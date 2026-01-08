@@ -1,0 +1,912 @@
+# DO NOT TOUCH! This is used to update the config file format if needed.
+config-version: 1.0.0.0
+# The anvil settings and cost per level for the enchanter GUI for each enchantment.
+enchantment-options:
+    minecraft:density:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:swift_sneak:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:breach:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:feather_falling:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:infinity:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:flame:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:impaling:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:protection:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:knockback:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    minecraft:depth_strider:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:luck_of_the_sea:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:silk_touch:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:loyalty:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:vanishing_curse:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:fire_protection:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:channeling:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:binding_curse:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:quick_charge:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:bane_of_arthropods:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:frost_walker:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    minecraft:multishot:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:projectile_protection:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:aqua_affinity:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:soul_speed:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:wind_burst:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:looting:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:smite:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:piercing:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:lure:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:riptide:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:power:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:blast_protection:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+    minecraft:mending:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    minecraft:fire_aspect:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    minecraft:respiration:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:thorns:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:sweeping_edge:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:punch:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    minecraft:sharpness:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:efficiency:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+    minecraft:fortune:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    minecraft:unbreaking:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:haste:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:multibreak:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:reach:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    skyenchants:replant:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:double_drop:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:explosive:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    skyenchants:speed:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:shield_bash:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:poison:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    skyenchants:wither:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+    skyenchants:tree_feller:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    skyenchants:health:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+            4:
+                money: 400.0
+                exp: 40
+                points: 40
+            5:
+                money: 500.0
+                exp: 50
+                points: 50
+            6:
+                money: 600.0
+                exp: 60
+                points: 60
+            7:
+                money: 700.0
+                exp: 70
+                points: 70
+            8:
+                money: 800.0
+                exp: 80
+                points: 80
+            9:
+                money: 900.0
+                exp: 90
+                points: 90
+            10:
+                money: 1000.0
+                exp: 100
+                points: 100
+    skyenchants:smelt:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:double_jump:
+        disable-anvil-use: true
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+    skyenchants:magnet:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10
+            2:
+                money: 200.0
+                exp: 20
+                points: 20
+            3:
+                money: 300.0
+                exp: 30
+                points: 30
+    skyenchants:durability:
+        disable-anvil-use: false
+        disable-enchanter-gui-use: false
+        cost-by-level:
+            1:
+                money: 100.0
+                exp: 10
+                points: 10

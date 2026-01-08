@@ -1,0 +1,48 @@
+config-version: 1.0.0.0
+gui-name: "<dark_purple><bold>Enchanter</bold></dark_purple>"
+gui-type: CHEST_27
+filler:
+    item-type: GRAY_STAINED_GLASS_PANE
+    name: " "
+player-info-button:
+    slot: 18
+    item:
+        item-type: EMERALD_BLOCK
+        name: "<green><bold>Player Info</bold></green>"
+        lore:
+            - "<white>Money:</white> <yellow><money></yellow>"
+            - "<white>Experience Levels:</white> <yellow><levels></yellow>"
+            - "<white>Player Points:</white> <yellow><points></yellow>"
+cost-button:
+    slot: 26
+    item:
+        item-type: GOLD_BLOCK
+        name: "<yellow><bold>Costs to Enchant Item</bold></yellow>"
+        lore:
+            - "<white>Money:</white> <yellow><required_money></yellow>"
+            - "<white>Experience Levels:</white> <yellow><required_levels></yellow>"
+            - "<white>Player Points:</white> <yellow><required_points></yellow>"
+input-item:
+    slot: 11
+    item:
+        item-type: BLUE_STAINED_GLASS_PANE
+        name: "<aqua>Input Item</aqua>"
+        lore:
+            - "<gray>Click an item in your inventory to input an item.</gray>"
+input-enchantment:
+    slot: 13
+    item:
+        item-type: PURPLE_STAINED_GLASS_PANE
+        name: "<dark_purple>Input Enchantment</dark_purple>"
+        lore:
+            - "<gray>Click an item in your inventory to input an enchantment.</gray>"
+output:
+    slot: 15
+    item:
+        item-type: RED_STAINED_GLASS_PANE
+        name: "<red>Output Item</red>"
+        lore:
+            - "<gray>The output item will be displayed here when valid</gray>"
+            - "<gray>inputs are placed inside the GUI."
+            - " "
+            - "<gray>Clicking the output item will add that item to your inventory.</gray>"

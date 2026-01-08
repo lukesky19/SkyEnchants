@@ -1,0 +1,33 @@
+name: SkyEnchants
+version: '${version}'
+main: com.github.lukesky19.skyEnchants.SkyEnchants
+description: SkyEnchants adds custom enchantments.
+api-version: '1.21.11'
+bootstrapper: com.github.lukesky19.skyEnchants.SkyEnchantsBootstrap
+dependencies:
+    bootstrap:
+        SkyLib:
+            load: BEFORE
+            required: true
+            join-classpath: true
+    server:
+        BentoBox:
+            load: BEFORE
+            required: false
+            join-classpath: true
+        PlayerPoints:
+            load: BEFORE
+            required: false
+            join-classpath: true
+        SkyTools:
+            load: BEFORE
+            required: false
+            join-classpath: true
+        SkyLib:
+            load: BEFORE
+            required: true
+            join-classpath: true
+        Vault:
+            load: BEFORE
+            required: false
+            join-classpath: true

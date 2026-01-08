@@ -1,0 +1,62 @@
+# DO NOT TOUCH! This is used to update the config file format if needed.
+config-version: 1.0.0.0
+# WARNING! Disabling an enchantment will result in the enchantment being removed from ItemStacks.
+# Enabling or disabling enchantments requires a server restart.
+enabled: true
+# Changing these values requires a server restart.
+registration:
+    # Changing the max level will not remove enchantments higher than the max level for any items.
+    # For Shield Bash, the effect will not apply if the enchantment level is higher than the max level though.
+    max-level: 3
+    # Should the enchantment be shown in enchantment tables?
+    show-in-enchantment-table: false
+    # This is only relevant if custom enchants use in anvils is enabled.
+    anvil-cost: 1
+    # weight is only relevant if it is shown inside enchantment tables.
+    weight: 1
+    # The enchantments that are exclusive with this enchantment. Requires this format: NAMESPACE:ENCHANTMENT_NAME
+    exclusive:
+        - minecraft:silk_touch
+        - minecraft:fortune
+        - skyenchants:haste
+    # The minimum and maximum cost refers to the selection enchantments.
+    # See https://minecraft.wiki/w/Enchanting/Levels for more information.
+    minimum-cost:
+        base-cost: 1
+        additional-cost-per-level: 1
+    maximum-cost:
+        base-cost: 3
+        additional-cost-per-level: 1
+    # The list of equipment slots the enchantment may be active in. Invalid values will be ignored.
+    # Possible values: ANY, MAINHAND, OFFHAND, HAND, FEET, LEGS, CHEST, HEAD, ARMOR, BODY, SADDLE
+    # See https://jd.papermc.io/paper/1.21.11/org/bukkit/inventory/EquipmentSlotGroup.html
+    equipment-slots:
+        - MAINHAND
+    # The items this enchantment can be applied to.
+    supported-items:
+        - wooden_pickaxe
+        - stone_pickaxe
+        - copper_pickaxe
+        - iron_pickaxe
+        - golden_pickaxe
+        - diamond_pickaxe
+        - netherite_pickaxe
+# Whether to only break blocks that match the first block broken or not.
+break-similar-only: true
+# Whether to break blocks below the player
+# This is recommended if the broken area is larger than 3x3x(any value)
+prevent-below-player: false
+# The maximum number of blocks to break per section.
+max-blocks-per-section: 10
+# The maximum number of blocks to process across all sections.
+total-max-blocks: 250
+# The delay between each section processed in ticks (1 tick = 0.05 seconds)
+location-processing-delay-ticks: 2
+# The delay between each section broken in ticks (1 tick = 0.05 seconds)
+block-break-delay-ticks: 20
+# The areas to break per enchantment level.
+# length x height x depth
+break-areas:
+    1: 3x3x1
+    2: 3x3x2
+    3: 3x3x3

@@ -1,0 +1,53 @@
+# DO NOT TOUCH! This is used to update the config file format if needed.
+config-version: 1.0.0.0
+# WARNING! Disabling an enchantment will result in the enchantment being removed from ItemStacks.
+# Enabling or disabling enchantments requires a server restart.
+enabled: true
+# Changing these values requires a server restart.
+registration:
+    # Changing the max level will not remove enchantments higher than the max level for any items.
+    # For Shield Bash, the effect will not apply if the enchantment level is higher than the max level though.
+    max-level: 2
+    # Should the enchantment be shown in enchantment tables?
+    show-in-enchantment-table: false
+    # This is only relevant if custom enchants use in anvils is enabled.
+    anvil-cost: 1
+    # weight is only relevant if it is shown inside enchantment tables.
+    weight: 1
+    # The enchantments that are exclusive with this enchantment. Requires this format: NAMESPACE:ENCHANTMENT_NAME
+    exclusive:
+        - minecraft:knockback
+        - minecraft:fire_aspect
+        - skyenchants:explosive
+        - skyenchants:wither
+    # The minimum and maximum cost refers to the selection enchantments.
+    # See https://minecraft.wiki/w/Enchanting/Levels for more information.
+    minimum-cost:
+        base-cost: 1
+        additional-cost-per-level: 1
+    maximum-cost:
+        base-cost: 3
+        additional-cost-per-level: 1
+    # The list of equipment slots the enchantment may be active in. Invalid values will be ignored.
+    # Possible values: ANY, MAINHAND, OFFHAND, HAND, FEET, LEGS, CHEST, HEAD, ARMOR, BODY, SADDLE
+    # See https://jd.papermc.io/paper/1.21.11/org/bukkit/inventory/EquipmentSlotGroup.html
+    equipment-slots:
+        - MAINHAND
+    # The items this enchantment can be applied to.
+    supported-items:
+        - wooden_sword
+        - stone_sword
+        - copper_sword
+        - iron_sword
+        - golden_sword
+        - diamond_sword
+        - netherite_sword
+# Duration refers to how long the potion effect should last.
+# The duration is in ticks, so make sure you consider that there are 20 ticks in 1 second.
+effect-duration-per-level:
+    1: 40 # 2 seconds
+    2: 120 # 5 seconds
+# The amplifier for the potion effect.
+effect-amplifier-per-level:
+    1: 0
+    2: 1

@@ -1,0 +1,233 @@
+# DO NOT TOUCH! This is used to update the config file format if needed.
+config-version: 1.0.0.0
+gui-name: "<gold><bold>Custom Enchantments</bold></gold>"
+gui-type: CHEST_54
+filler:
+    item-type: gray_stained_glass_pane
+    name: " "
+exit:
+    slot: 49
+    item:
+        item-type: barrier
+        name: "<red>Click to close the GUI"
+dummy-buttons:
+    - slot: 19
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment deals damage and knockback to the entity or player</gray>"
+              - "<gray>that had their attack blocked by a shield with this enchantment.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Shield</gray>"
+              - ""
+              - "<white>Damage Per Level</white>"
+              - "<white>1</white><gray>: 1.5 - </gray><white>2</white><gray>: 3.0 - </gray><white>3</white><gray>: 4.5</gray>"
+              - "<white>Knockback Per Level</white>"
+              - "<white>1</white><gray>: 0.25 - </gray><white>2</white><gray>: 0.5 - </gray><white>3</white><gray>: 0.75</gray>"
+          enchantments:
+              - enchantment: skyenchants:shield_bash
+                level: 3
+    - slot: 20
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment allows you to jump again while in the air when applied to boots.</gray>"
+              - "<white>Max Level</white><gray>: 1</gray>"
+              - "<white>Enchant</white><gray>: Boots</gray>"
+          enchantments:
+              - enchantment: skyenchants:double_jump
+                level: 1
+    - slot: 21
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment provides a permanent speed boost when applied to leggings.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Leggings</gray>"
+              - ""
+              - "<white>Speed Boost Per Level</white><gray>: +0.02 </gray>"
+              - "<red>Exclusive with swift sneak.</red>"
+          enchantments:
+              - enchantment: skyenchants:speed
+                level: 3
+    - slot: 22
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment provides a permanent health boost when applied to a chestplate.</gray>"
+              - "<white>Max Level</white><gray>: 10</gray>"
+              - "<white>Enchant</white><gray>: Chestplate</gray>"
+              - ""
+              - "<white>Health Per Level</white><gray>: +1 heart </gray>"
+              - "<red>Exclusive with thorns.</red>"
+          enchantments:
+              - enchantment: skyenchants:health
+                level: 10
+    - slot: 23
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment allows you to reach further away when your helmet</gray>"
+              - "<gray>has this enchantment.</gray>"
+              - "<white>Max Level</white><gray>: 2</gray>"
+              - "<white>Enchant</white><gray>: Helmet</gray>"
+              - ""
+              - "<white>Reach Distance Per Level</white><gray>: +0.5 </gray>"
+          enchantments:
+              - enchantment: skyenchants:reach
+                level: 2
+    - slot: 24
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment gives the entity or player damaged the wither effect</gray>"
+              - "<gray>when the enchantment is applied to a sword.</gray>"
+              - "<white>Max Level</white><gray>: 2</gray>"
+              - "<white>Enchant</white><gray>: Sword</gray>"
+              - ""
+              - "<white>Wither Effect Per Level</white>"
+              - "<white>1</white><gray>: 2s - </gray><white>2</white><gray>: 5s</gray>"
+              - "<red>Exclusive with knockback, fire aspect, explosive, and poison.</red>"
+          enchantments:
+              - enchantment: skyenchants:wither
+                level: 2
+    - slot: 25
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment gives the entity or player damaged the poison effect</gray>"
+              - "<gray>when the enchantment is applied to a sword.</gray>"
+              - "<white>Max Level</white><gray>: 2</gray>"
+              - "<white>Enchant</white><gray>: Sword</gray>"
+              - ""
+              - "<white>Poison Effect Per Level</white>"
+              - "<white>1</white><gray>: 2s - </gray><white>2</white><gray>: 5s</gray>"
+              - "<red>Exclusive with knockback, fire aspect, explosive, and wither.</red>"
+          enchantments:
+              - enchantment: skyenchants:poison
+                level: 2
+    - slot: 28
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment creates an explosion at the location of the entity or player</gray>"
+              - "<gray>damaged when the enchantment is applied to a sword.</gray>"
+              - "<white>Max Level</white><gray>: 1</gray>"
+              - "<white>Enchant</white><gray>: Sword</gray>"
+              - "<red>Exclusive with knockback, fire aspect, wither, and poison.</red>"
+          enchantments:
+              - enchantment: skyenchants:explosive
+                level: 1
+    - slot: 29
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment has a chance to give haste and make the tool unbreakable</gray>"
+              - "<gray>for a short time when applied to a pickaxe, shovel, or axe.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Pickaxe, Shovel, Axe</gray>"
+              - ""
+              - "<white>Chance Per Level</white>"
+              - "<white>1</white><gray>: 20% - </gray><white>2</white><gray>: 40% - </gray><white>3</white><gray>: 60%</gray>"
+              - "<white>Duration Per Level</white>"
+              - "<white>1</white><gray>: 10s - </gray><white>2</white><gray>: 20s - </gray><white>3</white><gray>: 30s</gray>"
+              - "<red>Exclusive with silk touch, fortune, and multibreak.</red>"
+          enchantments:
+              - enchantment: skyenchants:haste
+                level: 3
+    - slot: 30
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment breaks a small area around the block broken</gray>"
+              - "<gray>when applied to a pickaxe.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Pickaxe</gray>"
+              - ""
+              - "<white>Break Area Per Level</white>"
+              - "<white>1</white><gray>: 3x3x1 - </gray><white>2</white><gray>: 3x3x2 - </gray><white>3</white><gray>: 3x3x3</gray>"
+              - "<red>Exclusive with silk touch, fortune, and haste.</red>"
+              - "<gray>The collection and breaking of blocks is distributed over time so there</gray>"
+              - "<gray>may be a delay in the blocks being broken.</gray>"
+          enchantments:
+              - enchantment: skyenchants:multibreak
+                level: 3
+    - slot: 31
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment automatically crops down trees when applied to an axe.</gray>"
+              - "<white>Max Level</white><gray>: 1</gray>"
+              - "<white>Enchant</white><gray>: Axe</gray>"
+              - "<red>Exclusive with haste.</red>"
+              - "<gray>The collection and breaking of blocks is distributed over time so there</gray>"
+              - "<gray>may be a delay in the tree being chopped.</gray>"
+          enchantments:
+              - enchantment: skyenchants:tree_feller
+                level: 1
+    - slot: 32
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment has the chance to double the drops of the block broken</gray>"
+              - "<gray>when applied to a pickaxe, shovel, or axe.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Pickaxe, Shovel, Axe</gray>"
+              - ""
+              - "<white>Chance Per Level</white>"
+              - "<white>1</white><gray>: 20% - </gray><white>2</white><gray>: 40% - </gray><white>3</white><gray>: 60%</gray>"
+              - "<red>Exclusive with haste, multibreak, and tree feller.</red>"
+          enchantments:
+              - enchantment: skyenchants:double_drop
+                level: 3
+    - slot: 33
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment has the chance to smelt the block broken when applied</gray>"
+              - "<gray>to a pickaxe, shovel, or axe.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Pickaxe, Shovel, Axe</gray>"
+              - ""
+              - "<white>Chance Per Level</white>"
+              - "<white>1</white><gray>: 20% - </gray><white>2</white><gray>: 40% - </gray><white>3</white><gray>: 60%</gray>"
+          enchantments:
+              - enchantment: skyenchants:smelt
+                level: 3
+    - slot: 34
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment has the chance to replant the crop broken when applied</gray>"
+              - "<gray>to a hoe.</gray>"
+              - "<white>Max Level</white><gray>: 3</gray>"
+              - "<white>Enchant</white><gray>: Hoe</gray>"
+              - ""
+              - "<white>Chance Per Level</white>"
+              - "<white>1</white><gray>: 50% - </gray><white>2</white><gray>: 75% - </gray><white>3</white><gray>: 100%</gray>"
+          enchantments:
+              - enchantment: skyenchants:replant
+                level: 3
+    - slot: 37
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment automatically places the items from blocks into the player's inventory.</gray>"
+              - "<gray>Max Level: 3</gray>"
+              - "<white>Enchant</white><gray>: Pickaxe, Shovel, Axe, Hoe</gray>"
+              - ""
+              - "<white>Distance Per Level</white>"
+              - "<white>1</white><gray>: 1.5 blocks - </gray><white>2</white><gray>: 3 blocks - </gray><white>3</white><gray>: 5 blocks</gray>"
+          enchantments:
+              - enchantment: skyenchants:magnet
+                level: 3
+    - slot: 38
+      item:
+          item-type: enchanted_book
+          lore:
+              - "<gray>This enchantment protects items from breaking.</gray>"
+              - "<gray>Max Level: 1</gray>"
+              - "<white>Enchant</white><gray>: No Item Restrictions</gray>"
+          enchantments:
+              - enchantment: skyenchants:magnet
+                level: 3

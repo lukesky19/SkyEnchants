@@ -1,0 +1,56 @@
+# DO NOT TOUCH! This is used to update the config file format if needed.
+config-version: 1.0.0.0
+# WARNING! Disabling an enchantment will result in the enchantment being removed from ItemStacks.
+# Enabling or disabling enchantments requires a server restart.
+enabled: true
+# Prevent the application of the enchantment inside anvils.
+disable-anvil-use: true
+# Changing these values requires a server restart.
+registration:
+    # Changing the max level will not remove enchantments higher than the max level for any items.
+    # For Shield Bash, the effect will not apply if the enchantment level is higher than the max level though.
+    max-level: 3
+    # Should the enchantment be shown in enchantment tables?
+    show-in-enchantment-table: false
+    # This is only relevant if custom enchants use in anvils is enabled.
+    anvil-cost: 1
+    # weight is only relevant if it is shown inside enchantment tables.
+    weight: 2
+    # The enchantments that are exclusive with this enchantment. Requires this format: NAMESPACE:ENCHANTMENT_NAME
+    exclusive: []
+    # The minimum and maximum cost refers to the selection enchantments.
+    # See https://minecraft.wiki/w/Enchanting/Levels for more information.
+    minimum-cost:
+        base-cost: 1
+        additional-cost-per-level: 1
+    maximum-cost:
+        base-cost: 3
+        additional-cost-per-level: 1
+    # The list of equipment slots the enchantment may be active in. Invalid values will be ignored.
+    # Possible values: ANY, MAINHAND, OFFHAND, HAND, FEET, LEGS, CHEST, HEAD, ARMOR, BODY, SADDLE
+    # See https://jd.papermc.io/paper/1.21.11/org/bukkit/inventory/EquipmentSlotGroup.html
+    equipment-slots:
+        - MAINHAND
+        - OFFHAND
+    # The items this enchantment can be applied to.
+    supported-items:
+        - shield
+# The particle is spawned at the location of the player who blocked the attack.
+particle:
+    particle-type: explosion
+    count: 1
+    offset-x: 0.0
+    offset-y: 0.0
+    offset-z: 0.0
+    extra: 0.1
+# The damage applied to the entity that had their attack blocked.
+damage-per-level:
+    1: 1.5
+    2: 3.0
+    3: 4.5
+# The knockback strength applied to the entity that had their attack blocked.
+# The entity will be knocked back in the opposite direction of the player who block the attack.
+knockback-per-level:
+    1: 0.25
+    2: 0.5
+    3: 0.75
