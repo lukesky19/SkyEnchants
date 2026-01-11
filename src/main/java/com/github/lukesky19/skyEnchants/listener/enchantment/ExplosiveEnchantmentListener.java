@@ -37,8 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Listens to when an entity deals damage to another entity, and if the player has an explosive enchantment, attempts to apply the explosion effect.
@@ -47,6 +46,7 @@ public class ExplosiveEnchantmentListener implements Listener {
     private final @NotNull ComponentLogger logger;
     private final @NotNull ExplosiveConfigManager explosiveConfigManager;
     private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NotNull Set<UUID> entitiesToIgnore = new HashSet<>();
 
     /**
      * Constructor
@@ -67,11 +67,33 @@ public class ExplosiveEnchantmentListener implements Listener {
      * Listens to when an entity deals damage to another entity, checks to see if any custom enchantment effects need applied, and then applies those effects.
      * @param entityDamageByEntityEvent An {@link EntityDamageByEntityEvent}.
      */
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamaged(EntityDamageByEntityEvent entityDamageByEntityEvent) {
+        // Get the damage source
+        DamageSource damageSource = entityDamageByEntityEvent.getDamageSource();
+        // The entity that caused the damage
+        Entity causingEntity = damageSource.getCausingEntity();
+        if(causingEntity == null) return;
+        // Get the entity's unique id
+        UUID entityId = causingEntity.getUniqueId();
+
+        // If the event is cancelled, remove the entity id from the entities to ignore (if any) and return
+        if(entityDamageByEntityEvent.isCancelled()) {
+            entitiesToIgnore.remove(entityId);
+            return;
+        }
+
+        // If the entity id should be ignored, remove the entity id from the entities to ignore and return
+        // This is to prevent an infinite loop of the explosive enchantment activating.
+        if(entitiesToIgnore.contains(entityId)) {
+            entitiesToIgnore.remove(entityId);
+            return;
+        }
+
+        // Get the explosive configuration, and if null, log an error and return
         @Nullable Explosive explosive = explosiveConfigManager.getConfiguration();
         if(explosive == null) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the explosive enchantment due to invalid settings."));
+            logger.warn(AdventureUtil.deserialize("Unable to apply the explosive enchantment due to invalid settings."));
             return;
         }
 
@@ -82,11 +104,6 @@ public class ExplosiveEnchantmentListener implements Listener {
         // If the explosive enchantment is null, return
         if(explosiveEnchantment == null) return;
 
-        // Get the damage source
-        DamageSource damageSource = entityDamageByEntityEvent.getDamageSource();
-        // The entity that caused the damage
-        Entity causingEntity = damageSource.getCausingEntity();
-        if(causingEntity == null) return;
         if(!(causingEntity instanceof LivingEntity causingLivingEntity)) return;
         // The causing entity's equipment
         @Nullable EntityEquipment causingEntityEquipment = causingLivingEntity.getEquipment();
@@ -104,7 +121,7 @@ public class ExplosiveEnchantmentListener implements Listener {
         @NotNull Map<Integer, Integer> explosivePowerPerLevel = explosive.explosionPowerPerLevel();
         // Log an error if the power mapping is empty
         if(explosivePowerPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping)."));
+            logger.warn(AdventureUtil.deserialize("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping)."));
             return;
         }
 
@@ -126,9 +143,12 @@ public class ExplosiveEnchantmentListener implements Listener {
             @Nullable Integer power = explosivePowerPerLevel.get(enchantmentLevel);
             // If there is no power mapping for the enchantment level, log an error and move to the next EquipmentSlot
             if(power == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.warn(AdventureUtil.deserialize("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
+
+            // Add the entity id to the ignored entity ids to prevent infinite activation of the explosive enchantment
+            entitiesToIgnore.add(entityId);
 
             // Spawn the explosion
             targetLivingEntity.getLocation().createExplosion(causingEntity, power, false, false);
