@@ -44,16 +44,17 @@ public class PoisonConfigManager extends EnchantmentConfigManager<Poison> {
      * @return The original {@link Poison} configuration.
      */
     @Override
-    protected @Nullable Poison migrateConfiguration(@NotNull Poison poison) {
+    public @Nullable Poison migrateConfiguration(@NotNull Poison poison) {
         return poison;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param poison The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Poison poison) {
         return true;
     }
 }

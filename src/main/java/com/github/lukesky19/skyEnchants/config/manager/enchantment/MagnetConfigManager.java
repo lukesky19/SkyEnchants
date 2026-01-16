@@ -44,16 +44,17 @@ public class MagnetConfigManager extends EnchantmentConfigManager<Magnet> {
      * @return The original {@link Magnet} configuration.
      */
     @Override
-    protected @Nullable Magnet migrateConfiguration(@NotNull Magnet magnet) {
+    public @Nullable Magnet migrateConfiguration(@NotNull Magnet magnet) {
         return magnet;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param magnet The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Magnet magnet) {
         return true;
     }
 }

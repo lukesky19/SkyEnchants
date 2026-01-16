@@ -44,16 +44,17 @@ public class ExplosiveConfigManager extends EnchantmentConfigManager<Explosive> 
      * @return The original {@link Explosive} configuration.
      */
     @Override
-    protected @Nullable Explosive migrateConfiguration(@NotNull Explosive explosive) {
+    public @Nullable Explosive migrateConfiguration(@NotNull Explosive explosive) {
         return explosive;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param explosive The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Explosive explosive) {
         return true;
     }
 }

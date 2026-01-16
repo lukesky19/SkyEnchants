@@ -44,16 +44,17 @@ public class ReachConfigManager extends EnchantmentConfigManager<Reach> {
      * @return The original {@link Reach} configuration.
      */
     @Override
-    protected @Nullable Reach migrateConfiguration(@NotNull Reach reach) {
+    public @Nullable Reach migrateConfiguration(@NotNull Reach reach) {
         return reach;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param reach The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Reach reach) {
         return true;
     }
 }

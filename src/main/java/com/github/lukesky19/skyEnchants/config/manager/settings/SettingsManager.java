@@ -50,16 +50,17 @@ public class SettingsManager extends SimpleConfigManager<Settings> {
      * @return The original {@link Settings} configuration.
      */
     @Override
-    protected @Nullable Settings migrateConfiguration(@NotNull Settings settings) {
+    public @Nullable Settings migrateConfiguration(@NotNull Settings settings) {
         return settings;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param settings The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Settings settings) {
         return true;
     }
 }

@@ -44,16 +44,17 @@ public class SpeedConfigManager extends EnchantmentConfigManager<Speed> {
      * @return The original {@link Speed} configuration.
      */
     @Override
-    protected @Nullable Speed migrateConfiguration(@NotNull Speed speed) {
+    public @Nullable Speed migrateConfiguration(@NotNull Speed speed) {
         return speed;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param speed The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Speed speed) {
         return true;
     }
 }

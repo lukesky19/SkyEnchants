@@ -44,16 +44,17 @@ public class SmeltConfigManager extends EnchantmentConfigManager<Smelt> {
      * @return The original {@link Smelt} configuration.
      */
     @Override
-    protected @Nullable Smelt migrateConfiguration(@NotNull Smelt smelt) {
+    public @Nullable Smelt migrateConfiguration(@NotNull Smelt smelt) {
         return smelt;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param smelt The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Smelt smelt) {
         return true;
     }
 }

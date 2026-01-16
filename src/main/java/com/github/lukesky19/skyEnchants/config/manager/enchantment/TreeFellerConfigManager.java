@@ -44,16 +44,17 @@ public class TreeFellerConfigManager extends EnchantmentConfigManager<TreeFeller
      * @return The original {@link TreeFeller} configuration.
      */
     @Override
-    protected @Nullable TreeFeller migrateConfiguration(@NotNull TreeFeller treeFeller) {
+    public @Nullable TreeFeller migrateConfiguration(@NotNull TreeFeller treeFeller) {
         return treeFeller;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param treeFeller The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable TreeFeller treeFeller) {
         return true;
     }
 }

@@ -108,7 +108,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
      * @return The original {@link Locale} configuration.
      */
     @Override
-    protected @Nullable Locale migrateConfiguration(@NotNull Locale locale) {
+    public @Nullable Locale migrateConfiguration(@NotNull Locale locale) {
         return locale;
     }
 
@@ -116,7 +116,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
      * Validates if the locale is missing any strings.
      */
     @Override
-    public boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Locale configuration) {
         if(configuration == null) return false;
 
         if(configuration.configVersion()  == null
@@ -128,7 +128,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
                 || configuration.insufficientPoints()  == null
                 || configuration.enchanterError()  == null
                 || configuration.anvilUseNotAllowed()  == null) {
-            configuration = null;
+            this.configuration = null;
 
             logger.error(AdventureUtil.deserialize("Your locale is missing one of the plugin's messages. The default locale will be used."));
             logger.info(AdventureUtil.deserialize("You can regenerate your locale file by deleting it or adding the missing messages to resolve the issue."));

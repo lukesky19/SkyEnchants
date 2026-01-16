@@ -44,16 +44,17 @@ public class HasteConfigManager extends EnchantmentConfigManager<Haste> {
      * @return The original {@link Haste} configuration.
      */
     @Override
-    protected @Nullable Haste migrateConfiguration(@NotNull Haste haste) {
+    public @Nullable Haste migrateConfiguration(@NotNull Haste haste) {
         return haste;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param haste The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Haste haste) {
         return true;
     }
 }

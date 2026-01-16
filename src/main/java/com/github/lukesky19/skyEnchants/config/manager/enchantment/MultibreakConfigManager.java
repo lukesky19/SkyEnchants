@@ -44,16 +44,17 @@ public class MultibreakConfigManager extends EnchantmentConfigManager<Multibreak
      * @return The original {@link Multibreak} configuration.
      */
     @Override
-    protected @Nullable Multibreak migrateConfiguration(@NotNull Multibreak multibreak) {
+    public @Nullable Multibreak migrateConfiguration(@NotNull Multibreak multibreak) {
         return multibreak;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param multibreak The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Multibreak multibreak) {
         return true;
     }
 }

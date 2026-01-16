@@ -44,16 +44,17 @@ public class HealthConfigManager extends EnchantmentConfigManager<Health> {
      * @return The original {@link Health} configuration.
      */
     @Override
-    protected @Nullable Health migrateConfiguration(@NotNull Health health) {
+    public @Nullable Health migrateConfiguration(@NotNull Health health) {
         return health;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param health The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Health health) {
         return true;
     }
 }

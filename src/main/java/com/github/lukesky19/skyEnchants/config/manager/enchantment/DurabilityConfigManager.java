@@ -44,16 +44,17 @@ public class DurabilityConfigManager extends EnchantmentConfigManager<Durability
      * @return The original {@link Durability} configuration.
      */
     @Override
-    protected @Nullable Durability migrateConfiguration(@NotNull Durability durability) {
+    public @Nullable Durability migrateConfiguration(@NotNull Durability durability) {
         return durability;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param durability The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Durability durability) {
         return true;
     }
 }

@@ -44,16 +44,17 @@ public class DoubleDropConfigManager extends EnchantmentConfigManager<DoubleDrop
      * @return The original {@link DoubleDrop} configuration.
      */
     @Override
-    protected @Nullable DoubleDrop migrateConfiguration(@NotNull DoubleDrop doubleDrop) {
+    public @Nullable DoubleDrop migrateConfiguration(@NotNull DoubleDrop doubleDrop) {
         return doubleDrop;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param doubleDrop The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable DoubleDrop doubleDrop) {
         return true;
     }
 }

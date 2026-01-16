@@ -44,16 +44,17 @@ public class DoubleJumpConfigManager extends EnchantmentConfigManager<DoubleJump
      * @return The original {@link DoubleJump} configuration.
      */
     @Override
-    protected @Nullable DoubleJump migrateConfiguration(@NotNull DoubleJump doubleJump) {
+    public @Nullable DoubleJump migrateConfiguration(@NotNull DoubleJump doubleJump) {
         return doubleJump;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param doubleJump The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable DoubleJump doubleJump) {
         return true;
     }
 }

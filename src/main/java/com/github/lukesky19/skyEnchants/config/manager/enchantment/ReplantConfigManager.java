@@ -44,16 +44,17 @@ public class ReplantConfigManager extends EnchantmentConfigManager<Replant> {
      * @return The original {@link Replant} configuration.
      */
     @Override
-    protected @Nullable Replant migrateConfiguration(@NotNull Replant replant) {
+    public @Nullable Replant migrateConfiguration(@NotNull Replant replant) {
         return replant;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param replant The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Replant replant) {
         return true;
     }
 }

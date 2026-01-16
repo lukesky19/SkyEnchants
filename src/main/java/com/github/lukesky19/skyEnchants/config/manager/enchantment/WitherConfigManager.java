@@ -44,16 +44,17 @@ public class WitherConfigManager extends EnchantmentConfigManager<Wither> {
      * @return The original {@link Wither} configuration.
      */
     @Override
-    protected @Nullable Wither migrateConfiguration(@NotNull Wither wither) {
+    public @Nullable Wither migrateConfiguration(@NotNull Wither wither) {
         return wither;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param wither The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable Wither wither) {
         return true;
     }
 }

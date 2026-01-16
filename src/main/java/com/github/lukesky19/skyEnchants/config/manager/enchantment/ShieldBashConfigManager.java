@@ -44,16 +44,17 @@ public class ShieldBashConfigManager extends EnchantmentConfigManager<ShieldBash
      * @return The original {@link ShieldBash} configuration.
      */
     @Override
-    protected @Nullable ShieldBash migrateConfiguration(@NotNull ShieldBash shieldBash) {
+    public @Nullable ShieldBash migrateConfiguration(@NotNull ShieldBash shieldBash) {
         return shieldBash;
     }
 
     /**
      * Assumes configuration is valid.
+     * @param shieldBash The configuration.
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable ShieldBash shieldBash) {
         return true;
     }
 }

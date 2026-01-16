@@ -138,7 +138,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
 
             // Save the migrated configuration if different
             if(configuration != preMigrationConfiguration) {
-                saveConfiguration();
+                saveConfiguration(configuration);
             }
         } catch (ConfigurateException configurateException) {
             logger.error(AdventureUtil.deserialize("Failed to load configuration. Error: " + configurateException.getMessage()));
@@ -149,9 +149,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * Save the configuration.
      */
     @Override
-    public void saveConfiguration() {
-        if(configuration == null) return;
-
+    public void saveConfiguration(@NotNull C configuration) {
         try {
             @NotNull YamlConfigurationLoader yamlConfigurationLoader = ConfigurationUtility.getYamlConfigurationLoader(configurationPath);
 
@@ -213,11 +211,20 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * @param configuration The configuration to migrate.
      * @return V the migrated configuration.
      */
-    protected abstract @Nullable C migrateConfiguration(@NotNull C configuration);
+    public abstract @Nullable C migrateConfiguration(@NotNull C configuration);
+
+    /**
+     * Validate the configuration in the class.
+     * This is a convenience method and calls {@link #validateConfiguration(Object)} which should be favored instead.
+     * @return true if valid, or false.
+     */
+    public boolean validateConfiguration() {
+        return validateConfiguration(configuration);
+    }
 
     /**
      * Validate the configuration.
      * @return true if valid, or false.
      */
-    protected abstract boolean validateConfiguration();
+    public abstract boolean validateConfiguration(@Nullable C configuration);
 }

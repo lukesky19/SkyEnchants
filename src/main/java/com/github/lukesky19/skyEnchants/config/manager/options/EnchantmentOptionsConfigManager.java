@@ -65,7 +65,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
      * @return The original {@link EnchantmentOptionsConfig} configuration.
      */
     @Override
-    protected @Nullable EnchantmentOptionsConfig migrateConfiguration(@NotNull EnchantmentOptionsConfig enchantmentOptionsConfig) {
+    public @Nullable EnchantmentOptionsConfig migrateConfiguration(@NotNull EnchantmentOptionsConfig enchantmentOptionsConfig) {
         return enchantmentOptionsConfig;
     }
 
@@ -74,7 +74,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
      * @return Always true.
      */
     @Override
-    protected boolean validateConfiguration() {
+    public boolean validateConfiguration(@Nullable EnchantmentOptionsConfig configuration) {
         return true;
     }
 
@@ -108,6 +108,6 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
                 configuration.configVersion(),
                 enchantmentOptionsMap);
 
-        saveConfiguration();
+        saveConfiguration(configuration);
     }
 }
