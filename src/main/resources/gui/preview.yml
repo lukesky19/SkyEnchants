@@ -229,5 +229,5 @@ dummy-buttons:
               - "<gray>Max Level: 1</gray>"
               - "<white>Enchant</white><gray>: No Item Restrictions</gray>"
           enchantments:
-              - enchantment: skyenchants:magnet
-                level: 3
+              - enchantment: skyenchants:durability
+                level: 1
