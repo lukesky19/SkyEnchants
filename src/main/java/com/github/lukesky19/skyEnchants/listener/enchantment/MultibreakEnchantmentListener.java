@@ -19,14 +19,15 @@ package com.github.lukesky19.skyEnchants.listener.enchantment;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Multibreak;
+import com.github.lukesky19.skyEnchants.config.manager.enchantment.DurabilityConfigManager;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.MultibreakConfigManager;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.processor.MultibreakProcessor;
 import com.github.lukesky19.skyEnchants.util.Direction;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
 import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockType;
 import org.bukkit.enchantments.Enchantment;
@@ -49,40 +50,40 @@ import java.util.*;
 public class MultibreakEnchantmentListener implements Listener {
     private final @NotNull SkyEnchants skyEnchants;
     private final @NotNull ComponentLogger logger;
+    private final @NotNull DurabilityConfigManager durabilityConfigManager;
     private final @NotNull MultibreakConfigManager multibreakConfigManager;
     private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull List<Location> multibreakLocationsToIgnore = new ArrayList<>();
+    private final @NotNull HookManager hookManager;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
+     * @param durabilityConfigManager A {@link DurabilityConfigManager} instance.
      * @param multibreakConfigManager A {@link MultibreakConfigManager} instance.
      * @param enchantmentManager An {@link EnchantmentManager} instance.
+     * @param hookManager A {@link HookManager} instance.
      */
     public MultibreakEnchantmentListener(
             @NotNull SkyEnchants skyEnchants,
+            @NotNull DurabilityConfigManager durabilityConfigManager,
             @NotNull MultibreakConfigManager multibreakConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NotNull EnchantmentManager enchantmentManager,
+            @NotNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.logger = skyEnchants.getComponentLogger();
+        this.durabilityConfigManager = durabilityConfigManager;
         this.multibreakConfigManager = multibreakConfigManager;
         this.enchantmentManager = enchantmentManager;
+        this.hookManager = hookManager;
     }
 
     /**
      * When a block is broken by a tool with the Multibreak enchantment, attempt to get the nearby blocks that should be broken and break those blocks.
      * @param blockBreakEvent A {@link BlockBreakEvent}.
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBlockMultibreak(BlockBreakEvent blockBreakEvent) {
         Block block = blockBreakEvent.getBlock();
-        Location blockLocation = block.getLocation();
-
-        // If the event was cancelled, remove the location from the multibreakLocationsToIgnore if it contains it and return
-        if(blockBreakEvent.isCancelled()) {
-            multibreakLocationsToIgnore.remove(blockLocation);
-            return;
-        }
 
         @Nullable Multibreak multibreak = multibreakConfigManager.getConfiguration();
         if(multibreak == null) {
@@ -99,12 +100,6 @@ public class MultibreakEnchantmentListener implements Listener {
         // If no break areas are defined, log an error and return
         if(multibreak.breakAreas().isEmpty()) {
             logger.error(AdventureUtil.deserialize("Unable to apply multibreak enchantment effect due to invalid plugin settings (No break areas configured)."));
-            return;
-        }
-
-        // If the block location was broken by the plugin as a result of multibreak, remove the location and return
-        if(multibreakLocationsToIgnore.contains(blockLocation)) {
-            multibreakLocationsToIgnore.remove(blockLocation);
             return;
         }
 
@@ -157,20 +152,25 @@ public class MultibreakEnchantmentListener implements Listener {
             int height = Integer.parseInt(splitDimensionStrings[1]);
             int depth = Integer.parseInt(splitDimensionStrings[2]);
 
+            // Get the ItemStack to use to break blocks
+            ItemStack tool = entityEquipment.getItemInMainHand();
+            // Get the slot number
+            int slot = player.getInventory().getHeldItemSlot();
+
             // Create a new MultibreakProcessor to attempt to process the multibreak
             new MultibreakProcessor(
                     skyEnchants,
+                    durabilityConfigManager,
+                    enchantmentManager,
+                    hookManager,
                     direction,
                     block, blockType,
                     depth, width, height,
                     multibreak.breakSimilarOnly(),
                     multibreak.preventBelowPlayer(),
-                    multibreak.maxBlocksPerSection(),
-                    multibreak.totalMaxBlocks(),
-                    multibreak.locationProcessingDelayTicks(),
-                    multibreak.blockBreakDelayTicks(),
-                    multibreakLocationsToIgnore,
-                    player);
+                    player,
+                    tool,
+                    slot);
 
             return;
         }

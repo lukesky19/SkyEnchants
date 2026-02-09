@@ -15,12 +15,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-package com.github.lukesky19.skyEnchants.manager.hook;
+package com.github.lukesky19.skyEnchants.integration;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
-import com.github.lukesky19.skyEnchants.integration.Hook;
 import com.github.lukesky19.skyEnchants.integration.hooks.EconomyHook;
 import com.github.lukesky19.skyEnchants.integration.hooks.PlayerPointsHook;
+import com.github.lukesky19.skyEnchants.integration.hooks.RoseStackerHook;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -37,11 +37,11 @@ public class HookManager {
      * @param skyEnchants A {@link SkyEnchants} instance.
      */
     public HookManager(@NotNull SkyEnchants skyEnchants) {
-        EconomyHook economyHook = new EconomyHook(skyEnchants);
-        registerHook(EconomyHook.class, economyHook);
+        registerHook(EconomyHook.class, new EconomyHook(skyEnchants));
 
-        PlayerPointsHook playerPointsHook = new PlayerPointsHook(skyEnchants);
-        registerHook(PlayerPointsHook.class, playerPointsHook);
+        registerHook(PlayerPointsHook.class, new PlayerPointsHook(skyEnchants));
+
+        registerHook(RoseStackerHook.class, new RoseStackerHook(skyEnchants));
     }
 
     /**

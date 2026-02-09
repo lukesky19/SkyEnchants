@@ -25,7 +25,7 @@ import com.github.lukesky19.skyEnchants.config.manager.options.EnchantmentOption
 import com.github.lukesky19.skyEnchants.config.manager.gui.GUIConfigManager;
 import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
 import com.github.lukesky19.skyEnchants.config.manager.settings.SettingsManager;
-import com.github.lukesky19.skyEnchants.manager.hook.HookManager;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
 import com.github.lukesky19.skylib.api.gui.impl.UUIDGUIManager;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;

@@ -3,4 +3,4 @@ version: '${version}'
 main: com.github.lukesky19.skyEnchants.SkyEnchants
 api-version: '1.21'
 depend: [SkyLib]
-softdepend: [BentoBox, SkyTools, PlayerPoints, Vault]
+softdepend: [BentoBox, PlayerPoints, RoesStacker, SkyTools, Vault]

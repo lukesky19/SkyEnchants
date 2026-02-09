@@ -19,14 +19,15 @@ package com.github.lukesky19.skyEnchants.listener.enchantment;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.TreeFeller;
+import com.github.lukesky19.skyEnchants.config.manager.enchantment.DurabilityConfigManager;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.TreeFellerConfigManager;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.processor.TreeProcessor;
 import com.github.lukesky19.skyEnchants.util.BlockTypeUtils;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
 import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockType;
 import org.bukkit.enchantments.Enchantment;
@@ -49,40 +50,40 @@ import java.util.*;
 public class TreeFellerEnchantmentListener implements Listener {
     private final @NotNull SkyEnchants skyEnchants;
     private final @NotNull ComponentLogger logger;
+    private final @NotNull DurabilityConfigManager durabilityConfigManager;
     private final @NotNull TreeFellerConfigManager treeFellerConfigManager;
     private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull List<Location> treeFellerLocationsToIgnore = new ArrayList<>();
+    private final @NotNull HookManager hookManager;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
+     * @param durabilityConfigManager A {@link DurabilityConfigManager} instance.
      * @param treeFellerConfigManager A {@link TreeFellerConfigManager} instance.
      * @param enchantmentManager An {@link EnchantmentManager} instance.
+     * @param hookManager A {@link HookManager} instance.
      */
     public TreeFellerEnchantmentListener(
             @NotNull SkyEnchants skyEnchants,
+            @NotNull DurabilityConfigManager durabilityConfigManager,
             @NotNull TreeFellerConfigManager treeFellerConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NotNull EnchantmentManager enchantmentManager,
+            @NotNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.logger = skyEnchants.getComponentLogger();
+        this.durabilityConfigManager = durabilityConfigManager;
         this.treeFellerConfigManager = treeFellerConfigManager;
         this.enchantmentManager = enchantmentManager;
+        this.hookManager = hookManager;
     }
 
     /**
      * Listens for when a block is broken by a tool that contains the tree feller enchantment and applies the necessary actions.
      * @param blockBreakEvent A {@link BlockBreakEvent}.
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBlockBreakTreeFeller(BlockBreakEvent blockBreakEvent) {
         Block block = blockBreakEvent.getBlock();
-        Location blockLocation = block.getLocation();
-
-        // If the event was cancelled, remove the location from the treeFellerLocationsToIgnore if it contains it and return
-        if(blockBreakEvent.isCancelled()) {
-            treeFellerLocationsToIgnore.remove(blockLocation);
-            return;
-        }
 
         // If the tree feller's settings are null, log and error and return
         @Nullable TreeFeller treeFeller = treeFellerConfigManager.getConfiguration();
@@ -96,12 +97,6 @@ public class TreeFellerEnchantmentListener implements Listener {
         // If the tree feller enchantment is null, return
         @Nullable Enchantment treeFellerEnchantment = enchantmentManager.getTreeFellerEnchantment();
         if(treeFellerEnchantment == null) return;
-
-        // If the block location was broken by the plugin as a result of tree feller, remove the location and return
-        if(treeFellerLocationsToIgnore.contains(blockLocation)) {
-            treeFellerLocationsToIgnore.remove(blockLocation);
-            return;
-        }
 
         // Get the block's BlockType
         BlockType blockType = block.getType().asBlockType();
@@ -130,19 +125,24 @@ public class TreeFellerEnchantmentListener implements Listener {
             // If the enchantment level is over the max level, move to the next EquipmentSlot
             if(enchantmentLevel > maxLevel) continue;
 
+            // Get the ItemStack to use to break trees
+            ItemStack tool = entityEquipment.getItemInMainHand();
+            // Get the slot number
+            int slot = player.getInventory().getHeldItemSlot();
+
             // Create a new TreeProcessor to attempt to process the tree
             new TreeProcessor(
                     skyEnchants,
-                    treeFellerLocationsToIgnore,
+                    durabilityConfigManager,
+                    enchantmentManager,
+                    hookManager,
                     block,
                     treeFeller.minLeafCount(),
-                    treeFeller.maxBlocksPerSection(),
-                    treeFeller.totalMaxBlocks(),
                     treeFeller.includeLeaves(),
                     treeFeller.includeMangroveRoots(),
-                    treeFeller.treeDetectionDelayTicks(),
-                    treeFeller.blockBreakDelayTicks(),
-                    player);
+                    player,
+                    tool,
+                    slot);
 
             return;
         }

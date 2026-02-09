@@ -39,15 +39,6 @@ registration:
         - golden_axe
         - diamond_axe
         - netherite_axe
-# The maximum number of blocks to break per section.
-max-blocks-per-section: 10
-# The maximum number of blocks to process across all sections.
-# You may wish to increase this if you use the include leaves further down.
-total-max-blocks: 250
-# The delay between each section processed in ticks (1 tick = 0.05 seconds)
-tree-detection-delay-ticks: 2
-# The delay between each section broken in ticks (1 tick = 0.05 seconds)
-block-break-delay-ticks: 20
 # The minimum number of leaves that need to be around the logs to count as a tree.
 min-leaf-count: 25
 # Should leaves be broken by the tree feller enchantment?

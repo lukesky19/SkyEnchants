@@ -18,257 +18,231 @@
 package com.github.lukesky19.skyEnchants.processor;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
-import com.github.lukesky19.skyEnchants.listener.enchantment.TreeFellerEnchantmentListener;
+import com.github.lukesky19.skyEnchants.api.event.MultiBlockBreakEvent;
+import com.github.lukesky19.skyEnchants.api.event.PreMultiBlockBreakEvent;
+import com.github.lukesky19.skyEnchants.config.manager.enchantment.DurabilityConfigManager;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
+import com.github.lukesky19.skyEnchants.integration.hooks.RoseStackerHook;
+import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.BlockTypeUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.BlockType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-/**
- * This class is used to collect the blocks of a tree and break those blocks.
- * The collection and breaking process is distributed over time for performance reasons.
- */
-public class TreeProcessor {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull List<Location> treeFellerLocationsToIgnore;
-    private final @NotNull Player player;
+import static com.github.lukesky19.skyEnchants.util.PluginUtils.compact;
 
-    // Settings
+/**
+ * This class is used to collect the blocks of trees and break those blocks.
+ */
+public class TreeProcessor extends BlockProcessor {
+    // Options
     private final int minLeavesRequired;
-    private final int sectionMaxBlocksToProcess;
-    private final int totalMaxBlocksToProcess;
-    private final long treeProcessingDelayTicks;
-    private final long blockBreakDelayTicks;
     private final boolean includeLeaves;
     private final boolean includeMangroveRoots;
 
-    // Data
-    private final @NotNull Deque<Location> locationQueue = new ArrayDeque<>();
-    private final @NotNull List<Location> processedLocations = new ArrayList<>();
-    private final @NotNull Deque<Block> logBlocks = new ArrayDeque<>();
-    private final @NotNull Deque<Block> leafBlocks = new ArrayDeque<>();
-
-    private int totalProcessed = 0;
+    // Processing Data
     private int leafCount = 0;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
-     * @param treeFellerLocationsToIgnore The {@link List} of {@link Location}s of blocks to ignore for the {@link TreeFellerEnchantmentListener}.
-     * @param startingBlock The {@link Block} the player broke to initiate the tree felling.
-     * @param minLeavesRequired The minimum leaf count to be considered a tree.
-     * @param sectionMaxBlocksToProcess The maximum number of blocks to process per section.
-     * @param totalMaxBlocksToProcess The maximum number of blocks to process across all sections.
-     * @param includeLeaves Should leaves be broken when the tree is felled?
-     * @param includeMangroveRoots Should mangrove roots be broken when the tree is felled?
-     * @param treeProcessingDelayTicks The delay in ticks between tree detection processing.
-     * @param blockBreakDelayTicks The delay in ticks between tree breaking processing.
-     * @param player The {@link Player} who initiated the process and will break the collected blocks.
+     * @param durabilityConfigManager A {@link DurabilityConfigManager} instance.
+     * @param enchantmentManager An {@link EnchantmentManager} instance.
+     * @param hookManager A {@link HookManager} instance.
+     * @param startingBlock The starting {@link Block}.
+     * @param minLeavesRequired The number of leaves required to be a tree.
+     * @param includeLeaves If leaves should be broken.
+     * @param includeMangroveRoots If mangrove roots should be broken.
+     * @param player The {@link Player}.
+     * @param tool The {@link ItemStack} used.
+     * @param toolSlotNumber The slot number of the tool.
      */
     public TreeProcessor(
             @NotNull SkyEnchants skyEnchants,
-            @NotNull List<Location> treeFellerLocationsToIgnore,
+            @NotNull DurabilityConfigManager durabilityConfigManager,
+            @NotNull EnchantmentManager enchantmentManager,
+            @NotNull HookManager hookManager,
             @NotNull Block startingBlock,
             int minLeavesRequired,
-            int sectionMaxBlocksToProcess,
-            int totalMaxBlocksToProcess,
             boolean includeLeaves,
             boolean includeMangroveRoots,
-            long treeProcessingDelayTicks,
-            long blockBreakDelayTicks,
-            @NotNull Player player) {
-        this.skyEnchants = skyEnchants;
+            @NotNull Player player,
+            @NotNull ItemStack tool,
+            int toolSlotNumber) {
+        super(skyEnchants, durabilityConfigManager, enchantmentManager, hookManager, startingBlock, player, tool, toolSlotNumber);
 
         // Settings
         this.minLeavesRequired = minLeavesRequired;
-        this.sectionMaxBlocksToProcess = sectionMaxBlocksToProcess;
-        this.totalMaxBlocksToProcess = totalMaxBlocksToProcess;
         this.includeLeaves = includeLeaves;
         this.includeMangroveRoots = includeMangroveRoots;
-        this.treeProcessingDelayTicks = treeProcessingDelayTicks;
-        this.blockBreakDelayTicks = blockBreakDelayTicks;
 
-        // This is the list in TreeFellerEnchantmentListener so that blocks broken here don't trigger an infinite loop
-        this.treeFellerLocationsToIgnore = treeFellerLocationsToIgnore;
+        // Queue starting location
+        queueLocations(startingLocation);
 
-        // The Player Involved
-        this.player = player;
-
-        // Queue locations adjacent to starting location
-        queueAdjacentLocations(startingBlock.getLocation());
-
-        // Start the tree processor collection
-        skyEnchants.getServer().getScheduler().runTask(skyEnchants, this::collectLocations);
+        // Start the process
+        processLocations();
     }
 
     /**
-     * Collect the locations of blocks to break.
+     * Queue the 26 adjacent locations around the provided location.
+     * @apiNote Ignores locations in chunks not loaded.
+     * @param center The starting {@link Location}.
      */
-    private void collectLocations() {
-        if(!player.isOnline() && !player.isConnected()) {
-            cleanup();
-            return;
+    @Override
+    protected void queueLocations(@NotNull Location center) {
+        int baseX = center.getBlockX();
+        int baseY = center.getBlockY();
+        int baseZ = center.getBlockZ();
+
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    if (dx == 0 && dy == 0 && dz == 0) continue;
+
+                    Location newLoc = new Location(world, baseX + dx, baseY + dy, baseZ + dz);
+                    if(!newLoc.isChunkLoaded()) continue;
+                    long packedLocation = pack(newLoc);
+                    if(processedLocations.contains(packedLocation)) continue;
+
+                    locationQueue.add(newLoc);
+                }
+            }
         }
+    }
 
-        int processed = 0;
-
-        while(!locationQueue.isEmpty() && processed <= sectionMaxBlocksToProcess && totalProcessed <= totalMaxBlocksToProcess) {
+    /**
+     * Process the location queue.
+     */
+    @Override
+    protected void processLocations() {
+        RoseStackerHook roseStackerHook = hookManager.getHook(RoseStackerHook.class);
+        while(!locationQueue.isEmpty()) {
             Location location = locationQueue.poll();
-            if(processedLocations.contains(location)) continue;
+            if(location == null) continue;
+            long packedLocation = pack(location);
+            if(processedLocations.contains(packedLocation)) continue;
             Block block = location.getBlock();
-
-            // Verify the BlockType
+            // Ignore stacked blocks or spawners
+            if(roseStackerHook.isHooked() && roseStackerHook.isStackedBlock(block)) continue;
             @Nullable BlockType blockType = block.getType().asBlockType();
             if(blockType == null) continue;
 
-            // Add the block to the appropriate queue
-            if(BlockTypeUtils.isLogOrWoodBlock(block)) {
-                logBlocks.add(block);
+            if(BlockTypeUtils.isLogOrWoodBlock(block)
+                    || (includeMangroveRoots && blockType.equals(BlockType.MANGROVE_ROOTS))) {
+                processedLocations.add(packedLocation);
 
-                // Queue adjacent locations
-                queueAdjacentLocations(location);
+                blockQueue.add(block);
 
-                // Increment processed counters
-                processed++;
-                totalProcessed++;
-                processedLocations.add(location);
-            } else if(includeMangroveRoots && blockType.equals(BlockType.MANGROVE_ROOTS)) {
-                logBlocks.add(block);
-
-                // Queue adjacent locations
-                queueAdjacentLocations(location);
-
-                // Increment processed counters
-                processed++;
-                totalProcessed++;
-                processedLocations.add(location);
+                queueLocations(location);
             } else if(BlockTypeUtils.isLeafOrWartBlock(block)) {
-                leafCount++;
+                processedLocations.add(packedLocation);
 
                 if(includeLeaves) {
-                    leafBlocks.add(block);
+                    blockQueue.add(block);
                 }
 
-                // Queue adjacent locations
-                queueAdjacentLocations(location);
+                queueLocations(location);
 
-                // Increment processed counters
-                processed++;
-                totalProcessed++;
-                processedLocations.add(location);
+                leafCount++;
             }
         }
 
-        // If the location queue isn't empty and the max process count hasn't been reached, queue the next collection
-        if(!locationQueue.isEmpty() && totalProcessed <= totalMaxBlocksToProcess) {
-            skyEnchants.getServer().getScheduler().runTaskLater(skyEnchants, this::collectLocations, treeProcessingDelayTicks);
-            return;
-        }
-
-        // If the leaf count is less than the minimum required leaves, return
         if(leafCount < minLeavesRequired) {
             cleanup();
             return;
         }
 
-        // If no blocks were collected, return
-        if(logBlocks.isEmpty() && leafBlocks.isEmpty()) {
+        if(blockQueue.isEmpty()) {
             cleanup();
             return;
         }
 
-        // Process block breaking process
-        skyEnchants.getServer().getScheduler().runTaskLater(skyEnchants, this::processBlockBreaks, blockBreakDelayTicks);
+        breakBlocks();
     }
 
     /**
-     * Queue the adjacent locations around the location provided for processing.
-     * @apiNote Excludes locations already processed.
-     * @param location The {@link Location}.
+     * Break the blocks.
      */
-    private void queueAdjacentLocations(@NotNull Location location) {
-        for(int y = -1; y <= 1; y++) {
-            for(int x = -1; x <= 1; x++) {
-                for(int z = -1; z <= 1; z++) {
-                    if(x == 0 && y == 0 && z == 0) continue;
-                    Location newLocation = location.clone().add(x, y, z);
-                    if(processedLocations.contains(newLocation)) continue;
+    @Override
+    protected void breakBlocks() {
+        PluginManager pluginManager = skyEnchants.getServer().getPluginManager();
 
-                    locationQueue.add(newLocation);
-                }
+        assert tool != null;  // Tool is only set to null during the block breaking process
+        PreMultiBlockBreakEvent preMultiBlockBreakEvent = new PreMultiBlockBreakEvent(player, blockQueue);
+        pluginManager.callEvent(preMultiBlockBreakEvent);
+        if(preMultiBlockBreakEvent.isCancelled()) {
+            cleanup();
+            return;
+        }
+
+        @Nullable ItemMeta itemMeta = tool.getItemMeta();
+        @Nullable Damageable durabilityMeta = null;
+        if(itemMeta != null) {
+            if(itemMeta instanceof Damageable damageable) {
+                durabilityMeta = damageable;
             }
         }
+
+        List<BlockState> blockStateList = new ArrayList<>();
+        Collection<ItemStack> itemStackCollection = new ArrayList<>();
+        Map<BlockState, Collection<ItemStack>> blockStateItemStackMap = new HashMap<>();
+
+        while(!blockQueue.isEmpty()) {
+            Block block = blockQueue.poll();
+            BlockState blockState = block.getState(true);
+
+            blockStateList.add(blockState);
+
+            if(preMultiBlockBreakEvent.isDropItems()) {
+                Collection<ItemStack> drops = block.getDrops(tool);
+                itemStackCollection.addAll(drops);
+                blockStateItemStackMap.put(blockState, drops);
+            }
+
+            block.setBlockData(BlockType.AIR.createBlockData(), false);
+
+            if(durabilityMeta != null) {
+                updateDurability(durabilityMeta);
+
+                // If the tool broke or is protected by the durability enchantment, stop the loop
+                if(tool == null || isProtected(tool, durabilityMeta)) break;
+            }
+        }
+
+        // Update the tool's ItemMeta if not broken
+        if(tool != null && durabilityMeta != null) tool.setItemMeta(durabilityMeta);
+
+        Collection<ItemStack> compactedItemStacks = compact(itemStackCollection);
+        MultiBlockBreakEvent multiBlockBreakEvent = new MultiBlockBreakEvent(player, blockStateList, compactedItemStacks, blockStateItemStackMap, startingLocation);
+        pluginManager.callEvent(multiBlockBreakEvent);
+        if(multiBlockBreakEvent.isCancelled()) {
+            blockStateList.forEach(blockState -> blockState.update(true, false));
+            cleanup();
+            return;
+        }
+
+        compactedItemStacks.forEach(itemStack -> world.dropItemNaturally(startingLocation, itemStack));
+
+        cleanup();
     }
 
     /**
-     * Breaks the blocks that were collected and added to the breaking queue
+     * Clear any data.
      */
-    private void processBlockBreaks() {
-        if(!player.isOnline() && !player.isConnected()) {
-            cleanup();
-            return;
-        }
-
-        int processed = 0;
-
-        while(!logBlocks.isEmpty() && processed <= sectionMaxBlocksToProcess) {
-            Block block = logBlocks.poll();
-            @Nullable BlockType blockType = block.getType().asBlockType();
-            if(blockType == null) continue;
-            if(!BlockTypeUtils.isLogOrWoodBlock(block) && !blockType.equals(BlockType.MANGROVE_ROOTS)) continue;
-
-            // Add the block's location to be ignored for the tree feller enchantment listener to prevent an infinite loop
-            treeFellerLocationsToIgnore.add(block.getLocation());
-
-            // Have the player break the block
-            player.breakBlock(block);
-
-            processed++;
-        }
-
-        if(logBlocks.isEmpty() && leafBlocks.isEmpty()) {
-            cleanup();
-            return;
-        }
-
-        if(processed >= sectionMaxBlocksToProcess) {
-            skyEnchants.getServer().getScheduler().runTaskLater(skyEnchants, this::processBlockBreaks, blockBreakDelayTicks);
-        }
-
-        while(!leafBlocks.isEmpty() && processed <= sectionMaxBlocksToProcess) {
-            Block block = leafBlocks.poll();
-
-            @Nullable BlockType blockType = block.getType().asBlockType();
-            if(blockType == null) continue;
-            if(!BlockTypeUtils.isLeafOrWartBlock(block)) continue;
-
-            // Add the block's location to be ignored for the tree feller enchantment listener to prevent an infinite loop
-            treeFellerLocationsToIgnore.add(block.getLocation());
-
-            // Have the player break the block
-            player.breakBlock(block);
-        }
-
-        if(leafBlocks.isEmpty()) {
-            cleanup();
-            return;
-        }
-
-        skyEnchants.getServer().getScheduler().runTaskLater(skyEnchants, this::processBlockBreaks, blockBreakDelayTicks);
-    }
-
-    /**
-     * Cleanup any data stored.
-     */
-    private void cleanup() {
+    @Override
+    protected void cleanup() {
         locationQueue.clear();
         processedLocations.clear();
-        logBlocks.clear();
-        leafBlocks.clear();
+        blockQueue.clear();
     }
 }

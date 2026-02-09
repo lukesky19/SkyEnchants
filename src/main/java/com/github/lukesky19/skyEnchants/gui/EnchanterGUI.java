@@ -31,7 +31,7 @@ import com.github.lukesky19.skyEnchants.integration.hooks.PlayerPointsHook;
 import com.github.lukesky19.skyEnchants.config.manager.gui.GUIConfigManager;
 import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
 import com.github.lukesky19.skyEnchants.config.manager.settings.SettingsManager;
-import com.github.lukesky19.skyEnchants.manager.hook.HookManager;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
 import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
 import com.github.lukesky19.skylib.api.gui.GUIButton;
 import com.github.lukesky19.skylib.api.gui.GUIType;

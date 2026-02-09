@@ -20,6 +20,8 @@ package com.github.lukesky19.skyEnchants.listener.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Durability;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.DurabilityConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
+import com.github.lukesky19.skyEnchants.processor.MultibreakProcessor;
+import com.github.lukesky19.skyEnchants.processor.TreeProcessor;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
 import io.papermc.paper.event.entity.EntityDamageItemEvent;
 import org.bukkit.block.Block;
@@ -47,6 +49,8 @@ import java.util.List;
 /**
  * Listens for when an item is damaged that contains the durability enchantment and prevents the tool from breaking.
  * Also cancels many events to prevent infinite tool usage.
+ * @apiNote The durability enchantment is handled in {@link TreeProcessor} and {@link MultibreakProcessor}
+ * for the tree feller and multibreak enchantment.
  */
 public class DurabilityEnchantmentListener implements Listener {
     private final @NotNull DurabilityConfigManager durabilityConfigManager;

@@ -29,6 +29,7 @@ import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.jetbrains.annotations.NotNull;
 
@@ -160,5 +161,40 @@ public class PluginUtils {
                 .collect(Collectors.toList());
 
         return RegistrySet.keySet(RegistryKey.ENCHANTMENT, keyList);
+    }
+
+    /**
+     * Compact similar {@link ItemStack}s into one {@link ItemStack}.
+     * @param itemStacks The {@link Collection} of {@link ItemStack}s to compact.
+     * @return A {@link Collection} of {@link ItemStack}s.
+     */
+    public static @NotNull Collection<ItemStack> compact(@NotNull Collection<ItemStack> itemStacks) {
+        Collection<ItemStack> combinedStacks = new ArrayList<>();
+
+        for(ItemStack stack : itemStacks) {
+            if(stack == null || stack.getType().isAir() || stack.getAmount() <= 0) continue;
+
+            int remaining = stack.getAmount();
+            for(ItemStack combinedStack : combinedStacks) {
+                if (combinedStack.isSimilar(stack)) {
+                    int space = combinedStack.getMaxStackSize() - combinedStack.getAmount();
+                    if(space <= 0) continue;
+                    int toMove = Math.min(space, remaining);
+                    combinedStack.setAmount(combinedStack.getAmount() + toMove);
+                    remaining -= toMove;
+                }
+            }
+
+            // if there's still remaining, create new stacks as needed
+            while(remaining > 0) {
+                int take = Math.min(remaining, stack.getMaxStackSize());
+                ItemStack newStack = stack.clone();
+                newStack.setAmount(take);
+                combinedStacks.add(newStack);
+                remaining -= take;
+            }
+        }
+
+        return combinedStacks;
     }
 }

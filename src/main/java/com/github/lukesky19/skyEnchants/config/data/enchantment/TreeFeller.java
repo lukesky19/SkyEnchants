@@ -32,10 +32,6 @@ import org.jetbrains.annotations.Nullable;
  * @param configVersion The config version of the file.
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
- * @param maxBlocksPerSection The maximum number of blocks to process at once.
- * @param totalMaxBlocks The maximum total number of blocks to process.
- * @param treeDetectionDelayTicks The delay between tree detection processing.
- * @param blockBreakDelayTicks The delay between the breaking of the tree's blocks.
  * @param minLeafCount The minimum number of leaves required to be considered a tree.
  * @param includeLeaves Should leaves be removed when felling a tree?
  * @param includeMangroveRoots Should mangrove roots be removed when felling a tree?
@@ -45,10 +41,6 @@ public record TreeFeller(
         @Nullable String configVersion,
         boolean enabled,
         @NotNull Registration registration,
-        int maxBlocksPerSection,
-        int totalMaxBlocks,
-        long treeDetectionDelayTicks,
-        long blockBreakDelayTicks,
         int minLeafCount,
         boolean includeLeaves,
         boolean includeMangroveRoots) implements IEnchantmentConfig {

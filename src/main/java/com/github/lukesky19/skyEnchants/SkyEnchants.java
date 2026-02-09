@@ -34,7 +34,7 @@ import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
 import com.github.lukesky19.skyEnchants.config.manager.settings.SettingsManager;
 import com.github.lukesky19.skyEnchants.manager.block.BlockManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
-import com.github.lukesky19.skyEnchants.manager.hook.HookManager;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
 import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
 import com.github.lukesky19.skylib.api.common.abstracts.SkyPlugin;
 import com.github.lukesky19.skylib.api.gui.impl.UUIDGUIListener;
@@ -188,18 +188,17 @@ public final class SkyEnchants extends SkyPlugin {
         pluginManager.registerEvents(new JoinListener(attributeManager), this);
 
         // Enchantments
-        pluginManager.registerEvents(new DoubleDropEnchantmentListener(this, doubleDropConfigManager, enchantmentManager, blockManager), this);
+        pluginManager.registerEvents(new BlockDropItemListener(this, doubleDropConfigManager, smeltConfigManager, magnetConfigManager, enchantmentManager, blockManager), this);
         pluginManager.registerEvents(new DoubleJumpEnchantmentListener(logger, doubleJumpConfigManager, enchantmentManager), this);
         pluginManager.registerEvents(new DurabilityEnchantmentListener(durabilityConfigManager, enchantmentManager), this);
         pluginManager.registerEvents(new ExplosiveEnchantmentListener(logger, explosiveConfigManager, enchantmentManager), this);
         pluginManager.registerEvents(new HasteEnchantmentListener(this, hasteConfigManager, enchantmentManager), this);
-        pluginManager.registerEvents(new MagnetEnchantmentListener(logger, magnetConfigManager, enchantmentManager), this);
-        pluginManager.registerEvents(new MultibreakEnchantmentListener(this, multibreakConfigManager, enchantmentManager), this);
+        pluginManager.registerEvents(new MultiBlockBreakListener(this, doubleDropConfigManager, smeltConfigManager, magnetConfigManager, enchantmentManager, blockManager), this);
+        pluginManager.registerEvents(new MultibreakEnchantmentListener(this, durabilityConfigManager, multibreakConfigManager, enchantmentManager, hookManager), this);
         pluginManager.registerEvents(new PoisonEnchantmentListener(logger, poisonConfigManager, enchantmentManager), this);
         pluginManager.registerEvents(new ReplantEnchantmentListener(this, replantConfigManager, enchantmentManager), this);
         pluginManager.registerEvents(new ShieldBashEnchantmentListener(logger, shieldBashConfigManager, enchantmentManager), this);
-        pluginManager.registerEvents(new SmeltEnchantmentListener(this, smeltConfigManager, enchantmentManager), this);
-        pluginManager.registerEvents(new TreeFellerEnchantmentListener(this, treeFellerConfigManager, enchantmentManager), this);
+        pluginManager.registerEvents(new TreeFellerEnchantmentListener(this, durabilityConfigManager, treeFellerConfigManager, enchantmentManager, hookManager), this);
         pluginManager.registerEvents(new WitherEnchantmentListener(logger, witherConfigManager, enchantmentManager), this);
     }
 
