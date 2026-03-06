@@ -20,16 +20,15 @@ package com.github.lukesky19.skyEnchants.config.data.options;
 import com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentOptions;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 /**
  * This record contains the configuration options related to enchantments in anvils and the enchanter GUI.
- * @param configVersion The config version
+ * @param version The config version.
  * @param enchantmentOptions The {@link Map} mapping enchantment keys to {@link EnchantmentOptions}.
  */
 @ConfigSerializable
 public record EnchantmentOptionsConfig(
-        @Nullable String configVersion,
+        int version,
         @NotNull Map<String, EnchantmentOptions> enchantmentOptions) {}

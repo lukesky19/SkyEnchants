@@ -105,7 +105,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
         });
 
         configuration = new EnchantmentOptionsConfig(
-                configuration.configVersion(),
+                configuration.version(),
                 enchantmentOptionsMap);
 
         saveConfiguration(configuration);

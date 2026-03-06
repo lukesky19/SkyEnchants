@@ -18,13 +18,12 @@
 package com.github.lukesky19.skyEnchants.config.data.locale;
 
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 /**
  * The plugin's locale configuration.
- * @param configVersion The config version of the locale.
+ * @param version The config version of the locale.
  * @param prefix The plugin's prefix.
  * @param help The plugin's help messages.
  * @param reload The plugin's reload message.
@@ -37,7 +36,7 @@ import java.util.List;
  */
 @ConfigSerializable
 public record Locale(
-        @Nullable String configVersion,
+        int version,
         String prefix,
         List<String> help,
         String reload,

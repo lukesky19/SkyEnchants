@@ -39,6 +39,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -130,6 +131,21 @@ public class TreeFellerEnchantmentListener implements Listener {
             // Get the slot number
             int slot = player.getInventory().getHeldItemSlot();
 
+            // Tool protection if configured
+            if(treeFeller.preventToolBreaking()) {
+                if(tool.getItemMeta() instanceof Damageable damageable) {
+                    if(damageable.hasDamage()) {
+                        int maxDurability = damageable.hasMaxDamage()
+                                ? damageable.getMaxDamage()
+                                : tool.getType().getMaxDurability();
+                        if((maxDurability - damageable.getDamage()) <= 1) {
+                            blockBreakEvent.setCancelled(true);
+                            return;
+                        }
+                    }
+                }
+            }
+
             // Create a new TreeProcessor to attempt to process the tree
             new TreeProcessor(
                     skyEnchants,
@@ -140,6 +156,7 @@ public class TreeFellerEnchantmentListener implements Listener {
                     treeFeller.minLeafCount(),
                     treeFeller.includeLeaves(),
                     treeFeller.includeMangroveRoots(),
+                    treeFeller.preventToolBreaking(),
                     player,
                     tool,
                     slot);

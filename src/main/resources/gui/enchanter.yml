@@ -1,4 +1,5 @@
-config-version: 1.0.0.0
+# DO NOT TOUCH! This is used to update the config file format if needed.
+version: 1
 gui-name: "<dark_purple><bold>Enchanter</bold></dark_purple>"
 gui-type: CHEST_27
 filler:

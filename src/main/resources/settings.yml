@@ -1,5 +1,5 @@
-# The config version of the file.
-config-version: 1.0.0.0
+# DO NOT TOUCH! This is used to update the config file format if needed.
+version: 1
 # The locale file to use, without the file extension.
 locale: en_US
 # Should any enchantments not applied be given back as a new enchanted book?

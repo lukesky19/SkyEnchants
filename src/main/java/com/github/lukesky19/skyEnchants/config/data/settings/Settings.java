@@ -22,14 +22,14 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * This record contains the plugin's settings and enchantment configuration.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param locale The locale to use.
  * @param giveEnchantedBookForUnappliedEnchantments Whether enchantments not applied to the item in the enchanter GUI should be returned to the player.
  * @param giveUnappliedEnchantmentsAsOneBook Whether unapplied enchantments should be given as one book or multiple.
  */
 @ConfigSerializable
 public record Settings(
-        @Nullable String configVersion,
+        int version,
         @Nullable String locale,
         boolean giveEnchantedBookForUnappliedEnchantments,
         boolean giveUnappliedEnchantmentsAsOneBook) {}

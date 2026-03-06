@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.lukesky19"
-version = "0.2.0.0"
+version = "0.3.0.0"
 
 repositories {
     mavenLocal()
@@ -31,7 +31,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
-    compileOnly("com.github.lukesky19:SkyLib:1.4.0.0")
+    compileOnly("com.github.lukesky19:SkyLib:1.5.0.0")
 
     // Hooks
     compileOnly("world.bentobox:bentobox:2.7.0-SNAPSHOT")

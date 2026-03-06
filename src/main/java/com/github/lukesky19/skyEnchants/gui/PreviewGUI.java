@@ -174,7 +174,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
 
         ItemStackConfig fillerConfig = previewGUIConfig.filler();
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
-        itemStackBuilder.fromItemStackConfig(fillerConfig, player, null, List.of());
+        itemStackBuilder.fromItemStackConfig(fillerConfig, player, List.of());
 
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
@@ -200,7 +200,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
         }
 
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
-        itemStackBuilder.fromItemStackConfig(exitConfig.item(), player, null, List.of());
+        itemStackBuilder.fromItemStackConfig(exitConfig.item(), player, List.of());
 
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
@@ -241,7 +241,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
 
         ItemStackConfig itemStackConfig = buttonConfig.item();
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
-        itemStackBuilder.fromItemStackConfig(itemStackConfig, player, null, placeholders);
+        itemStackBuilder.fromItemStackConfig(itemStackConfig, player, placeholders);
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();

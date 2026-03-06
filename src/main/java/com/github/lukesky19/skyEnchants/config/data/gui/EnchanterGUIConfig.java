@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * This record contains the config to create the {@link EnchanterGUI}.
- * @param configVersion The version of the config.
+ * @param version The version of the config.
  * @param guiName The GUI's name.
  * @param guiType The {@link GUIType}.
  * @param filler The {@link ItemStackConfig} for the filler buttons.
@@ -41,7 +41,7 @@ import java.util.List;
  */
 @ConfigSerializable
 public record EnchanterGUIConfig(
-        @Nullable String configVersion,
+        int version,
         @Nullable String guiName,
         @Nullable GUIType guiType,
         @NotNull ItemStackConfig filler,

@@ -25,20 +25,19 @@ import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 /**
  * This record contains the configuration for the double drop enchantment.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
  * @param chancePerLevel The {@link Map} mapping enchantment levels to the chance for double drops per level.
  */
 @ConfigSerializable
 public record DoubleDrop(
-        @Nullable String configVersion,
+        int version,
         boolean enabled,
         @NotNull Registration registration,
         @NotNull Map<Integer, Double> chancePerLevel) implements IEnchantmentConfig {

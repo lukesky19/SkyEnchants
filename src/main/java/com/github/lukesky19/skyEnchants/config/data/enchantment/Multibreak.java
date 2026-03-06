@@ -25,13 +25,12 @@ import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 /**
  * This record contains the configuration for the multibreak enchantment.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
  * @param breakSimilarOnly Whether the enchantment should only break similar blocks to the one broken.
@@ -44,7 +43,7 @@ import java.util.Map;
  */
 @ConfigSerializable
 public record Multibreak(
-        @Nullable String configVersion,
+        int version,
         boolean enabled,
         @NotNull Registration registration,
         boolean breakSimilarOnly,

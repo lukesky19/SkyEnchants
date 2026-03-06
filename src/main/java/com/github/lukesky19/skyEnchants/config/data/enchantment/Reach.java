@@ -25,20 +25,19 @@ import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 /**
  * This record contains the configuration for the reach enchantment.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
  * @param reachDistancePerLevel The {@link Map} mapping enchantment levels to reach distance amounts.
  */
 @ConfigSerializable
 public record Reach(
-        @Nullable String configVersion,
+        int version,
         boolean enabled,
         @NotNull Registration registration,
         @NotNull Map<Integer, Double> reachDistancePerLevel) implements IEnchantmentConfig {

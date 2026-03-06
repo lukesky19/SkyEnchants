@@ -18,7 +18,7 @@
 package com.github.lukesky19.skyEnchants.integration.hooks;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
-import com.github.lukesky19.skyEnchants.integration.Hook;
+import com.github.lukesky19.skylib.api.integration.Hook;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.entity.Player;

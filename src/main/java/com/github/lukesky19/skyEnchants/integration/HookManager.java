@@ -21,6 +21,7 @@ import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.integration.hooks.EconomyHook;
 import com.github.lukesky19.skyEnchants.integration.hooks.PlayerPointsHook;
 import com.github.lukesky19.skyEnchants.integration.hooks.RoseStackerHook;
+import com.github.lukesky19.skylib.api.integration.Hook;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

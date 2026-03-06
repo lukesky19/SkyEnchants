@@ -324,7 +324,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
 
         ItemStackConfig fillerConfig = enchanterGUIConfig.filler();
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
-        itemStackBuilder.fromItemStackConfig(fillerConfig, player, null, List.of());
+        itemStackBuilder.fromItemStackConfig(fillerConfig, player, List.of());
 
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
@@ -371,7 +371,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
                 Placeholder.parsed("required_points", String.valueOf(requiredPoints)));
 
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
-        itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, null, placeholders);
+        itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, placeholders);
 
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
@@ -417,7 +417,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
                 Placeholder.parsed("points", points));
 
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
-        itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, null, placeholders);
+        itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, placeholders);
 
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
@@ -460,7 +460,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
 
             setButton(buttonConfig.slot(), builder.build());
         } else {
-            itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, null, List.of());
+            itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, List.of());
 
             Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
             optionalItemStack.ifPresent(itemStack -> {
@@ -504,7 +504,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
 
             setButton(buttonConfig.slot(), builder.build());
         } else {
-            itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, null, List.of());
+            itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, List.of());
 
             Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
             optionalItemStack.ifPresent(itemStack -> {
@@ -734,7 +734,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         if(inventoryView == null) return;
 
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
-        itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, null, List.of());
+        itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, List.of());
 
         Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
@@ -759,7 +759,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
 
             ItemStackConfig itemStackConfig = buttonConfig.item();
             ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
-            itemStackBuilder.fromItemStackConfig(itemStackConfig, player, null, List.of());
+            itemStackBuilder.fromItemStackConfig(itemStackConfig, player, List.of());
             Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
             optionalItemStack.ifPresent(itemStack -> {
                 GUIButton.Builder builder = new GUIButton.Builder();

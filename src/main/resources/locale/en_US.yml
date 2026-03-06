@@ -1,4 +1,4 @@
-config-version: 1.0.0.0
+version: 1
 prefix: "<dark_purple><bold>SkyEnchants</bold></dark_purple><gray> ▪ </gray>"
 help:
     - "<dark_purple>SkyEnchants is developed by <white><bold>lukeskywlker19</bold></white>.</dark_purple>"

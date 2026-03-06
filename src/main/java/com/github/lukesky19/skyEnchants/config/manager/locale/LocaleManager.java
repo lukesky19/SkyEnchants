@@ -36,7 +36,7 @@ import java.util.List;
 public class LocaleManager extends SimpleConfigManager<Locale> {
     private final @NotNull SimpleConfigManager<Settings> settingsManager;
     private final @NotNull Locale DEFAULT_LOCALE = new Locale(
-            "1.0.0.0",
+            1,
                     "<dark_purple><bold>SkyEnchants</bold></dark_purple><gray> ▪ </gray>",
             List.of(
                     "<dark_purple>SkyEnchants is developed by <white><bold>lukeskywlker19</bold></white>.</dark_purple>",
@@ -119,8 +119,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
     public boolean validateConfiguration(@Nullable Locale configuration) {
         if(configuration == null) return false;
 
-        if(configuration.configVersion()  == null
-                || configuration.prefix()  == null
+        if(configuration.prefix()  == null
                 || configuration.reload()  == null
                 || configuration.guiOpenError()  == null
                 || configuration.insufficientFunds()  == null

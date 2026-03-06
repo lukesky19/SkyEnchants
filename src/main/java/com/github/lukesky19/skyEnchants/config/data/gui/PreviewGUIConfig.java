@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * This record contains the configuration for the {@link PreviewGUI}.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param guiName The name for the GUI.
  * @param guiType The {@link GUIType}.
  * @param filler The {@link ItemStackConfig} for the filler buttons.
@@ -37,7 +37,7 @@ import java.util.List;
  */
 @ConfigSerializable
 public record PreviewGUIConfig(
-        @Nullable String configVersion,
+        int version,
         @Nullable String guiName,
         @Nullable GUIType guiType,
         @NotNull ItemStackConfig filler,

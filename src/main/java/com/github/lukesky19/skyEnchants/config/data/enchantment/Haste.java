@@ -25,13 +25,12 @@ import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 /**
  * This record contains the configuration for the haste enchantment.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
  * @param temporaryUnbreakable Should the tool be made unbreakable for a temporary amount of time?
@@ -42,7 +41,7 @@ import java.util.Map;
  */
 @ConfigSerializable
 public record Haste(
-        @Nullable String configVersion,
+        int version,
         boolean enabled,
         @NotNull Registration registration,
         boolean temporaryUnbreakable,

@@ -25,25 +25,26 @@ import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This record contains the configuration for the tree feller enchantment.
- * @param configVersion The config version of the file.
+ * @param version The config version.
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
  * @param minLeafCount The minimum number of leaves required to be considered a tree.
  * @param includeLeaves Should leaves be removed when felling a tree?
  * @param includeMangroveRoots Should mangrove roots be removed when felling a tree?
+ * @param preventToolBreaking Should the tool be prevented from breaking when activated?
  */
 @ConfigSerializable
 public record TreeFeller(
-        @Nullable String configVersion,
+        int version,
         boolean enabled,
         @NotNull Registration registration,
         int minLeafCount,
         boolean includeLeaves,
-        boolean includeMangroveRoots) implements IEnchantmentConfig {
+        boolean includeMangroveRoots,
+        boolean preventToolBreaking) implements IEnchantmentConfig {
     @Override
     public boolean isEnabled() {
         return enabled;

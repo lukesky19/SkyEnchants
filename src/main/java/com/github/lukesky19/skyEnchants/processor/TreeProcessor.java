@@ -20,16 +20,20 @@ package com.github.lukesky19.skyEnchants.processor;
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.api.event.MultiBlockBreakEvent;
 import com.github.lukesky19.skyEnchants.api.event.PreMultiBlockBreakEvent;
+import com.github.lukesky19.skyEnchants.config.data.enchantment.Durability;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.DurabilityConfigManager;
 import com.github.lukesky19.skyEnchants.integration.HookManager;
 import com.github.lukesky19.skyEnchants.integration.hooks.RoseStackerHook;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.BlockTypeUtils;
+import com.github.lukesky19.skyEnchants.util.PluginUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.BlockType;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -49,6 +53,7 @@ public class TreeProcessor extends BlockProcessor {
     private final int minLeavesRequired;
     private final boolean includeLeaves;
     private final boolean includeMangroveRoots;
+    private final boolean preventBreaking;
 
     // Processing Data
     private int leafCount = 0;
@@ -63,6 +68,7 @@ public class TreeProcessor extends BlockProcessor {
      * @param minLeavesRequired The number of leaves required to be a tree.
      * @param includeLeaves If leaves should be broken.
      * @param includeMangroveRoots If mangrove roots should be broken.
+     * @param preventBreaking Whether the tool should be prevented from breaking or not.
      * @param player The {@link Player}.
      * @param tool The {@link ItemStack} used.
      * @param toolSlotNumber The slot number of the tool.
@@ -76,6 +82,7 @@ public class TreeProcessor extends BlockProcessor {
             int minLeavesRequired,
             boolean includeLeaves,
             boolean includeMangroveRoots,
+            boolean preventBreaking,
             @NotNull Player player,
             @NotNull ItemStack tool,
             int toolSlotNumber) {
@@ -85,6 +92,7 @@ public class TreeProcessor extends BlockProcessor {
         this.minLeavesRequired = minLeavesRequired;
         this.includeLeaves = includeLeaves;
         this.includeMangroveRoots = includeMangroveRoots;
+        this.preventBreaking = preventBreaking;
 
         // Queue starting location
         queueLocations(startingLocation);
@@ -244,5 +252,47 @@ public class TreeProcessor extends BlockProcessor {
         locationQueue.clear();
         processedLocations.clear();
         blockQueue.clear();
+    }
+
+    @Override
+    protected boolean isProtected(@NotNull ItemStack tool, @NotNull Damageable damageable) {
+        if(!damageable.hasDamage()) return false;
+        int maxDurability = damageable.hasMaxDamage()
+                ? damageable.getMaxDamage()
+                : tool.getType().getMaxDurability();
+
+        if(preventBreaking) {
+            // We use 2 here instead of 1 because the BlockBreakEvent itself that triggered the tree processor will remove 1 durability.
+            // If we used 1, the tool would break.
+            return (maxDurability - damageable.getDamage()) <= 2;
+        } else {
+            if((maxDurability - damageable.getDamage()) > 1) return false;
+
+            // Get the durability enchantment configuration and if null, return
+            @Nullable Durability durability = durabilityConfigManager.getConfiguration();
+            if(durability == null) return false;
+            // If the durability enchantment is disabled, return
+            if(!durability.isEnabled()) return false;
+            // If the durability enchantment is null, return
+            @Nullable Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
+            if(durabilityEnchantment == null) return false;
+
+            // Get the EquipmentSlots
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(durability.getRegistrationConfig().equipmentSlots());
+            // If the equipment slot is not configured to be affected by durability, return false
+            if(!equipmentSlots.contains(EquipmentSlot.HAND)) return false;
+
+            // If the ItemStack doesn't contain the durability enchantment, return false
+            if(!tool.getEnchantments().containsKey(durabilityEnchantment)) return false;
+
+            // Get the max level of the durability enchantment
+            int maxLevel = durability.getRegistrationConfig().maxLevel();
+
+            // Get the enchantment level of the durability enchantment
+            int enchantmentLevel = tool.getEnchantmentLevel(durabilityEnchantment);
+
+            // If the enchantment level is below or equal to the max level, the event should be cancelled.
+            return enchantmentLevel <= maxLevel;
+        }
     }
 }
