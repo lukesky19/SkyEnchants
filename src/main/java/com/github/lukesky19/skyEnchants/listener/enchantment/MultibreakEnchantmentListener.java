@@ -26,7 +26,7 @@ import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.processor.MultibreakProcessor;
 import com.github.lukesky19.skyEnchants.util.Direction;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockType;
@@ -87,7 +87,7 @@ public class MultibreakEnchantmentListener implements Listener {
 
         @Nullable Multibreak multibreak = multibreakConfigManager.getConfiguration();
         if(multibreak == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate a multibreak enchantment due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate a multibreak enchantment due to invalid settings."));
             return;
         }
 
@@ -99,7 +99,7 @@ public class MultibreakEnchantmentListener implements Listener {
 
         // If no break areas are defined, log an error and return
         if(multibreak.breakAreas().isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply multibreak enchantment effect due to invalid plugin settings (No break areas configured)."));
+            logger.error(AdventureUtility.plain("Unable to apply multibreak enchantment effect due to invalid plugin settings (No break areas configured)."));
             return;
         }
 
@@ -135,7 +135,7 @@ public class MultibreakEnchantmentListener implements Listener {
             @Nullable String areaDimensionsString = multibreak.breakAreas().get(enchantmentLevel);
             // If there is no break area mapping for the enchantment level, log an error and move to the next EquipmentSlot
             if(areaDimensionsString == null) {
-                logger.error(AdventureUtil.deserialize("No dimensions for the area to break for enchantment level " + enchantmentLevel));
+                logger.error(AdventureUtility.plain("No dimensions for the area to break for enchantment level " + enchantmentLevel));
                 continue;
             }
 
@@ -143,7 +143,7 @@ public class MultibreakEnchantmentListener implements Listener {
             String[] splitDimensionStrings = areaDimensionsString.split("x");
             // If the array doesn't contain 3 Strings, log and error and move to the next EquipmentSlot
             if(splitDimensionStrings.length != 3) {
-                logger.error(AdventureUtil.deserialize("Invalid dimensions for the area to break for enchantment level " + enchantmentLevel));
+                logger.error(AdventureUtility.plain("Invalid dimensions for the area to break for enchantment level " + enchantmentLevel));
                 continue;
             }
 

@@ -17,15 +17,17 @@
 */
 package com.github.lukesky19.skyEnchants.config.manager.abstracts;
 
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
-import com.github.lukesky19.skylib.api.common.interfaces.config.ISimpleConfigManager;
-import com.github.lukesky19.skylib.api.configurate.ConfigurationUtility;
-import com.github.lukesky19.skylib.libs.configurate.ConfigurateException;
-import com.github.lukesky19.skylib.libs.configurate.ConfigurationNode;
-import com.github.lukesky19.skylib.libs.configurate.yaml.YamlConfigurationLoader;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.common.api.configuration.interfaces.ISimpleConfigManager;
+import com.github.lukesky19.skylib.common.platform.PlatformUtils;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import com.github.lukesky19.skylib.libs.configurate.ConfigurateException;
+import com.github.lukesky19.skylib.libs.configurate.ConfigurationNode;
+import com.github.lukesky19.skylib.libs.configurate.yaml.NodeStyle;
+import com.github.lukesky19.skylib.libs.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -109,14 +111,14 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
         configuration = null;
 
         if(!configurationPath.toFile().exists()) {
-            saveBundledConfig();
+            saveDefaultConfiguration();
         }
 
-        YamlConfigurationLoader yamlConfigurationLoader = ConfigurationUtility.getYamlConfigurationLoader(configurationPath);
+        YamlConfigurationLoader yamlConfigurationLoader = createLoader(configurationPath);
         try {
             configuration = yamlConfigurationLoader.load().get(configClass);
             if(configuration == null) {
-                logger.warn(AdventureUtil.deserialize("Failed to load configuration. Class name: " + this.getClass().getName()));
+                logger.warn(AdventureUtility.plain("Failed to load configuration. Class name: " + this.getClass().getName()));
                 return;
             }
             @NotNull C preMigrationConfiguration = configuration;
@@ -125,13 +127,13 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
             configuration = migrateConfiguration(configuration);
             // If migration failed, return
             if(configuration == null) {
-                logger.warn(AdventureUtil.deserialize("Migrated configuration is invalid. Class name: " + this.getClass().getName()));
+                logger.warn(AdventureUtility.plain("Migrated configuration is invalid. Class name: " + this.getClass().getName()));
                 return;
             }
 
             // Check if the configuration is invalid
             if(!validateConfiguration()) {
-                logger.warn(AdventureUtil.deserialize("Configuration validation failed. Class name: " + this.getClass().getName()));
+                logger.warn(AdventureUtility.plain("Configuration validation failed. Class name: " + this.getClass().getName()));
                 configuration = null;
                 return;
             }
@@ -141,7 +143,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
                 saveConfiguration(configuration);
             }
         } catch (ConfigurateException configurateException) {
-            logger.error(AdventureUtil.deserialize("Failed to load configuration. Error: " + configurateException.getMessage()));
+            logger.error(AdventureUtility.plain("Failed to load configuration. Error: " + configurateException.getMessage()));
         }
     }
 
@@ -151,7 +153,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
     @Override
     public void saveConfiguration(@NotNull C configuration) {
         try {
-            @NotNull YamlConfigurationLoader yamlConfigurationLoader = ConfigurationUtility.getYamlConfigurationLoader(configurationPath);
+            @NotNull YamlConfigurationLoader yamlConfigurationLoader = createLoader(configurationPath);
 
             ConfigurationNode node = yamlConfigurationLoader.createNode();
 
@@ -159,19 +161,20 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
 
             yamlConfigurationLoader.save(node);
         } catch (ConfigurateException e) {
-            logger.error(AdventureUtil.deserialize("Failed to save settings config file. Error: " + e.getMessage()));
+            logger.error(AdventureUtility.plain("Failed to save settings config file. Error: " + e.getMessage()));
         }
     }
 
     /**
      * Save the default bundled configuration.
      */
-    protected void saveBundledConfig() {
+    @Override
+    public void saveDefaultConfiguration() {
         // Open the input stream
         try(InputStream inputStream = EnchantmentConfigManager.class.getResourceAsStream(resourcePath)) {
             // Display an error if the input stream is invalid.
             if(inputStream == null) {
-                logger.error(AdventureUtil.deserialize("Failed to create the input stream. Resource Path: " + resourcePath));
+                logger.error(AdventureUtility.plain("Failed to create the input stream. Resource Path: " + resourcePath));
                 return;
             }
 
@@ -180,7 +183,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
 
             // Create the parent directories if they do not exist
             if (!enchantmentDirectory.exists() && !enchantmentDirectory.mkdirs()) {
-                logger.error(AdventureUtil.deserialize("Failed to create directories for data directory: " + enchantmentDirectory));
+                logger.error(AdventureUtility.plain("Failed to create directories for data directory: " + enchantmentDirectory));
                 return;
             }
 
@@ -199,10 +202,10 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
                     out.write(buffer, 0, length);
                 }
             } catch (IOException e) {
-                logger.error(AdventureUtil.deserialize("Error saving default configuration " + outputFile.getName() + " to " + enchantmentDirectory + ". Resource path: " + resourcePath + ". Error: " + e.getMessage()));
+                logger.error(AdventureUtility.plain("Error saving default configuration " + outputFile.getName() + " to " + enchantmentDirectory + ". Resource path: " + resourcePath + ". Error: " + e.getMessage()));
             }
         } catch (IOException e) {
-            logger.error(AdventureUtil.deserialize("Error saving default configuration. Resource path: " + resourcePath + ". Error: " + e.getMessage()));
+            logger.error(AdventureUtility.plain("Error saving default configuration. Resource path: " + resourcePath + ". Error: " + e.getMessage()));
         }
     }
 
@@ -227,4 +230,20 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * @return true if valid, or false.
      */
     public abstract boolean validateConfiguration(@Nullable C configuration);
+
+    /**
+     * Create the {@link YamlConfigurationLoader} for the path provided.
+     * @param path The {@link Path}.
+     * @return The {@link YamlConfigurationLoader}.
+     */
+    protected @NonNull YamlConfigurationLoader createLoader(@NonNull Path path) {
+        return YamlConfigurationLoader.builder()
+                .path(path)
+                .nodeStyle(NodeStyle.BLOCK)
+                .indent(4)
+                .defaultOptions(configurationOptions ->
+                        configurationOptions.serializers(builder ->
+                                builder.registerAll(PlatformUtils.getSerializers())))
+                .build();
+    }
 }

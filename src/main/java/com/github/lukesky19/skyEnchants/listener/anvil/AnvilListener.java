@@ -22,8 +22,8 @@ import com.github.lukesky19.skyEnchants.config.data.locale.Locale;
 import com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentOptions;
 import com.github.lukesky19.skyEnchants.config.manager.options.EnchantmentOptionsConfigManager;
 import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
-import com.github.lukesky19.skylib.api.format.FormatUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.paper.api.format.FormatUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -97,13 +97,13 @@ public class AnvilListener implements Listener {
         for(Enchantment enchantment : inputItemEnchantments.keySet()) {
             @Nullable EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
             if(enchantmentOptions == null) {
-                logger.warn(AdventureUtil.deserialize("No anvil configuration found for NamespacedKey: " + enchantment.getKey()));
+                logger.warn(AdventureUtility.plain("No anvil configuration found for NamespacedKey: " + enchantment.getKey()));
                 continue;
             }
 
             List<TagResolver.Single> placeholders = List.of(Placeholder.parsed("enchantments", FormatUtil.formatKey(enchantment.getKey())));
             if(enchantmentOptions.disableAnvilUse()) {
-                player.sendMessage(AdventureUtil.deserialize(locale.prefix() + locale.anvilUseNotAllowed(), placeholders));
+                player.sendMessage(AdventureUtility.deserialize(locale.prefix() + locale.anvilUseNotAllowed(), placeholders));
                 inventoryClickEvent.setCancelled(true);
                 return;
             }

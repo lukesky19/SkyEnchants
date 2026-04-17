@@ -17,8 +17,8 @@
 */
 package com.github.lukesky19.skyEnchants.config.data.settings;
 
-import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 import org.jetbrains.annotations.Nullable;
+import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 /**
  * This record contains the plugin's settings and enchantment configuration.

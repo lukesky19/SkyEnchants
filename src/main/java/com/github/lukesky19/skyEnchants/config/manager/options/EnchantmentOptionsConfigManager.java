@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.options;
 import com.github.lukesky19.skyEnchants.config.data.misc.ApplicationCost;
 import com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentOptions;
 import com.github.lukesky19.skyEnchants.config.data.options.EnchantmentOptionsConfig;
-import com.github.lukesky19.skylib.api.common.abstracts.SkyPlugin;
-import com.github.lukesky19.skylib.api.common.abstracts.config.SimpleConfigManager;
+import com.github.lukesky19.skylib.common.api.configuration.abstracts.SimpleConfigManager;
+import com.github.lukesky19.skylib.paper.api.plugin.SkyPlugin;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.NamespacedKey;
@@ -44,7 +44,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
      * @param plugin A {@link SkyPlugin}.
      */
     public EnchantmentOptionsConfigManager(@NotNull SkyPlugin plugin) {
-        super(plugin, Path.of(plugin.getDataFolder() + File.separator + "enchantment_options.yml"), EnchantmentOptionsConfig.class);
+        super(plugin, Path.of(plugin.getDirectoryFile() + File.separator + "enchantment_options.yml"), EnchantmentOptionsConfig.class);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
     }
 
     @Override
-    protected void saveBundledConfig() {
+    public void saveDefaultConfiguration() {
         plugin.saveResource("enchantment_options.yml", false);
     }
 

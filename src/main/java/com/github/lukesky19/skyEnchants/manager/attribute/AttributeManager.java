@@ -25,7 +25,7 @@ import com.github.lukesky19.skyEnchants.config.manager.enchantment.ReachConfigMa
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.SpeedConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -116,7 +116,7 @@ public class AttributeManager {
                     @Nullable Integer healthAmount = healthPerLevel.get(enchantmentLevel);
                     // Log an error if there is no health amount configured for the enchantment level and move to the next EquipmentSlot
                     if(healthAmount == null) {
-                        logger.error(AdventureUtil.deserialize("Unable to apply health enchantment's attribute due to invalid plugin settings (No health mapping for enchantment level: " + enchantmentLevel + ")."));
+                        logger.error(AdventureUtility.plain("Unable to apply health enchantment's attribute due to invalid plugin settings (No health mapping for enchantment level: " + enchantmentLevel + ")."));
                         continue;
                     }
 
@@ -124,7 +124,7 @@ public class AttributeManager {
                     applyHealthAttribute(itemStack, equipmentSlot, healthAmount);
                 }
             } else {
-                logger.error(AdventureUtil.deserialize("Unable to apply the health enchantment attribute due to invalid plugin settings (No health mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply the health enchantment attribute due to invalid plugin settings (No health mapping)."));
             }
         }
 
@@ -157,7 +157,7 @@ public class AttributeManager {
                     @Nullable Double reachDistanceAmount = reachDistancePerLevel.get(enchantmentLevel);
                     // Log an error if there is no reach distance amount configured for the enchantment level and move to the next EquipmentSlot
                     if(reachDistanceAmount == null) {
-                        logger.error(AdventureUtil.deserialize("Unable to apply reach enchantment's attribute due to invalid plugin settings (No reach distance mapping for enchantment level: " + enchantmentLevel + ")."));
+                        logger.error(AdventureUtility.plain("Unable to apply reach enchantment's attribute due to invalid plugin settings (No reach distance mapping for enchantment level: " + enchantmentLevel + ")."));
                         continue;
                     }
 
@@ -165,7 +165,7 @@ public class AttributeManager {
                     applyReachAttribute(itemStack, equipmentSlot, reachDistanceAmount);
                 }
             } else {
-                logger.error(AdventureUtil.deserialize("Unable to apply the reach enchantment attribute due to invalid plugin settings (No reach distance mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply the reach enchantment attribute due to invalid plugin settings (No reach distance mapping)."));
             }
         }
 
@@ -198,7 +198,7 @@ public class AttributeManager {
                     @Nullable Double speedAmount = speedPerLevel.get(enchantmentLevel);
                     // Log an error if there is no speed amount configured for the enchantment level and move to the next EquipmentSlot
                     if(speedAmount == null) {
-                        logger.error(AdventureUtil.deserialize("Unable to apply speed enchantment's attribute due to invalid plugin settings (No speed mapping for enchantment level: " + enchantmentLevel + ")."));
+                        logger.error(AdventureUtility.plain("Unable to apply speed enchantment's attribute due to invalid plugin settings (No speed mapping for enchantment level: " + enchantmentLevel + ")."));
                         continue;
                     }
 
@@ -206,7 +206,7 @@ public class AttributeManager {
                     applySpeedAttribute(itemStack, equipmentSlot, speedAmount);
                 }
             } else {
-                logger.error(AdventureUtil.deserialize("Unable to apply the speed enchantment attribute due to invalid plugin settings (No speed mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply the speed enchantment attribute due to invalid plugin settings (No speed mapping)."));
             }
         }
     }
@@ -251,7 +251,7 @@ public class AttributeManager {
                     @Nullable Integer healthAmount = healthPerLevel.get(enchantmentLevel);
                     // Log an error if there is no health amount configured for the enchantment level and move to the next EquipmentSlot
                     if(healthAmount == null) {
-                        logger.error(AdventureUtil.deserialize("Unable to apply health enchantment's attribute due to invalid plugin settings (No health mapping for enchantment level: " + enchantmentLevel + ")."));
+                        logger.error(AdventureUtility.plain("Unable to apply health enchantment's attribute due to invalid plugin settings (No health mapping for enchantment level: " + enchantmentLevel + ")."));
                         continue;
                     }
 
@@ -259,7 +259,7 @@ public class AttributeManager {
                     applyHealthAttribute(itemStack, equipmentSlot, healthAmount);
                 }
             } else {
-                logger.error(AdventureUtil.deserialize("Unable to apply the health enchantment attribute due to invalid plugin settings (No health mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply the health enchantment attribute due to invalid plugin settings (No health mapping)."));
             }
         }
 
@@ -290,7 +290,7 @@ public class AttributeManager {
                     @Nullable Double reachDistanceAmount = reachDistancePerLevel.get(enchantmentLevel);
                     // Log an error if there is no reach distance amount configured for the enchantment level and move to the next EquipmentSlot
                     if(reachDistanceAmount == null) {
-                        logger.error(AdventureUtil.deserialize("Unable to apply reach enchantment's attribute due to invalid plugin settings (No reach distance mapping for enchantment level: " + enchantmentLevel + ")."));
+                        logger.error(AdventureUtility.plain("Unable to apply reach enchantment's attribute due to invalid plugin settings (No reach distance mapping for enchantment level: " + enchantmentLevel + ")."));
                         continue;
                     }
 
@@ -298,7 +298,7 @@ public class AttributeManager {
                     applyReachAttribute(itemStack, equipmentSlot, reachDistanceAmount);
                 }
             } else {
-                logger.error(AdventureUtil.deserialize("Unable to apply the reach enchantment attribute due to invalid plugin settings (No reach distance mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply the reach enchantment attribute due to invalid plugin settings (No reach distance mapping)."));
             }
         }
 
@@ -329,7 +329,7 @@ public class AttributeManager {
                     @Nullable Double speedAmount = speedPerLevel.get(enchantmentLevel);
                     // Log an error if there is no speed amount configured for the enchantment level and move to the next EquipmentSlot
                     if(speedAmount == null) {
-                        logger.error(AdventureUtil.deserialize("Unable to apply speed enchantment's attribute due to invalid plugin settings (No speed mapping for enchantment level: " + enchantmentLevel + ")."));
+                        logger.error(AdventureUtility.plain("Unable to apply speed enchantment's attribute due to invalid plugin settings (No speed mapping for enchantment level: " + enchantmentLevel + ")."));
                         continue;
                     }
 
@@ -337,7 +337,7 @@ public class AttributeManager {
                     applySpeedAttribute(itemStack, equipmentSlot, speedAmount);
                 }
             } else {
-                logger.error(AdventureUtil.deserialize("Unable to apply the speed enchantment attribute due to invalid plugin settings (No speed mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply the speed enchantment attribute due to invalid plugin settings (No speed mapping)."));
             }
         }
     }

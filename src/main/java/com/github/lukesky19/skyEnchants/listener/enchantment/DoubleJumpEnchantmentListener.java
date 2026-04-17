@@ -21,7 +21,7 @@ import com.github.lukesky19.skyEnchants.config.data.enchantment.DoubleJump;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.DoubleJumpConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Input;
 import org.bukkit.block.Block;
@@ -86,7 +86,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
 
         @Nullable DoubleJump doubleJump = doubleJumpConfigManager.getConfiguration();
         if(doubleJump == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate a double jump enchantment due to an invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate a double jump enchantment due to an invalid settings."));
             return;
         }
 
@@ -101,7 +101,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
         @NotNull Map<Integer, Double> jumpVelocityPerLevel = doubleJump.velocityPerLevel();
         // If the jump velocity is empty, log an error and return
         if(jumpVelocityPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply double jump enchantment action due to invalid plugin settings (No velocity mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply double jump enchantment action due to invalid plugin settings (No velocity mapping)."));
             return;
         }
 
@@ -152,7 +152,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
             @Nullable Double jumpVelocity = jumpVelocityPerLevel.get(enchantmentLevel);
             // Log an error if no jump velocity is configured
             if(jumpVelocity == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the double jump enchantment effect due to invalid plugin settings (No jump velocity mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the double jump enchantment effect due to invalid plugin settings (No jump velocity mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
@@ -172,7 +172,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent playerMoveEvent) {
         @Nullable DoubleJump doubleJump = doubleJumpConfigManager.getConfiguration();
         if(doubleJump == null) {
-            logger.error(AdventureUtil.deserialize("Unable to reset jump count due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to reset jump count due to invalid settings."));
             return;
         }
 

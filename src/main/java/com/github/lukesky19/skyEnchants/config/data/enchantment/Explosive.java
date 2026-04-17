@@ -19,12 +19,12 @@ package com.github.lukesky19.skyEnchants.config.data.enchantment;
 
 import com.github.lukesky19.skyEnchants.config.data.enchantment.interfaces.IEnchantmentConfig;
 import com.github.lukesky19.skyEnchants.config.data.misc.Registration;
-import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;
+import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.Map;
 

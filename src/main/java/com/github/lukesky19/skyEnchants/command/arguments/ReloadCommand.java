@@ -20,7 +20,7 @@ package com.github.lukesky19.skyEnchants.command.arguments;
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.data.locale.Locale;
 import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -59,9 +59,9 @@ public class ReloadCommand {
                 skyEnchants.reload();
 
                 if(sender instanceof Player) {
-                    sender.sendMessage(AdventureUtil.deserialize(locale.prefix() + locale.reload()));
+                    sender.sendMessage(AdventureUtility.deserialize(locale.prefix() + locale.reload()));
                 } else {
-                    sender.sendMessage(AdventureUtil.deserialize(locale.reload()));
+                    sender.sendMessage(AdventureUtility.deserialize(locale.reload()));
                 }
 
                 return 1;

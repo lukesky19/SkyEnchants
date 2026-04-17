@@ -22,7 +22,7 @@ import com.github.lukesky19.skyEnchants.config.data.enchantment.Replant;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.ReplantConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -73,7 +73,7 @@ public class ReplantEnchantmentListener implements Listener {
     public void onBlockBreakReplantEnchantment(BlockBreakEvent blockBreakEvent) {
         @Nullable Replant replant = replantConfigManager.getConfiguration();
         if(replant == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate a replant enchantment due to invalid plugin settings."));
+            logger.error(AdventureUtility.plain("Unable to activate a replant enchantment due to invalid plugin settings."));
             return;
         }
 
@@ -87,7 +87,7 @@ public class ReplantEnchantmentListener implements Listener {
 
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to activate the replant enchantment due to invalid plugin settings (No chance mapping)."));
+            logger.error(AdventureUtility.plain("Unable to activate the replant enchantment due to invalid plugin settings (No chance mapping)."));
             return;
         }
 
@@ -131,7 +131,7 @@ public class ReplantEnchantmentListener implements Listener {
             @Nullable Double replantChance = chancePerLevel.get(enchantmentLevel);
             // Log an error if there is no chance configured for the enchantment level
             if(replantChance == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the replant enchantment due to invalid plugin settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the replant enchantment due to invalid plugin settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 

@@ -17,10 +17,10 @@
 */
 package com.github.lukesky19.skyEnchants.config.data.misc;
 
-import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.jetbrains.annotations.Nullable;
+import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 /**
  * This record contains the configuration to create and spawn a {@link org.bukkit.Particle}.

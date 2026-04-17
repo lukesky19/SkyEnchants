@@ -22,7 +22,7 @@ import com.github.lukesky19.skyEnchants.config.data.enchantment.Haste;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.HasteConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -80,7 +80,7 @@ public class HasteEnchantmentListener implements Listener {
     public void onBlockBreakHasteEnchantment(BlockBreakEvent blockBreakEvent) {
         @Nullable Haste haste = hasteConfigManager.getConfiguration();
         if(haste == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate a haste enchantment due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate a haste enchantment due to invalid settings."));
             return;
         }
 
@@ -97,26 +97,26 @@ public class HasteEnchantmentListener implements Listener {
         // If unbreakable with haste is enabled and there is no unbreakable duration mapping, log an error and return
         if(haste.temporaryUnbreakable()) {
             if(unbreakableDurationPerLevel.isEmpty()) {
-                logger.error(AdventureUtil.deserialize("Unable to apply haste enchantment effect due to invalid settings (No unbreakable duration mapping)."));
+                logger.error(AdventureUtility.plain("Unable to apply haste enchantment effect due to invalid settings (No unbreakable duration mapping)."));
                 return;
             }
         }
 
         // If there is no effect duration mapping, log an error and return
         if(effectDurationPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply haste enchantment effect due to invalid settings (No effect duration mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply haste enchantment effect due to invalid settings (No effect duration mapping)."));
             return;
         }
 
         // If there is no effect amplifier mapping, log an error and return
         if(effectAmplifierPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply haste enchantment effect due to invalid settings (No effect amplifier mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply haste enchantment effect due to invalid settings (No effect amplifier mapping)."));
             return;
         }
 
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply haste enchantment effect due to invalid settings (No chance mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply haste enchantment effect due to invalid settings (No chance mapping)."));
             return;
         }
 
@@ -150,7 +150,7 @@ public class HasteEnchantmentListener implements Listener {
             @Nullable Double hasteChance = chancePerLevel.get(enchantmentLevel);
             // Log an error if there is no chance configured for the enchantment level
             if(hasteChance == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply haste enchantment effects due to invalid settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply haste enchantment effects due to invalid settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
@@ -166,7 +166,7 @@ public class HasteEnchantmentListener implements Listener {
             @Nullable Integer duration = effectDurationPerLevel.get(enchantmentLevel);
             // Log an error if there is no duration configured for the enchantment level
             if(duration == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the haste enchantment effect due to invalid settings (No effect duration mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the haste enchantment effect due to invalid settings (No effect duration mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
@@ -174,7 +174,7 @@ public class HasteEnchantmentListener implements Listener {
             @Nullable Integer amplifier = effectAmplifierPerLevel.get(enchantmentLevel);
             // Log an error if there is no amplifier configured for the enchantment level
             if(amplifier == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the haste enchantment effect due to invalid settings (No effect amplifier mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the haste enchantment effect due to invalid settings (No effect amplifier mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
@@ -198,7 +198,7 @@ public class HasteEnchantmentListener implements Listener {
                 @Nullable Long unbreakableDuration = unbreakableDurationPerLevel.get(enchantmentLevel);
                 // Log an error if there is no duration for the enchantment level
                 if(unbreakableDuration == null) {
-                    logger.error(AdventureUtil.deserialize("Unable to apply the haste enchantment effect due to invalid settings (No unbreakable duration mapping for enchantment level: " + enchantmentLevel + ")."));
+                    logger.error(AdventureUtility.plain("Unable to apply the haste enchantment effect due to invalid settings (No unbreakable duration mapping for enchantment level: " + enchantmentLevel + ")."));
                     continue;
                 }
 
@@ -222,7 +222,7 @@ public class HasteEnchantmentListener implements Listener {
     public void onBlockBreakUnbreakableCheck(BlockBreakEvent blockBreakEvent) {
         @Nullable Haste haste = hasteConfigManager.getConfiguration();
         if(haste == null) {
-            logger.error(AdventureUtil.deserialize("Unable to remove a unbreakable tool from the haste enchantment due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to remove a unbreakable tool from the haste enchantment due to invalid settings."));
             return;
         }
 

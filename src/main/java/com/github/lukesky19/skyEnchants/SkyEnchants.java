@@ -35,10 +35,10 @@ import com.github.lukesky19.skyEnchants.config.manager.settings.SettingsManager;
 import com.github.lukesky19.skyEnchants.manager.block.BlockManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.integration.HookManager;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
-import com.github.lukesky19.skylib.api.common.abstracts.SkyPlugin;
-import com.github.lukesky19.skylib.api.gui.impl.UUIDGUIListener;
-import com.github.lukesky19.skylib.api.gui.impl.UUIDGUIManager;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.paper.api.gui.impl.UUIDGUIListener;
+import com.github.lukesky19.skylib.paper.api.gui.impl.UUIDGUIManager;
+import com.github.lukesky19.skylib.paper.api.plugin.SkyPlugin;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.entity.LivingEntity;
@@ -263,14 +263,14 @@ public final class SkyEnchants extends SkyPlugin {
         if(skyLib != null && skyLib.isEnabled()) {
             String version = skyLib.getPluginMeta().getVersion();
             String[] splitVersion = version.split("\\.");
-            int second = Integer.parseInt(splitVersion[1]);
+            int first = Integer.parseInt(splitVersion[0]);
 
-            if(second >= 5) {
+            if(first >= 2) {
                 return true;
             }
         }
 
-        this.getComponentLogger().error(AdventureUtil.deserialize("SkyLib Version 1.5.0.0 or newer is required to run this plugin."));
+        this.getComponentLogger().error(AdventureUtility.deserialize("SkyLib Version 2.0.0.0 or newer is required to run this plugin."));
         this.getServer().getPluginManager().disablePlugin(this);
         return false;
     }

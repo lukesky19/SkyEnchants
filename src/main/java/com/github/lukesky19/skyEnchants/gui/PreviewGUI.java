@@ -21,13 +21,13 @@ import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.data.gui.ButtonConfig;
 import com.github.lukesky19.skyEnchants.config.data.gui.PreviewGUIConfig;
 import com.github.lukesky19.skyEnchants.config.manager.gui.GUIConfigManager;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
-import com.github.lukesky19.skylib.api.gui.GUIButton;
-import com.github.lukesky19.skylib.api.gui.GUIType;
-import com.github.lukesky19.skylib.api.gui.impl.UUIDGUIManager;
-import com.github.lukesky19.skylib.api.gui.templates.ChestGUI;
-import com.github.lukesky19.skylib.api.itemstack.ItemStackBuilder;
-import com.github.lukesky19.skylib.api.itemstack.ItemStackConfig;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.paper.api.gui.GUIButton;
+import com.github.lukesky19.skylib.paper.api.gui.GUIType;
+import com.github.lukesky19.skylib.paper.api.gui.impl.UUIDGUIManager;
+import com.github.lukesky19.skylib.paper.api.gui.templates.ChestGUI;
+import com.github.lukesky19.skylib.paper.api.itemstack.ItemStackBuilder;
+import com.github.lukesky19.skylib.paper.api.itemstack.ItemStackConfig;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -74,13 +74,13 @@ public class PreviewGUI extends ChestGUI<UUID> {
      */
     public boolean create() {
         if(previewGUIConfig == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to create the InventoryView for the preview GUI due to invalid gui configuration."));
+            logger.warn(AdventureUtility.plain("Unable to create the InventoryView for the preview GUI due to invalid gui configuration."));
             return false;
         }
 
         GUIType guiType = previewGUIConfig.guiType();
         if(guiType == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to create the InventoryView for the preview GUI due to an invalid GUIType."));
+            logger.warn(AdventureUtility.plain("Unable to create the InventoryView for the preview GUI due to an invalid GUIType."));
             return false;
         }
 
@@ -88,7 +88,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
             case CHEST_9, CHEST_18, CHEST_27, CHEST_36, CHEST_45, CHEST_54 -> {}
 
             default -> {
-                logger.error(AdventureUtil.deserialize("Unsupported GUI Type in preview GUI config. Allowed Types: CHEST_9, CHEST_18, CHEST_27, CHEST_36, CHEST_45, CHEST_54"));
+                logger.error(AdventureUtility.plain("Unsupported GUI Type in preview GUI config. Allowed Types: CHEST_9, CHEST_18, CHEST_27, CHEST_36, CHEST_45, CHEST_54"));
                 return false;
             }
         }
@@ -105,13 +105,13 @@ public class PreviewGUI extends ChestGUI<UUID> {
     @Override
     public boolean update() {
         if(previewGUIConfig == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to create the InventoryView for the preview GUI due to invalid gui configuration."));
+            logger.warn(AdventureUtility.plain("Unable to create the InventoryView for the preview GUI due to invalid gui configuration."));
             return false;
         }
 
         // If the InventoryView was not created, log a warning and return false.
         if(inventoryView == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to add buttons to the GUI as the InventoryView was not created."));
+            logger.warn(AdventureUtility.plain("Unable to add buttons to the GUI as the InventoryView was not created."));
             return false;
         }
 
@@ -195,7 +195,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
         ButtonConfig exitConfig = previewGUIConfig.exit();
 
         if(exitConfig.slot() == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to add the exit button to the preview GUI due to an invalid slot."));
+            logger.warn(AdventureUtility.plain("Unable to add the exit button to the preview GUI due to an invalid slot."));
             return;
         }
 
@@ -206,7 +206,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
-            builder.setAction(inventoryClickEvent -> close());
+            builder.setAction(_ -> close());
 
             setButton(exitConfig.slot(), builder.build());
         });
@@ -220,7 +220,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
 
         previewGUIConfig.dummyButtons().forEach(buttonConfig -> {
             if(buttonConfig.slot() == null) {
-                logger.warn(AdventureUtil.deserialize("Unable to add a dummy button to the preview GUI due to an invalid slot."));
+                logger.warn(AdventureUtility.plain("Unable to add a dummy button to the preview GUI due to an invalid slot."));
                 return;
             }
 
@@ -235,7 +235,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
      */
     private void createDisplayButton(@NotNull ButtonConfig buttonConfig, @NotNull List<TagResolver.Single> placeholders) {
         if(buttonConfig.slot() == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to add a display button to the preview GUI due to an invalid slot."));
+            logger.warn(AdventureUtility.plain("Unable to add a display button to the preview GUI due to an invalid slot."));
             return;
         }
 

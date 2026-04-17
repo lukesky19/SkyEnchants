@@ -18,7 +18,7 @@
 package com.github.lukesky19.skyEnchants.integration.hooks;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
-import com.github.lukesky19.skylib.api.integration.Hook;
+import com.github.lukesky19.skylib.common.api.integration.Hook;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;

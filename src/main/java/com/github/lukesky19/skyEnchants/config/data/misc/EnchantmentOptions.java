@@ -1,7 +1,7 @@
 package com.github.lukesky19.skyEnchants.config.data.misc;
 
-import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 import org.jetbrains.annotations.NotNull;
+import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.Map;
 

@@ -21,7 +21,7 @@ import com.github.lukesky19.skyEnchants.config.data.enchantment.Explosive;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.ExplosiveConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.enchantments.Enchantment;
@@ -93,7 +93,7 @@ public class ExplosiveEnchantmentListener implements Listener {
         // Get the explosive configuration, and if null, log an error and return
         @Nullable Explosive explosive = explosiveConfigManager.getConfiguration();
         if(explosive == null) {
-            logger.warn(AdventureUtil.deserialize("Unable to apply the explosive enchantment due to invalid settings."));
+            logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment due to invalid settings."));
             return;
         }
 
@@ -121,7 +121,7 @@ public class ExplosiveEnchantmentListener implements Listener {
         @NotNull Map<Integer, Integer> explosivePowerPerLevel = explosive.explosionPowerPerLevel();
         // Log an error if the power mapping is empty
         if(explosivePowerPerLevel.isEmpty()) {
-            logger.warn(AdventureUtil.deserialize("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping)."));
+            logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping)."));
             return;
         }
 
@@ -143,7 +143,7 @@ public class ExplosiveEnchantmentListener implements Listener {
             @Nullable Integer power = explosivePowerPerLevel.get(enchantmentLevel);
             // If there is no power mapping for the enchantment level, log an error and move to the next EquipmentSlot
             if(power == null) {
-                logger.warn(AdventureUtil.deserialize("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 

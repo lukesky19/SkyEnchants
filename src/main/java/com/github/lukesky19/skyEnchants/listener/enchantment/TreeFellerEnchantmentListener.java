@@ -26,7 +26,7 @@ import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.processor.TreeProcessor;
 import com.github.lukesky19.skyEnchants.util.BlockTypeUtils;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockType;
@@ -89,7 +89,7 @@ public class TreeFellerEnchantmentListener implements Listener {
         // If the tree feller's settings are null, log and error and return
         @Nullable TreeFeller treeFeller = treeFellerConfigManager.getConfiguration();
         if(treeFeller == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate a tree feller enchantment due to an invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate a tree feller enchantment due to an invalid settings."));
             return;
         }
 

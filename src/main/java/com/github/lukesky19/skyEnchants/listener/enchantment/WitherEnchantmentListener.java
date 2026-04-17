@@ -21,7 +21,7 @@ import com.github.lukesky19.skyEnchants.config.data.enchantment.Wither;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.WitherConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.enchantments.Enchantment;
@@ -73,7 +73,7 @@ public class WitherEnchantmentListener implements Listener {
     public void onEntityDamaged(EntityDamageByEntityEvent entityDamageByEntityEvent) {
         @Nullable Wither wither = witherConfigManager.getConfiguration();
         if(wither == null) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the wither enchantment's effects due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to apply the wither enchantment's effects due to invalid settings."));
             return;
         }
 
@@ -107,13 +107,13 @@ public class WitherEnchantmentListener implements Listener {
         @NotNull Map<Integer, Integer> effectAmplifierPerLevel = wither.effectAmplifierPerLevel();
         // Log an error if the effect duration mapping is empty
         if(effectDurationPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the wither enchantment effect due to invalid plugin settings (No effect duration mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply the wither enchantment effect due to invalid plugin settings (No effect duration mapping)."));
             return;
         }
 
         // Log an error if the amplifier duration mapping is empty
         if(effectAmplifierPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the wither enchantment effect due to invalid plugin settings (No effect amplifier mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply the wither enchantment effect due to invalid plugin settings (No effect amplifier mapping)."));
             return;
         }
 
@@ -138,13 +138,13 @@ public class WitherEnchantmentListener implements Listener {
 
             // Log an error if there is no duration mapping for the enchantment level and move to the next EquipmentSlot
             if(duration == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply wither enchantment effect due to invalid plugin settings (No effect duration mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply wither enchantment effect due to invalid plugin settings (No effect duration mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
             // Log an error if there is no amplifier mapping for the enchantment level and move to the next EquipmentSlot
             if(amplifier == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply wither enchantment effect due to invalid plugin settings (No effect amplifier mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply wither enchantment effect due to invalid plugin settings (No effect amplifier mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 

@@ -22,8 +22,8 @@ import com.github.lukesky19.skyEnchants.config.data.misc.ParticleConfig;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.ShieldBashConfigManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
-import com.github.lukesky19.skylib.api.registry.RegistryUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.paper.api.registry.RegistryUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -76,7 +76,7 @@ public class ShieldBashEnchantmentListener implements Listener {
     public void onAttackBlocked(EntityDamageByEntityEvent entityDamageByEntityEvent) {
         @Nullable ShieldBash shieldBash = shieldBashConfigManager.getConfiguration();
         if(shieldBash == null) {
-            logger.error(AdventureUtil.deserialize("Unable to apply shield bash due to an invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to apply shield bash due to an invalid settings."));
             return;
         }
         // If shield bash isn't enabled, return
@@ -92,13 +92,13 @@ public class ShieldBashEnchantmentListener implements Listener {
 
         // If there is no damage mapping, log an error and return
         if(damagePerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply shield bash enchantment effect due to invalid plugin settings (No damage mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply shield bash enchantment effect due to invalid plugin settings (No damage mapping)."));
             return;
         }
 
         // If there is no knockback mapping, log an error and return
         if(knockbackPerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply shield bash enchantment effect due to invalid plugin settings (No knockback mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply shield bash enchantment effect due to invalid plugin settings (No knockback mapping)."));
             return;
         }
 
@@ -138,13 +138,13 @@ public class ShieldBashEnchantmentListener implements Listener {
 
             @Nullable Double damageAmount = damagePerLevel.get(enchantmentLevel);
             if(damageAmount == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the shield bash enchantment effect due to invalid plugin settings (No damage mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the shield bash enchantment effect due to invalid plugin settings (No damage mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
             @Nullable Double knockbackAmount = knockbackPerLevel.get(enchantmentLevel);
             if(knockbackAmount == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the shield bash enchantment effect due to invalid plugin settings (No damage mapping for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the shield bash enchantment effect due to invalid plugin settings (No damage mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
@@ -174,12 +174,12 @@ public class ShieldBashEnchantmentListener implements Listener {
         ParticleConfig particleConfig = shieldBash.particle();
         String particleName = particleConfig.particleType();
         if(particleName == null) {
-            logger.error(AdventureUtil.deserialize("Unable to apply shield bash due to an invalid particle name."));
+            logger.error(AdventureUtility.plain("Unable to apply shield bash due to an invalid particle name."));
             return;
         }
         Optional<Particle> optionalParticle = RegistryUtil.getParticle(logger, particleName);
         if(optionalParticle.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply shield bash due to an no particle found for: " + particleName + "."));
+            logger.error(AdventureUtility.plain("Unable to apply shield bash due to an no particle found for: " + particleName + "."));
             return;
         }
         Particle particle = optionalParticle.get();

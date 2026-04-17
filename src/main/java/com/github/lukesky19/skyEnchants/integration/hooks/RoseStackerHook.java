@@ -17,8 +17,8 @@
 */
 package com.github.lukesky19.skyEnchants.integration.hooks;
 
-import com.github.lukesky19.skylib.api.common.abstracts.SkyPlugin;
-import com.github.lukesky19.skylib.api.integration.Hook;
+import com.github.lukesky19.skylib.common.api.integration.Hook;
+import com.github.lukesky19.skylib.paper.api.plugin.SkyPlugin;
 import dev.rosewood.rosestacker.api.RoseStackerAPI;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;

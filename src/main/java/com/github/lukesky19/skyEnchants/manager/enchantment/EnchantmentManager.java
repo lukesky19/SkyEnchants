@@ -17,7 +17,7 @@
 */
 package com.github.lukesky19.skyEnchants.manager.enchantment;
 
-import com.github.lukesky19.skylib.api.registry.RegistryUtil;
+import com.github.lukesky19.skylib.paper.api.registry.RegistryUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.enchantments.Enchantment;
 import org.jetbrains.annotations.NotNull;

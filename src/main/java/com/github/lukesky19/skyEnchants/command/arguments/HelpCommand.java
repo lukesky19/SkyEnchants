@@ -19,7 +19,8 @@ package com.github.lukesky19.skyEnchants.command.arguments;
 
 import com.github.lukesky19.skyEnchants.config.data.locale.Locale;
 import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.paper.api.adventure.PaperAdventureUtility;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -54,11 +55,11 @@ public class HelpCommand {
 
                     if(sender instanceof Player player) {
                         for(String msg : locale.help()) {
-                            player.sendMessage(AdventureUtil.deserialize(player, msg));
+                            player.sendMessage(PaperAdventureUtility.deserialize(player, msg));
                         }
                     } else {
                         for(String msg : locale.help()) {
-                            sender.sendMessage(AdventureUtil.deserialize(msg));
+                            sender.sendMessage(AdventureUtility.deserialize(msg));
                         }
                     }
 

@@ -27,7 +27,7 @@ import com.github.lukesky19.skyEnchants.config.manager.enchantment.SmeltConfigMa
 import com.github.lukesky19.skyEnchants.manager.block.BlockManager;
 import com.github.lukesky19.skyEnchants.manager.enchantment.EnchantmentManager;
 import com.github.lukesky19.skyEnchants.util.PluginUtils;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -113,7 +113,7 @@ public class BlockDropItemListener implements Listener {
             @NotNull List<Item> itemList) {
         @Nullable DoubleDrop doubleDrop = doubleDropConfigManager.getConfiguration();
         if(doubleDrop == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate a double drop enchantment due to an invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate a double drop enchantment due to an invalid settings."));
             return;
         }
 
@@ -128,7 +128,7 @@ public class BlockDropItemListener implements Listener {
         @NotNull Map<Integer, Double> chancePerLevel = doubleDrop.chancePerLevel();
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the double drop enchantment due to invalid plugin settings (No chance mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply the double drop enchantment due to invalid plugin settings (No chance mapping)."));
             return;
         }
 
@@ -166,7 +166,7 @@ public class BlockDropItemListener implements Listener {
             @NotNull List<Item> itemList) {
         @Nullable Smelt smelt = smeltConfigManager.getConfiguration();
         if(smelt == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate the smelt enchantment due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate the smelt enchantment due to invalid settings."));
             return;
         }
 
@@ -182,7 +182,7 @@ public class BlockDropItemListener implements Listener {
         @NotNull Map<Integer, Double> chancePerLevel = smelt.chancePerLevel();
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
-            logger.error(AdventureUtil.deserialize("Unable to apply the smelt enchantment due to invalid settings (No chance mapping)."));
+            logger.error(AdventureUtility.plain("Unable to apply the smelt enchantment due to invalid settings (No chance mapping)."));
             return;
         }
 
@@ -231,7 +231,7 @@ public class BlockDropItemListener implements Listener {
 
         @Nullable Magnet magnet = magnetConfigManager.getConfiguration();
         if(magnet == null) {
-            logger.error(AdventureUtil.deserialize("Unable to activate the magnet enchantment due to invalid settings."));
+            logger.error(AdventureUtility.plain("Unable to activate the magnet enchantment due to invalid settings."));
             return;
         }
 
@@ -245,7 +245,7 @@ public class BlockDropItemListener implements Listener {
         if(!magnet.guaranteedPickup()) {
             // If no distance-level values are defined, log an error and return
             if(magnet.pickupDistanceSquaredPerLevel().isEmpty()) {
-                logger.error(AdventureUtil.deserialize("Unable to apply magnet enchantment effect due to invalid settings (No distance to levels mappings are configured)."));
+                logger.error(AdventureUtility.plain("Unable to apply magnet enchantment effect due to invalid settings (No distance to levels mappings are configured)."));
                 return;
             }
         }
@@ -338,7 +338,7 @@ public class BlockDropItemListener implements Listener {
             @Nullable Double chance = chancePerLevel.get(enchantmentLevel);
             // Log an error if there is no chance configured for the enchantment level
             if (chance == null) {
-                logger.error(AdventureUtil.deserialize("Unable to apply the " + enchantment.getKey() + " enchantment due to invalid plugin settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
+                logger.error(AdventureUtility.plain("Unable to apply the " + enchantment.getKey() + " enchantment due to invalid plugin settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 

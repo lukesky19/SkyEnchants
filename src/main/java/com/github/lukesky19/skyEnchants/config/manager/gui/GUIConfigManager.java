@@ -20,13 +20,15 @@ package com.github.lukesky19.skyEnchants.config.manager.gui;
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.data.gui.EnchanterGUIConfig;
 import com.github.lukesky19.skyEnchants.config.data.gui.PreviewGUIConfig;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
-import com.github.lukesky19.skylib.api.configurate.ConfigurationUtility;
-import com.github.lukesky19.skylib.libs.configurate.ConfigurateException;
-import com.github.lukesky19.skylib.libs.configurate.yaml.YamlConfigurationLoader;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
+import com.github.lukesky19.skylib.common.platform.PlatformUtils;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import com.github.lukesky19.skylib.libs.configurate.ConfigurateException;
+import com.github.lukesky19.skylib.libs.configurate.yaml.NodeStyle;
+import com.github.lukesky19.skylib.libs.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -79,19 +81,19 @@ public class GUIConfigManager {
 
         saveDefaultConfig();
 
-        YamlConfigurationLoader previewLoader = ConfigurationUtility.getYamlConfigurationLoader(previewGUIConfigPath);
-        YamlConfigurationLoader applyLoader = ConfigurationUtility.getYamlConfigurationLoader(enchanterGUIConfigPath);
+        YamlConfigurationLoader previewLoader = createLoader(previewGUIConfigPath);
+        YamlConfigurationLoader applyLoader = createLoader(enchanterGUIConfigPath);
 
         try {
             previewGUIConfig = previewLoader.load().get(PreviewGUIConfig.class);
         } catch (ConfigurateException configurateException) {
-            logger.error(AdventureUtil.deserialize("Failed to load the preview GUI config. Error:" + configurateException.getMessage()));
+            logger.error(AdventureUtility.plain("Failed to load the preview GUI config. Error:" + configurateException.getMessage()));
         }
 
         try {
             enchanterGUIConfig = applyLoader.load().get(EnchanterGUIConfig.class);
         } catch (ConfigurateException configurateException) {
-            logger.error(AdventureUtil.deserialize("Failed to load the enchanter GUI config. Error:" + configurateException.getMessage()));
+            logger.error(AdventureUtility.plain("Failed to load the enchanter GUI config. Error:" + configurateException.getMessage()));
         }
     }
 
@@ -105,5 +107,21 @@ public class GUIConfigManager {
         if(!enchanterGUIConfigPath.toFile().exists()) {
             skyEnchants.saveResource("gui" + File.separator + "enchanter.yml", false);
         }
+    }
+
+    /**
+     * Create the {@link YamlConfigurationLoader} for the path provided.
+     * @param path The {@link Path}.
+     * @return The {@link YamlConfigurationLoader}.
+     */
+    protected @NonNull YamlConfigurationLoader createLoader(@NonNull Path path) {
+        return YamlConfigurationLoader.builder()
+                .path(path)
+                .nodeStyle(NodeStyle.BLOCK)
+                .indent(4)
+                .defaultOptions(configurationOptions ->
+                        configurationOptions.serializers(builder ->
+                                builder.registerAll(PlatformUtils.getSerializers())))
+                .build();
     }
 }

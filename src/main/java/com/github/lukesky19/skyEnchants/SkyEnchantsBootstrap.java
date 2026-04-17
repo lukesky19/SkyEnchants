@@ -21,7 +21,7 @@ import com.github.lukesky19.skyEnchants.config.data.enchantment.interfaces.IEnch
 import com.github.lukesky19.skyEnchants.config.data.misc.Registration;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.*;
 import com.github.lukesky19.skyEnchants.config.manager.enchantment.*;
-import com.github.lukesky19.skylib.api.adventure.AdventureUtil;
+import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
@@ -154,97 +154,97 @@ public final class SkyEnchantsBootstrap implements PluginBootstrap {
                 if(doubleDrop != null) {
                     registerEnchantment(doubleDrop, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the double drop enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the double drop enchantment due to invalid settings."));
                 }
 
                 if(doubleJump != null) {
                     registerEnchantment(doubleJump, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the double jump enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the double jump enchantment due to invalid settings."));
                 }
 
                 if(durability != null) {
                     registerEnchantment(durability, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the durability enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the durability enchantment due to invalid settings."));
                 }
 
                 if(explosive != null) {
                     registerEnchantment(explosive, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the explosive enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the explosive enchantment due to invalid settings."));
                 }
 
                 if(haste != null) {
                     registerEnchantment(haste, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the haste enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the haste enchantment due to invalid settings."));
                 }
 
                 if(health != null) {
                     registerEnchantment(health, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the health enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the health enchantment due to invalid settings."));
                 }
 
                 if(magnet != null) {
                     registerEnchantment(magnet, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the magnet enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the magnet enchantment due to invalid settings."));
                 }
 
                 if(multibreak != null) {
                     registerEnchantment(multibreak, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the multibreak enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the multibreak enchantment due to invalid settings."));
                 }
 
                 if(poison != null) {
                     registerEnchantment(poison, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the poison enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the poison enchantment due to invalid settings."));
                 }
 
                 if(reach != null) {
                     registerEnchantment(reach, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the reach enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the reach enchantment due to invalid settings."));
                 }
 
                 if(replant != null) {
                     registerEnchantment(replant, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the replant enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the replant enchantment due to invalid settings."));
                 }
 
                 if(shieldBash != null) {
                     registerEnchantment(shieldBash, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the shield bash enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the shield bash enchantment due to invalid settings."));
                 }
 
                 if(smelt != null) {
                     registerEnchantment(smelt, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the smelt enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the smelt enchantment due to invalid settings."));
                 }
 
                 if(speed != null) {
                     registerEnchantment(speed, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the speed enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the speed enchantment due to invalid settings."));
                 }
 
                 if(treeFeller != null) {
                     registerEnchantment(treeFeller, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the tree feller enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the tree feller enchantment due to invalid settings."));
                 }
 
                 if(wither != null) {
                     registerEnchantment(wither, writableRegistry);
                 } else {
-                    logger.error(AdventureUtil.deserialize("Unable to register the wither enchantment due to invalid settings."));
+                    logger.error(AdventureUtility.plain("Unable to register the wither enchantment due to invalid settings."));
                 }
             }));
     }
