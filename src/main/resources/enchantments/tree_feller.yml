@@ -45,6 +45,8 @@ min-leaf-count: 25
 include-leaves: false
 # Should mangrove roots be broken by the tree feller enchantment?
 include-mangrove-roots: false
+# Should other tree foliage be broken by the tree feller enchantment? Such as vines, twisting vines, shroomlight, etc.
+include-foliage: false
 # Should the tool be prevented from breaking when the tree feller enchantment is activated?
 # This is like the durability enchantment functionality included with the tree feller enchantment.
 prevent-tool-breaking: true

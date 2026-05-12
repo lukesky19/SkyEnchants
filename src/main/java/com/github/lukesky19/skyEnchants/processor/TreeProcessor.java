@@ -53,6 +53,7 @@ public class TreeProcessor extends BlockProcessor {
     private final int minLeavesRequired;
     private final boolean includeLeaves;
     private final boolean includeMangroveRoots;
+    private final boolean includeFoliage;
     private final boolean preventBreaking;
 
     // Processing Data
@@ -68,6 +69,7 @@ public class TreeProcessor extends BlockProcessor {
      * @param minLeavesRequired The number of leaves required to be a tree.
      * @param includeLeaves If leaves should be broken.
      * @param includeMangroveRoots If mangrove roots should be broken.
+     * @param includeFoliage If other tree foliage should be broken.
      * @param preventBreaking Whether the tool should be prevented from breaking or not.
      * @param player The {@link Player}.
      * @param tool The {@link ItemStack} used.
@@ -82,6 +84,7 @@ public class TreeProcessor extends BlockProcessor {
             int minLeavesRequired,
             boolean includeLeaves,
             boolean includeMangroveRoots,
+            boolean includeFoliage,
             boolean preventBreaking,
             @NotNull Player player,
             @NotNull ItemStack tool,
@@ -92,6 +95,7 @@ public class TreeProcessor extends BlockProcessor {
         this.minLeavesRequired = minLeavesRequired;
         this.includeLeaves = includeLeaves;
         this.includeMangroveRoots = includeMangroveRoots;
+        this.includeFoliage = includeFoliage;
         this.preventBreaking = preventBreaking;
 
         // Queue starting location
@@ -146,7 +150,8 @@ public class TreeProcessor extends BlockProcessor {
             if(blockType == null) continue;
 
             if(BlockTypeUtils.isLogOrWoodBlock(block)
-                    || (includeMangroveRoots && blockType.equals(BlockType.MANGROVE_ROOTS))) {
+                    || (includeMangroveRoots && blockType.equals(BlockType.MANGROVE_ROOTS))
+                    || (includeFoliage && BlockTypeUtils.isFoliageBlock(block))) {
                 processedLocations.add(packedLocation);
 
                 blockQueue.add(block);

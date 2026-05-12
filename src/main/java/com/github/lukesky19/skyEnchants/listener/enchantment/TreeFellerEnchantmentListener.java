@@ -156,6 +156,7 @@ public class TreeFellerEnchantmentListener implements Listener {
                     treeFeller.minLeafCount(),
                     treeFeller.includeLeaves(),
                     treeFeller.includeMangroveRoots(),
+                    treeFeller.includeFoliage(),
                     treeFeller.preventToolBreaking(),
                     player,
                     tool,

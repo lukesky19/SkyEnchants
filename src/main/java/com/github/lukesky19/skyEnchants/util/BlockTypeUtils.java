@@ -20,6 +20,7 @@ package com.github.lukesky19.skyEnchants.util;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockType;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Set;
 
@@ -37,6 +38,9 @@ public class BlockTypeUtils {
         throw new RuntimeException("The use of the default constructor is not allowed.");
     }
 
+    /**
+     * Blocks that may be the logs of the tree.
+     */
     private static final Set<BlockType> LOG_BLOCKS = Set.of(
             BlockType.OAK_LOG, BlockType.BIRCH_LOG, BlockType.SPRUCE_LOG,
             BlockType.JUNGLE_LOG, BlockType.ACACIA_LOG, BlockType.DARK_OAK_LOG,
@@ -48,11 +52,21 @@ public class BlockTypeUtils {
             BlockType.CRIMSON_HYPHAE, BlockType.WARPED_HYPHAE
     );
 
+    /**
+     * Leaf blocks surrounding trees.
+     */
     private static final Set<BlockType> LEAF_BLOCKS = Set.of(
             BlockType.OAK_LEAVES, BlockType.BIRCH_LEAVES, BlockType.SPRUCE_LEAVES,
             BlockType.JUNGLE_LEAVES, BlockType.ACACIA_LEAVES, BlockType.DARK_OAK_LEAVES,
             BlockType.CHERRY_LEAVES, BlockType.MANGROVE_LEAVES, BlockType.PALE_OAK_LEAVES,
             BlockType.NETHER_WART_BLOCK, BlockType.WARPED_WART_BLOCK
+    );
+
+    /**
+     * Extra foliage blocks that may be attached to trees.
+     */
+    private static final Set<BlockType> FOLIAGE_BLOCKS = Set.of(
+            BlockType.VINE, BlockType.TWISTING_VINES, BlockType.SHROOMLIGHT, BlockType.MANGROVE_PROPAGULE
     );
 
     /**
@@ -77,5 +91,17 @@ public class BlockTypeUtils {
         if(blockType == null) return false;
 
         return LEAF_BLOCKS.contains(blockType);
+    }
+
+    /**
+     * Is the {@link Block}'s {@link BlockType} that of a foliage attached to a tree?
+     * @param block The {@link Block} to check.
+     * @return true or false.
+     */
+    public static boolean isFoliageBlock(@NonNull Block block) {
+        BlockType blockType = block.getType().asBlockType();
+        if(blockType == null) return false;
+
+        return FOLIAGE_BLOCKS.contains(blockType);
     }
 }

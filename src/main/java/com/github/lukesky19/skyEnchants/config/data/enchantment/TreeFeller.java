@@ -34,6 +34,7 @@ import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializ
  * @param minLeafCount The minimum number of leaves required to be considered a tree.
  * @param includeLeaves Should leaves be removed when felling a tree?
  * @param includeMangroveRoots Should mangrove roots be removed when felling a tree?
+ * @param includeFoliage Should other tree foliage be removed when felling a tree?
  * @param preventToolBreaking Should the tool be prevented from breaking when activated?
  */
 @ConfigSerializable
@@ -44,6 +45,7 @@ public record TreeFeller(
         int minLeafCount,
         boolean includeLeaves,
         boolean includeMangroveRoots,
+        boolean includeFoliage,
         boolean preventToolBreaking) implements IEnchantmentConfig {
     @Override
     public boolean isEnabled() {
