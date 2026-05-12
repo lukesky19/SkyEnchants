@@ -87,7 +87,7 @@ public class BlockDropItemListener implements Listener {
      * Listens for {@link BlockDropItemEvent} to apply enchantment effects for double drop, smelt, and magnet.
      * @param blockDropItemEvent A {@link BlockDropItemEvent}.
      */
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockDropItem(BlockDropItemEvent blockDropItemEvent) {
         Block block = blockDropItemEvent.getBlock();
         Player player = blockDropItemEvent.getPlayer();
