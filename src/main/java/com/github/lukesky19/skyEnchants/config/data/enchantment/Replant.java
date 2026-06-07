@@ -34,13 +34,15 @@ import java.util.Map;
  * @param enabled Is the enchantment enabled?
  * @param registration The {@link Registration} config for the enchantment.
  * @param chancePerLevel The {@link Map} mapping enchantment levels to the chance to activate.
+ * @param preventBelowMaxAge Should crops below their max age be prevented from being broken?
  */
 @ConfigSerializable
 public record Replant(
         int version,
         boolean enabled,
         @NotNull Registration registration,
-        @NotNull Map<Integer, Double> chancePerLevel) implements IEnchantmentConfig {
+        @NotNull Map<Integer, Double> chancePerLevel,
+        boolean preventBelowMaxAge) implements IEnchantmentConfig {
     @Override
     public boolean isEnabled() {
         return enabled;

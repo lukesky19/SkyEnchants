@@ -42,3 +42,5 @@ chance-per-level:
     1: 0.5
     2: 0.75
     3: 1.0
+# This prevents breaking crops below the max age.
+prevent-below-max-age: false

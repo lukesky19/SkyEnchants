@@ -93,7 +93,7 @@ public class ReplantEnchantmentListener implements Listener {
 
         Block block = blockBreakEvent.getBlock();
         if(!(block.getBlockData() instanceof Ageable ageable)) return;
-        if(ageable.getAge() < ageable.getMaximumAge()) return;
+        if(!replant.preventBelowMaxAge() && ageable.getAge() < ageable.getMaximumAge()) return;
         Material blockMaterial = block.getType();
         BlockType blockType = blockMaterial.asBlockType();
         if(blockType == null) return;
@@ -141,6 +141,14 @@ public class ReplantEnchantmentListener implements Listener {
 
                 // If the random chance is greater than or equal to the replant chance, move to the next EquipmentSlot
                 if(randomChance >= replantChance) continue;
+            }
+
+            // If configured to prevent block break below maximum age of the crop, cancel the event
+            if(replant.preventBelowMaxAge()) {
+                if(ageable.getAge() < ageable.getMaximumAge()) {
+                    blockBreakEvent.setCancelled(true);
+                    return;
+                }
             }
 
             // Get the player's Inventory
