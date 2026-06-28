@@ -18,8 +18,11 @@
 package com.github.lukesky19.skyEnchants.listener.block;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
+import com.github.lukesky19.skyEnchants.integration.HookManager;
+import com.github.lukesky19.skyEnchants.integration.hooks.RoseStackerHook;
 import com.github.lukesky19.skyEnchants.manager.block.BlockManager;
 import org.bukkit.GameMode;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
@@ -29,6 +32,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This class listens for when a block is placed and marks it as player-placed.
@@ -36,15 +40,21 @@ import org.jetbrains.annotations.NotNull;
 public class BlockStatusListener implements Listener {
     private final @NotNull SkyEnchants skyEnchants;
     private final @NotNull BlockManager blockManager;
+    private final @NonNull HookManager hookManager;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
      * @param blockManager A {@link BlockManager} instance.
+     * @param hookManager A {@link HookManager} instance.
      */
-    public BlockStatusListener(@NotNull SkyEnchants skyEnchants, @NotNull BlockManager blockManager) {
+    public BlockStatusListener(
+            @NotNull SkyEnchants skyEnchants,
+            @NotNull BlockManager blockManager,
+            @NonNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.blockManager = blockManager;
+        this.hookManager = hookManager;
     }
 
     /**
@@ -56,7 +66,20 @@ public class BlockStatusListener implements Listener {
         if(blockBreakEvent.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
 
         // This is done 1 tick later so that the value can be read by other events
-        skyEnchants.getServer().getScheduler().runTaskLater(skyEnchants, () -> blockManager.removeBlockPlayerPlaced(blockBreakEvent.getBlock()), 1L);
+        skyEnchants.getServer().getScheduler().runTaskLater(skyEnchants, () -> {
+            Block block = blockBreakEvent.getBlock();
+
+            // Don't remove player-placed status if the block is still stacked
+            RoseStackerHook roseStackerHook = hookManager.getHook(RoseStackerHook.class);
+            if(roseStackerHook.isHooked()) {
+                if(roseStackerHook.isStackedBlock(block)) return;
+            }
+
+            // Don't remove player-placed status if there is a non-air block still there.
+            if(!block.isEmpty()) return;
+
+            blockManager.removeBlockPlayerPlaced(block);
+        }, 1L);
     }
 
     /**

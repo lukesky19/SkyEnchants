@@ -174,7 +174,7 @@ public final class SkyEnchants extends SkyPlugin {
         pluginManager.registerEvents(new UUIDGUIListener(guiManager), this);
 
         // Player-placed block status
-        pluginManager.registerEvents(new BlockStatusListener(this, blockManager), this);
+        pluginManager.registerEvents(new BlockStatusListener(this, blockManager, hookManager), this);
         if(pluginManager.isPluginEnabled("SkyTools")) {
             pluginManager.registerEvents(new BuildToolListener(blockManager), this);
         }
