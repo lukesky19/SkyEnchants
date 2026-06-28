@@ -31,6 +31,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -71,6 +72,12 @@ public class ExplosiveEnchantmentListener implements Listener {
     public void onEntityDamaged(EntityDamageByEntityEvent entityDamageByEntityEvent) {
         // Get the damage source
         DamageSource damageSource = entityDamageByEntityEvent.getDamageSource();
+
+        // Ignore explosion damage due to incompatibility with PinataParty.
+        EntityDamageEvent.DamageCause cause = entityDamageByEntityEvent.getCause();
+        if(cause == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
+                || cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) return;
+
         // The entity that caused the damage
         Entity causingEntity = damageSource.getCausingEntity();
         if(causingEntity == null) return;
