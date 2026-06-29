@@ -28,6 +28,8 @@ import com.github.lukesky19.skylib.paper.api.player.PlayerUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -226,5 +228,34 @@ public class EnchantmentUtils {
      */
     public static int getLevel(@NonNull ItemMeta meta, @NonNull Enchantment enchantment) {
         return meta instanceof EnchantmentStorageMeta storage ? storage.getStoredEnchantLevel(enchantment) : meta.getEnchantLevel(enchantment);
+    }
+
+    /**
+     * Does the causing entity's armor have thorns and the enchantment?
+     * @param equipment The entity's {@link EntityEquipment}.
+     * @param enchantment The {@link Enchantment} to check for.
+     * @return true if any armor piece contains the enchantment, otherwise false.
+     */
+    public static boolean doesArmorContainEnchantment(@NonNull EntityEquipment equipment, @NonNull Enchantment enchantment) {
+        boolean helmet = hasEnchantment(equipment.getItem(EquipmentSlot.HEAD), enchantment);
+        boolean chestplate = hasEnchantment(equipment.getItem(EquipmentSlot.CHEST), enchantment);
+        boolean leggings = hasEnchantment(equipment.getItem(EquipmentSlot.LEGS), enchantment);
+        boolean boots = hasEnchantment(equipment.getItem(EquipmentSlot.FEET), enchantment);
+
+        return helmet || chestplate || leggings || boots;
+    }
+
+    /**
+     * Does the {@link ItemStack} contain the thorns and the enchantment provided?
+     * @param itemStack The {@link ItemStack}.
+     * @param enchantment The {@link Enchantment}.
+     * @return true if it has the enchantment combination, otherwise false.
+     */
+    private static boolean hasEnchantment(@NonNull ItemStack itemStack, @NonNull Enchantment enchantment) {
+        // If the ItemStack is empty (air), the item doesn't have the enchantment
+        if(itemStack.isEmpty()) return false;
+
+        return itemStack.getEnchantments().containsKey(Enchantment.THORNS)
+                && itemStack.getEnchantments().containsKey(enchantment);
     }
 }

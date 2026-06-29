@@ -24,6 +24,7 @@ import com.github.lukesky19.skyEnchants.util.PluginUtils;
 import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -39,6 +40,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+
+import static com.github.lukesky19.skyEnchants.util.EnchantmentUtils.doesArmorContainEnchantment;
 
 /**
  * Listens to when an entity deals damage to another entity, and if the player has an explosive enchantment, attempts to apply the explosion effect.
@@ -130,6 +133,12 @@ public class ExplosiveEnchantmentListener implements Listener {
         if(explosivePowerPerLevel.isEmpty()) {
             logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping)."));
             return;
+        }
+
+        // Thorns handling
+        if(damageSource.getDamageType().equals(DamageType.THORNS)) {
+            // Ignore thorns damage from activating if armor doesn't contain the enchantment.
+            if(!doesArmorContainEnchantment(causingEntityEquipment, explosiveEnchantment)) return;
         }
 
         // Loop through the equipment slots the explosive enchantment can activate in

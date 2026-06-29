@@ -24,6 +24,7 @@ import com.github.lukesky19.skyEnchants.util.PluginUtils;
 import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -41,6 +42,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.github.lukesky19.skyEnchants.util.EnchantmentUtils.doesArmorContainEnchantment;
 
 /**
  * Listens to when an entity deals damage to another entity, and if the player has a wither enchantment, attempts to apply the wither effect.
@@ -115,6 +118,12 @@ public class WitherEnchantmentListener implements Listener {
         if(effectAmplifierPerLevel.isEmpty()) {
             logger.error(AdventureUtility.plain("Unable to apply the wither enchantment effect due to invalid plugin settings (No effect amplifier mapping)."));
             return;
+        }
+
+        // Thorns handling
+        if(damageSource.getDamageType().equals(DamageType.THORNS)) {
+            // Ignore thorns damage from activating if armor doesn't contain the enchantment.
+            if(!doesArmorContainEnchantment(causingEntityEquipment, witherEnchantment)) return;
         }
 
         // Loop through the equipment slots the wither enchantment can activate in
