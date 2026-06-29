@@ -19,13 +19,12 @@ package com.github.lukesky19.skyEnchants.gui;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.data.options.EnchantmentOptionsConfig;
-import com.github.lukesky19.skyEnchants.config.data.locale.Locale;
-import com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentOptions;
 import com.github.lukesky19.skyEnchants.config.data.settings.Settings;
 import com.github.lukesky19.skyEnchants.config.data.gui.EnchanterGUIConfig;
 import com.github.lukesky19.skyEnchants.config.data.gui.ButtonConfig;
 import com.github.lukesky19.skyEnchants.config.data.misc.ApplicationCost;
 import com.github.lukesky19.skyEnchants.config.manager.options.EnchantmentOptionsConfigManager;
+import com.github.lukesky19.skyEnchants.data.EnchantmentData;
 import com.github.lukesky19.skyEnchants.integration.hooks.EconomyHook;
 import com.github.lukesky19.skyEnchants.integration.hooks.PlayerPointsHook;
 import com.github.lukesky19.skyEnchants.config.manager.gui.GUIConfigManager;
@@ -42,7 +41,6 @@ import com.github.lukesky19.skylib.paper.api.itemstack.ItemStackConfig;
 import com.github.lukesky19.skylib.paper.api.player.PlayerUtil;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -52,24 +50,26 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static com.github.lukesky19.skyEnchants.util.EnchantmentUtils.*;
+import static com.github.lukesky19.skyEnchants.util.PriceUtils.*;
+
 /**
  * This class creates the GUI to access different shop categories.
  */
 public class EnchanterGUI extends ChestGUI<UUID> {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull SettingsManager settingsManager;
-    private final @NotNull LocaleManager localeManager;
-    private final @NotNull EnchantmentOptionsConfigManager enchantmentOptionsConfigManager;
-    private final @NotNull HookManager hookManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull SettingsManager settingsManager;
+    private final @NonNull LocaleManager localeManager;
+    private final @NonNull EnchantmentOptionsConfigManager enchantmentOptionsConfigManager;
+    private final @NonNull HookManager hookManager;
     private final @Nullable EnchanterGUIConfig enchanterGUIConfig;
 
     // The selected input item
@@ -84,7 +84,9 @@ public class EnchanterGUI extends ChestGUI<UUID> {
     // This is the output ItemStack to give to the player.
     private @Nullable ItemStack outputItemStack;
     // This contains the costs to enchant the item.
-    private @Nullable ApplicationCost applicationCost;
+    private @Nullable ApplicationCost costs;
+    // This contains the penalties to enchant the item.
+    private @Nullable ApplicationCost penalties;
     // This contains the enchantments to add and return
     private @Nullable EnchantmentData enchantmentData;
 
@@ -100,14 +102,14 @@ public class EnchanterGUI extends ChestGUI<UUID> {
      * @param hookManager A {@link HookManager} instance.
      */
     public EnchanterGUI(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull UUIDGUIManager guiManager,
-            @NotNull Player player,
-            @NotNull SettingsManager settingsManager,
-            @NotNull LocaleManager localeManager,
-            @NotNull EnchantmentOptionsConfigManager enchantmentOptionsConfigManager,
-            @NotNull GUIConfigManager guiConfigManager,
-            @NotNull HookManager hookManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull UUIDGUIManager guiManager,
+            @NonNull Player player,
+            @NonNull SettingsManager settingsManager,
+            @NonNull LocaleManager localeManager,
+            @NonNull EnchantmentOptionsConfigManager enchantmentOptionsConfigManager,
+            @NonNull GUIConfigManager guiConfigManager,
+            @NonNull HookManager hookManager) {
         super(skyEnchants, guiManager, player.getUniqueId(), player);
 
         this.skyEnchants = skyEnchants;
@@ -168,8 +170,9 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         createFillerButtons(inventoryView.getTopInventory().getSize());
         createDummyButtons();
 
-        this.enchantmentData = getEnchantmentData();
-        this.applicationCost = calculateApplicationCosts();
+        this.enchantmentData = getEnchantmentData(logger, enchantmentOptionsConfigManager, input1ItemStack, input2ItemStack);
+        this.costs = calculateCosts(logger, enchantmentOptionsConfigManager, enchantmentData);
+        this.penalties = calculatePenalties(logger, enchantmentOptionsConfigManager, enchantmentData);
         createPlayerInfoButton();
         createCostsButton();
         createInput1Button();
@@ -194,8 +197,9 @@ public class EnchanterGUI extends ChestGUI<UUID> {
             return;
         }
 
-        this.enchantmentData = getEnchantmentData();
-        this.applicationCost = calculateApplicationCosts();
+        this.enchantmentData = getEnchantmentData(logger, enchantmentOptionsConfigManager, input1ItemStack, input2ItemStack);
+        this.costs = calculateCosts(logger, enchantmentOptionsConfigManager, enchantmentData);
+        this.penalties = calculatePenalties(logger, enchantmentOptionsConfigManager, enchantmentData);
         createPlayerInfoButton();
         createCostsButton();
         createInput1Button();
@@ -232,7 +236,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
      * @param inventoryCloseEvent An {@link InventoryCloseEvent}
      */
     @Override
-    public void handleClose(@NotNull InventoryCloseEvent inventoryCloseEvent) {
+    public void handleClose(@NonNull InventoryCloseEvent inventoryCloseEvent) {
         if(inventoryCloseEvent.getReason().equals(InventoryCloseEvent.Reason.UNLOADED)
                 || inventoryCloseEvent.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW)) return;
 
@@ -258,21 +262,21 @@ public class EnchanterGUI extends ChestGUI<UUID> {
      * @param inventoryDragEvent An {@link InventoryDragEvent}
      */
     @Override
-    public void handleBottomDrag(@NotNull InventoryDragEvent inventoryDragEvent) {}
+    public void handleBottomDrag(@NonNull InventoryDragEvent inventoryDragEvent) {}
 
     /**
      * Handles when items are dragged across the entire inventory. This method does nothing.
      * @param inventoryDragEvent An {@link InventoryDragEvent}
      */
     @Override
-    public void handleGlobalDrag(@NotNull InventoryDragEvent inventoryDragEvent) {}
+    public void handleGlobalDrag(@NonNull InventoryDragEvent inventoryDragEvent) {}
 
     /**
      * Handles when the player's inventory is clicked. This method does nothing.
      * @param inventoryClickEvent An {@link InventoryClickEvent}
      */
     @Override
-    public void handleBottomClick(@NotNull InventoryClickEvent inventoryClickEvent) {
+    public void handleBottomClick(@NonNull InventoryClickEvent inventoryClickEvent) {
         inventoryClickEvent.setCancelled(true);
 
         // If the InventoryView is null, return
@@ -313,7 +317,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
      * @param inventoryClickEvent An {@link InventoryClickEvent}
      */
     @Override
-    public void handleGlobalClick(@NotNull InventoryClickEvent inventoryClickEvent) {}
+    public void handleGlobalClick(@NonNull InventoryClickEvent inventoryClickEvent) {}
 
     /**
      * Create the filler buttons for the GUI.
@@ -326,7 +330,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
         itemStackBuilder.fromItemStackConfig(fillerConfig, player, List.of());
 
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
@@ -359,10 +363,16 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         double requiredMoney = 0.0;
         int requiredExpLevels = 0;
         int requiredPoints = 0;
-        if(applicationCost != null) {
-            requiredMoney = applicationCost.money();
-            requiredExpLevels = applicationCost.exp();
-            requiredPoints = applicationCost.points();
+        if(costs != null) {
+            requiredMoney += costs.money();
+            requiredExpLevels += costs.exp();
+            requiredPoints += costs.points();
+        }
+
+        if(penalties != null) {
+            requiredMoney += penalties.money();
+            requiredExpLevels += penalties.exp();
+            requiredPoints += penalties.points();
         }
 
         List<TagResolver.Single> placeholders = List.of(
@@ -373,7 +383,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
         itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, placeholders);
 
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
@@ -419,7 +429,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
         itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, placeholders);
 
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
@@ -441,7 +451,6 @@ public class EnchanterGUI extends ChestGUI<UUID> {
             return;
         }
 
-        ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
         if(input1ItemStack != null && input1Slot != -1) {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(input1ItemStack);
@@ -460,15 +469,14 @@ public class EnchanterGUI extends ChestGUI<UUID> {
 
             setButton(buttonConfig.slot(), builder.build());
         } else {
+            ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
             itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, List.of());
+            Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+            if(optionalItemStack.isEmpty()) return;
 
-            Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
-            optionalItemStack.ifPresent(itemStack -> {
-                GUIButton.Builder builder = new GUIButton.Builder();
-                builder.setItemStack(itemStack);
-
-                setButton(buttonConfig.slot(), builder.build());
-            });
+            GUIButton.Builder builder = new GUIButton.Builder();
+            builder.setItemStack(optionalItemStack.get());
+            setButton(buttonConfig.slot(), builder.build());
         }
     }
 
@@ -485,7 +493,6 @@ public class EnchanterGUI extends ChestGUI<UUID> {
             return;
         }
 
-        ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
         if(input2ItemStack != null && input2Slot != -1) {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(input2ItemStack);
@@ -504,15 +511,14 @@ public class EnchanterGUI extends ChestGUI<UUID> {
 
             setButton(buttonConfig.slot(), builder.build());
         } else {
+            ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
             itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, List.of());
+            Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+            if(optionalItemStack.isEmpty()) return;
 
-            Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
-            optionalItemStack.ifPresent(itemStack -> {
-                GUIButton.Builder builder = new GUIButton.Builder();
-                builder.setItemStack(itemStack);
-
-                setButton(buttonConfig.slot(), builder.build());
-            });
+            GUIButton.Builder builder = new GUIButton.Builder();
+            builder.setItemStack(optionalItemStack.get());
+            setButton(buttonConfig.slot(), builder.build());
         }
     }
 
@@ -529,60 +535,64 @@ public class EnchanterGUI extends ChestGUI<UUID> {
             return;
         }
 
-        if(input1ItemStack != null && input2ItemStack != null) {
-            EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
-            if(enchantmentOptionsConfig == null) {
-                logger.error(AdventureUtility.plain("Unable to create the output ItemStack due to invalid enchantment options settings."));
-                createOutputButtonPlaceholder(buttonConfig.slot(), buttonConfig);
-                return;
-            }
-
-            @Nullable ItemStack outputStack = createOutputItemStack();
-            if(outputStack == null) {
-                createOutputButtonPlaceholder(buttonConfig.slot(), buttonConfig);
-                return;
-            }
-            this.outputItemStack = outputStack;
-
-            GUIButton.Builder builder = new GUIButton.Builder();
-            builder.setItemStack(outputStack);
-            builder.setAction(inventoryClickEvent -> {
-                @Nullable Settings settings = settingsManager.getConfiguration();
-                if(settings == null) return;
-                if(input1Slot == -1 || input1ItemStack == null) return;
-                if(input2Slot == -1 || input2ItemStack == null) return;
-                if(applicationCost == null) return;
-                if(enchantmentData == null) return;
-
-                // If the player does not have the required amounts to meet the costs, return
-                if(!hasRequiredCosts(inventoryClickEvent)) return;
-
-                // Remove the calculated costs from the player
-                removeCosts();
-
-                // Give the result item to the player
-                PlayerUtil.giveItem(player.getInventory(), outputItemStack, outputItemStack.getAmount(), player.getLocation());
-
-                // Clear any input data
-                input1Slot = -1;
-                input1ItemStack = null;
-                input2Slot = -1;
-                input2ItemStack = null;
-
-                // Give any unadded enchantments if configured to do so
-                returnUnappliedEnchantments(settings);
-
-                // Update the GUI's buttons
-                updateDynamicButtons();
-
-                super.update();
-            });
-
-            // Set the result button
-            setButton(buttonConfig.slot(), builder.build());
-        } else {
+        if(input1ItemStack == null || input2ItemStack == null) {
             createOutputButtonPlaceholder(buttonConfig.slot(), buttonConfig);
+            return;
         }
+
+        EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
+        if(enchantmentOptionsConfig == null) {
+            logger.error(AdventureUtility.plain("Unable to create the output ItemStack due to invalid enchantment options settings."));
+            createOutputButtonPlaceholder(buttonConfig.slot(), buttonConfig);
+            return;
+        }
+
+        this.outputItemStack = createOutputItemStack();
+        if(outputItemStack == null) {
+            createOutputButtonPlaceholder(buttonConfig.slot(), buttonConfig);
+            return;
+        }
+
+        GUIButton.Builder builder = new GUIButton.Builder();
+        builder.setItemStack(outputItemStack);
+        builder.setAction(inventoryClickEvent -> {
+            @Nullable Settings settings = settingsManager.getConfiguration();
+            if(settings == null) return;
+            if(enchantmentData == null) return;
+
+            // If the player does not have the required amounts, return
+            if(!hasRequiredAmounts(logger, localeManager, hookManager, player, costs, penalties, inventoryClickEvent)) return;
+
+            // Remove the calculated amounts from the player
+            removeRequiredAmounts(hookManager, player, costs, penalties);
+            
+            // Clear costs and penalties
+            costs = null;
+            penalties = null;
+
+            // Give the result item to the player
+            PlayerUtil.giveItem(player.getInventory(), outputItemStack, outputItemStack.getAmount(), player.getLocation());
+
+            // Clear any input data
+            input1Slot = -1;
+            input1ItemStack = null;
+            input2Slot = -1;
+            input2ItemStack = null;
+
+            // Give any unadded enchantments if configured to do so
+            returnUnappliedEnchantments(settings, player, enchantmentData);
+            
+            // Clear EnchantmentData
+            enchantmentData = null;
+
+            // Update the GUI's buttons
+            updateDynamicButtons();
+
+            super.update();
+        });
+
+        // Set the result button
+        setButton(buttonConfig.slot(), builder.build());
     }
 
     /**
@@ -597,7 +607,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         }
         ItemStack resultItemStack = input1ItemStack.clone();
         // Get the enchantments to add and return
-        EnchantmentData enchantmentData = getEnchantmentData();
+        EnchantmentData enchantmentData = getEnchantmentData(logger, enchantmentOptionsConfigManager, input1ItemStack, input2ItemStack);
         // Return null if no enchantments to add
         if(enchantmentData.enchantmentsToAdd().isEmpty()) {
             logger.error(AdventureUtility.plain("Unable to create output ItemStack for the enchanter GUI due to no enchantments to add."));
@@ -605,15 +615,21 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         }
 
         if(resultItemStack.getItemMeta() instanceof EnchantmentStorageMeta resultEnchantmentStorage) {
+            enchantmentData.enchantmentConflicts().forEach((enchantment, _) ->
+                    resultEnchantmentStorage.removeStoredEnchant(enchantment));
+
             enchantmentData.enchantmentsToAdd().forEach((enchantment, level) -> {
                 resultEnchantmentStorage.removeStoredEnchant(enchantment);
 
                 resultEnchantmentStorage.addStoredEnchant(enchantment, level, false);
-
-                resultItemStack.setItemMeta(resultEnchantmentStorage);
             });
+
+            resultItemStack.setItemMeta(resultEnchantmentStorage);
         } else {
-            enchantmentData.enchantmentsToAdd.forEach((enchantment, level) -> {
+            enchantmentData.enchantmentConflicts().forEach((enchantment, _) ->
+                    resultItemStack.removeEnchantment(enchantment));
+
+            enchantmentData.enchantmentsToAdd().forEach((enchantment, level) -> {
                 resultItemStack.removeEnchantment(enchantment);
 
                 resultItemStack.addEnchantment(enchantment, level);
@@ -624,119 +640,17 @@ public class EnchanterGUI extends ChestGUI<UUID> {
     }
 
     /**
-     * Calculate the enchantments to add and return.
-     * @return The {@link EnchantmentData}.
-     */
-    private @NotNull EnchantmentData getEnchantmentData() {
-        Map<Enchantment, Integer> enchantmentsToAdd = new HashMap<>();
-        Map<Enchantment, Integer> enchantmentsToReturn = new HashMap<>();
-        // Return the EnchantmentData with empty maps if either input stack is null
-        if(input1ItemStack == null || input2ItemStack == null) return new EnchantmentData(enchantmentsToAdd, enchantmentsToReturn);
-
-        ItemMeta input1ItemMeta = input1ItemStack.getItemMeta();
-        ItemMeta input2ItemMeta = input2ItemStack.getItemMeta();
-
-        if(input2ItemMeta instanceof EnchantmentStorageMeta input2EnchantmentStorage) {
-            if(input1ItemMeta instanceof EnchantmentStorageMeta input1EnchantmentStorage) {
-                for(Map.Entry<Enchantment, Integer> entry : input2EnchantmentStorage.getStoredEnchants().entrySet()) {
-                    Enchantment enchantment = entry.getKey();
-                    int level = entry.getValue();
-                    int maxLevel = enchantment.getMaxLevel();
-
-                    boolean hasEnchant = input1EnchantmentStorage.hasStoredEnchant(enchantment);
-                    boolean isConflicting = input1EnchantmentStorage.hasConflictingStoredEnchant(enchantment);
-                    int storedLevel = input1EnchantmentStorage.getStoredEnchantLevel(enchantment);
-
-                    if(!hasEnchant && !isConflicting) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel < level) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel == level && level < maxLevel) {
-                        enchantmentsToAdd.put(enchantment, level + 1);
-                    } else {
-                        enchantmentsToReturn.put(enchantment, level);
-                    }
-                }
-            } else {
-                for(Map.Entry<Enchantment, Integer> entry : input2EnchantmentStorage.getStoredEnchants().entrySet()) {
-                    Enchantment enchantment = entry.getKey();
-                    int level = entry.getValue();
-                    int maxLevel = enchantment.getMaxLevel();
-
-                    boolean hasEnchant = input1ItemMeta.hasEnchant(enchantment);
-                    boolean isConflicting = input1ItemMeta.hasConflictingEnchant(enchantment);
-                    int storedLevel = input1ItemMeta.getEnchantLevel(enchantment);
-
-                    if(!hasEnchant && !isConflicting) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel < level) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel == level && level < maxLevel) {
-                        enchantmentsToAdd.put(enchantment, level + 1);
-                    } else {
-                        enchantmentsToReturn.put(enchantment, level);
-                    }
-                }
-            }
-        } else {
-            if(input1ItemMeta instanceof EnchantmentStorageMeta input1EnchantmentStorage) {
-                for(Map.Entry<Enchantment, Integer> entry : input2ItemMeta.getEnchants().entrySet()) {
-                    Enchantment enchantment = entry.getKey();
-                    int level = entry.getValue();
-                    int maxLevel = enchantment.getMaxLevel();
-
-                    boolean hasEnchant = input1EnchantmentStorage.hasStoredEnchant(enchantment);
-                    boolean isConflicting = input1EnchantmentStorage.hasConflictingStoredEnchant(enchantment);
-                    int storedLevel = input1EnchantmentStorage.getStoredEnchantLevel(enchantment);
-
-                    if(!hasEnchant && !isConflicting) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel < level) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel == level && level < maxLevel) {
-                        enchantmentsToAdd.put(enchantment, level + 1);
-                    } else {
-                        enchantmentsToReturn.put(enchantment, level);
-                    }
-                }
-            } else {
-                for(Map.Entry<Enchantment, Integer> entry : input2ItemMeta.getEnchants().entrySet()) {
-                    Enchantment enchantment = entry.getKey();
-                    int level = entry.getValue();
-                    int maxLevel = enchantment.getMaxLevel();
-
-                    boolean hasEnchant = input1ItemMeta.hasEnchant(enchantment);
-                    boolean isConflicting = input1ItemMeta.hasConflictingEnchant(enchantment);
-                    int storedLevel = input1ItemMeta.getEnchantLevel(enchantment);
-
-                    if(!hasEnchant && !isConflicting) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel < level) {
-                        enchantmentsToAdd.put(enchantment, level);
-                    } else if(hasEnchant && storedLevel == level && level < maxLevel) {
-                        enchantmentsToAdd.put(enchantment, level + 1);
-                    } else {
-                        enchantmentsToReturn.put(enchantment, level);
-                    }
-                }
-            }
-        }
-
-        return new EnchantmentData(enchantmentsToAdd, enchantmentsToReturn);
-    }
-
-    /**
      * Create the placeholder button for the output slot.
      * @param slot The slot to place the button.
      * @param buttonConfig The {@link ButtonConfig} for the output button.
      */
-    private void createOutputButtonPlaceholder(int slot, @NotNull ButtonConfig buttonConfig) {
+    private void createOutputButtonPlaceholder(int slot, @NonNull ButtonConfig buttonConfig) {
         if(inventoryView == null) return;
 
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
         itemStackBuilder.fromItemStackConfig(buttonConfig.item(), player, List.of());
 
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
@@ -760,7 +674,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
             ItemStackConfig itemStackConfig = buttonConfig.item();
             ItemStackBuilder itemStackBuilder = new ItemStackBuilder(logger);
             itemStackBuilder.fromItemStackConfig(itemStackConfig, player, List.of());
-            Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+            Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
             optionalItemStack.ifPresent(itemStack -> {
                 GUIButton.Builder builder = new GUIButton.Builder();
 
@@ -770,195 +684,4 @@ public class EnchanterGUI extends ChestGUI<UUID> {
             });
         });
     }
-
-    /**
-     * Calculate the costs required to apply the enchantments.
-     * @return The {@link ApplicationCost} or null.
-     */
-    private @Nullable ApplicationCost calculateApplicationCosts() {
-        @Nullable EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
-        if(enchantmentOptionsConfig == null) {
-            logger.error(AdventureUtility.plain("Unable to calculate application costs due to invalid enchantment options configuration."));
-            return null;
-        }
-
-        if(enchantmentData == null) {
-            logger.error(AdventureUtility.plain("Unable to calculate application costs due to invalid enchantment data."));
-            return null;
-        }
-
-        double requiredMoney = 0.0;
-        int requiredExpLevels = 0;
-        int requiredPoints = 0;
-
-        for(Map.Entry<Enchantment, Integer> entry : enchantmentData.enchantmentsToAdd().entrySet()) {
-            Enchantment enchantment = entry.getKey();
-            int level = entry.getValue();
-
-            @Nullable ApplicationCost applicationCost = getApplicationCost(enchantmentOptionsConfig, enchantment, level);
-            if(applicationCost == null) {
-                logger.error(AdventureUtility.plain("Unable to calculate application costs due to missing enchantment configuration for " + enchantment.getKey() + " and level " + level));
-                return null;
-            }
-
-            requiredMoney += applicationCost.money();
-            requiredExpLevels += applicationCost.exp();
-            requiredPoints += applicationCost.points();
-        }
-
-        return new ApplicationCost(requiredMoney, requiredExpLevels, requiredPoints);
-    }
-
-    /**
-     * Get the {@link ApplicationCost} for the enchantment and enchantment level.
-     * @param enchantmentOptionsConfig The plugin's {@link EnchantmentOptionsConfig}.
-     * @param enchantment The {@link Enchantment}.
-     * @param level The enchantment level.
-     * @return The {@link ApplicationCost} or null.
-     */
-    private @Nullable ApplicationCost getApplicationCost(@NotNull EnchantmentOptionsConfig enchantmentOptionsConfig, @NotNull Enchantment enchantment, int level) {
-        @Nullable EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
-        if(enchantmentOptions == null) return null;
-
-        return enchantmentOptions.costByLevel().get(level);
-    }
-
-    /**
-     * Check if the player has the required money, exp levels, and points.
-     * @apiNote Also cancels the {@link InventoryClickEvent} and sends any error messages to the player or console as necessary.
-     * @param inventoryClickEvent The {@link InventoryClickEvent}.
-     * @return true if the player has the required amounts, otherwise false.
-     */
-    private boolean hasRequiredCosts(@NotNull InventoryClickEvent inventoryClickEvent) {
-        Locale locale = localeManager.getConfiguration();
-
-        if(applicationCost == null) {
-            player.sendMessage(AdventureUtility.plain(locale.prefix() + locale.enchanterError()));
-            inventoryClickEvent.setCancelled(true);
-            return false;
-        }
-
-        EconomyHook economyHook = hookManager.getHook(EconomyHook.class);
-        PlayerPointsHook playerPointsHook = hookManager.getHook(PlayerPointsHook.class);
-
-        // Check if the player has the required money
-        if(applicationCost.money() > 0) {
-            if(economyHook.isHooked()) {
-                if(economyHook.getBalance(player) < applicationCost.money()) {
-                    player.sendMessage(AdventureUtility.plain(locale.prefix() + locale.insufficientFunds()));
-                    inventoryClickEvent.setCancelled(true);
-                    return false;
-                }
-            } else {
-                logger.error(AdventureUtility.plain("Unable to remove the required money because the economy was not hooked into."));
-                player.sendMessage(AdventureUtility.plain(locale.prefix() + locale.enchanterError()));
-                inventoryClickEvent.setCancelled(true);
-                return false;
-            }
-        }
-
-        // Check if the player has the required experience levels
-        if(applicationCost.exp() > 0) {
-            if(player.getLevel() < applicationCost.exp()) {
-                player.sendMessage(AdventureUtility.plain(locale.prefix() + locale.insufficientExpLevels()));
-                inventoryClickEvent.setCancelled(true);
-                return false;
-            }
-        }
-
-        // Check if the player has the required points
-        if(applicationCost.points() > 0) {
-            if(playerPointsHook.isHooked()) {
-                if(playerPointsHook.getBalance(player) < applicationCost.points()) {
-                    player.sendMessage(AdventureUtility.plain(locale.prefix() + locale.insufficientPoints()));
-                    inventoryClickEvent.setCancelled(true);
-                    return false;
-                }
-            } else {
-                logger.error(AdventureUtility.plain("Unable to remove the required money because the PlayerPoints plugin was not hooked into."));
-                player.sendMessage(AdventureUtility.plain(locale.prefix() + locale.enchanterError()));
-                inventoryClickEvent.setCancelled(true);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Remove the required money, exp levels, and points from the player.
-     */
-    public void removeCosts() {
-        if(applicationCost == null) return;
-        EconomyHook economyHook = hookManager.getHook(EconomyHook.class);
-        PlayerPointsHook playerPointsHook = hookManager.getHook(PlayerPointsHook.class);
-
-        if(applicationCost.money() > 0 && economyHook.isHooked()) {
-            economyHook.removeFromBalance(player, applicationCost.money());
-        }
-
-        if(applicationCost.exp() > 0) {
-            player.setLevel(player.getLevel() - applicationCost.exp());
-        }
-
-        if(applicationCost.points() > 0 && playerPointsHook.isHooked()) {
-            playerPointsHook.removeFromBalance(player, applicationCost.points());
-        }
-    }
-
-    /**
-     * Give the unadded enchantments back to the player if configured to do so and the map contains any enchantments.
-     * @param settings The plugin's {@link Settings}.
-     */
-    private void returnUnappliedEnchantments(@NotNull Settings settings) {
-        // If enchantment data is null, return
-        if(enchantmentData == null) return;
-        // If not configured to return unapplied enchantments, return
-        if(!settings.giveEnchantedBookForUnappliedEnchantments()) return;
-        // If the enchantments to return is empty, return
-        if(enchantmentData.enchantmentsToReturn().isEmpty()) return;
-
-        // Return the unapplied enchantments as either one book or multiple
-        if(settings.giveUnappliedEnchantmentsAsOneBook()) {
-            // Create the Enchanted Book ItemStack
-            ItemStack returnStack = ItemType.ENCHANTED_BOOK.createItemStack();
-            // Get the EnchantmentStorageMeta
-            if(!(returnStack.getItemMeta() instanceof EnchantmentStorageMeta returnItemEnchantmentMeta)) return;
-
-            // Add the enchantments to the enchanted book
-            enchantmentData.enchantmentsToReturn().forEach((enchantment, level) ->
-                    returnItemEnchantmentMeta.addStoredEnchant(enchantment, level, false));
-
-            // Set the item meta of the ItemStack
-            returnStack.setItemMeta(returnItemEnchantmentMeta);
-
-            // Give the player the ItemStack
-            PlayerUtil.giveItem(player.getInventory(), returnStack, returnStack.getAmount(), player.getLocation());
-        } else {
-            enchantmentData.enchantmentsToReturn().forEach((enchantment, level) -> {
-                // Create the Enchanted Book ItemStack
-                ItemStack returnStack = ItemType.ENCHANTED_BOOK.createItemStack();
-                // Get the EnchantmentStorageMeta
-                if(!(returnStack.getItemMeta() instanceof EnchantmentStorageMeta returnEnchantmentStorageMeta)) return;
-
-                // Add the enchantment enchanted book
-                returnEnchantmentStorageMeta.addStoredEnchant(enchantment, level, false);
-
-                // Set the item meta of the ItemStack
-                returnStack.setItemMeta(returnEnchantmentStorageMeta);
-
-                // Give the player the ItemStack
-                PlayerUtil.giveItem(player.getInventory(), returnStack, returnStack.getAmount(), player.getLocation());
-            });
-        }
-    }
-
-    /**
-     * This record stores the enchantments to add and return.
-     * @param enchantmentsToAdd The {@link Map} mapping {@link Enchantment}s to {@link Integer}s (levels) to add.
-     * @param enchantmentsToReturn The {@link Map} mapping {@link Enchantment}s to {@link Integer}s (levels) to return.
-     */
-    private record EnchantmentData(
-            @NotNull Map<Enchantment, Integer> enchantmentsToAdd,
-            @NotNull Map<Enchantment, Integer> enchantmentsToReturn) {}
 }

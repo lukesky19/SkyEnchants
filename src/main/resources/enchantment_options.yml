@@ -5,6 +5,7 @@ enchantment-options:
     minecraft:density:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -26,9 +27,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:swift_sneak:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -42,9 +65,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:breach:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -62,9 +99,27 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:feather_falling:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -82,25 +137,55 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:infinity:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:flame:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:impaling:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -122,9 +207,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:protection:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -142,9 +249,27 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:knockback:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -154,9 +279,19 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:depth_strider:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -170,9 +305,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:luck_of_the_sea:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -186,17 +335,45 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:silk_touch:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:loyalty:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -210,17 +387,37 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:vanishing_curse:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:fire_protection:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -238,25 +435,55 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:channeling:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:binding_curse:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:quick_charge:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -270,9 +497,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:bane_of_arthropods:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -294,9 +535,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:frost_walker:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -306,9 +569,19 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:multishot:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -317,6 +590,7 @@ enchantment-options:
     minecraft:projectile_protection:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -334,17 +608,41 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:aqua_affinity:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:soul_speed:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -358,9 +656,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:wind_burst:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -374,9 +686,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:looting:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -390,9 +716,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:smite:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -414,9 +754,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:piercing:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -434,9 +796,27 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:lure:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -450,9 +830,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:riptide:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -466,9 +860,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:power:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -490,9 +898,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:blast_protection:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -510,17 +940,41 @@ enchantment-options:
                 money: 400.0
                 exp: 40
                 points: 40
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:mending:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:fire_aspect:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -530,9 +984,19 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:respiration:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -546,9 +1010,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:thorns:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -562,9 +1040,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:sweeping_edge:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -578,9 +1070,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:punch:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -590,9 +1096,19 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:sharpness:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -614,9 +1130,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:efficiency:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -638,9 +1176,31 @@ enchantment-options:
                 money: 500.0
                 exp: 50
                 points: 50
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:fortune:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -654,9 +1214,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     minecraft:unbreaking:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -670,9 +1244,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:haste:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -686,9 +1274,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:multibreak:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -702,9 +1304,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:reach:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -714,9 +1330,19 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:replant:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -730,9 +1356,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:double_drop:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -746,17 +1386,37 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:explosive:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:speed:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -773,6 +1433,7 @@ enchantment-options:
     skyenchants:shield_bash:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -786,9 +1447,23 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:poison:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -798,9 +1473,19 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:wither:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -810,17 +1495,33 @@ enchantment-options:
                 money: 200.0
                 exp: 20
                 points: 20
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:tree_feller:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:health:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -862,9 +1563,51 @@ enchantment-options:
                 money: 1000.0
                 exp: 100
                 points: 100
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
+            4:
+                money: 0.0
+                exp: 0
+                points: 100
+            5:
+                money: 0.0
+                exp: 0
+                points: 100
+            6:
+                money: 0.0
+                exp: 0
+                points: 100
+            7:
+                money: 0.0
+                exp: 0
+                points: 100
+            8:
+                money: 0.0
+                exp: 0
+                points: 100
+            9:
+                money: 0.0
+                exp: 0
+                points: 100
+            10:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:smelt:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -878,17 +1621,37 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:double_jump:
         disable-anvil-use: true
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:magnet:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
@@ -902,11 +1665,30 @@ enchantment-options:
                 money: 300.0
                 exp: 30
                 points: 30
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100
+            2:
+                money: 0.0
+                exp: 0
+                points: 100
+            3:
+                money: 0.0
+                exp: 0
+                points: 100
     skyenchants:durability:
         disable-anvil-use: false
         disable-enchanter-gui-use: false
+        allow-enchantment-overwrite: false
         cost-by-level:
             1:
                 money: 100.0
                 exp: 10
                 points: 10
+        penalty-by-level:
+            1:
+                money: 0.0
+                exp: 0
+                points: 100

@@ -92,14 +92,18 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
             NamespacedKey namespacedKey = enchantment.getKey();
             String enchantmentKeyName = namespacedKey.toString();
 
-            EnchantmentOptions enchantmentConfig = enchantmentOptionsMap.getOrDefault(enchantmentKeyName, new EnchantmentOptions(false, false, new HashMap<>()));
+            EnchantmentOptions enchantmentConfig = enchantmentOptionsMap.getOrDefault(enchantmentKeyName, new EnchantmentOptions(false, false,false, new HashMap<>(), new HashMap<>()));
             enchantmentOptionsMap.put(enchantmentKeyName, enchantmentConfig);
 
-            Map<Integer, ApplicationCost> innerMap = enchantmentConfig.costByLevel();
-
+            Map<Integer, ApplicationCost> costMap = enchantmentConfig.costByLevel();
+            Map<Integer, ApplicationCost> penaltyMap = enchantmentConfig.penaltyByLevel();
             for(int level = enchantment.getStartLevel(); level <= enchantment.getMaxLevel(); level++) {
-                if(!innerMap.containsKey(level)) {
-                    innerMap.put(level, new ApplicationCost(100 * level, 10 * level, 10 * level));
+                if(!costMap.containsKey(level)) {
+                    costMap.put(level, new ApplicationCost(100 * level, 10 * level, 10 * level));
+                }
+
+                if(!penaltyMap.containsKey(level)) {
+                    penaltyMap.put(level, new ApplicationCost(0.0, 0, 100));
                 }
             }
         });
