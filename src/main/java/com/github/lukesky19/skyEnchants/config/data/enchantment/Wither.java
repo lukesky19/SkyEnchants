@@ -6,7 +6,7 @@ import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.Map;
@@ -23,26 +23,26 @@ import java.util.Map;
 public record Wither(
         int version,
         boolean enabled,
-        @NotNull Registration registration,
-        @NotNull Map<Integer, Integer> effectDurationPerLevel,
-        @NotNull Map<Integer, Integer> effectAmplifierPerLevel) implements IEnchantmentConfig {
+        @NonNull Registration registration,
+        @NonNull Map<Integer, Integer> effectDurationPerLevel,
+        @NonNull Map<Integer, Integer> effectAmplifierPerLevel) implements IEnchantmentConfig {
     @Override
     public boolean isEnabled() {
         return enabled;
     }
 
     @Override
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return "Wither";
     }
 
     @Override
-    public @NotNull TypedKey<@NotNull Enchantment> getTypedKey() {
+    public @NonNull TypedKey<@NonNull Enchantment> getTypedKey() {
         return EnchantmentKeys.create(Key.key("skyenchants", "wither"));
     }
 
     @Override
-    public @NotNull Registration getRegistrationConfig() {
+    public @NonNull Registration getRegistrationConfig() {
         return registration;
     }
 }

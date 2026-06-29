@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Health;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class HealthConfigManager extends EnchantmentConfigManager<Health> {
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public HealthConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public HealthConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "health.yml", Health.class);
     }
 
@@ -44,7 +44,7 @@ public class HealthConfigManager extends EnchantmentConfigManager<Health> {
      * @return The original {@link Health} configuration.
      */
     @Override
-    public @Nullable Health migrateConfiguration(@NotNull Health health) {
+    public @Nullable Health migrateConfiguration(@NonNull Health health) {
         return health;
     }
 

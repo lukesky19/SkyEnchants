@@ -21,9 +21,8 @@ import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import com.github.lukesky19.skylib.common.api.configuration.interfaces.ISimpleConfigManager;
 import com.github.lukesky19.skylib.common.platform.PlatformUtils;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import com.github.lukesky19.skylib.libs.configurate.ConfigurateException;
 import com.github.lukesky19.skylib.libs.configurate.ConfigurationNode;
 import com.github.lukesky19.skylib.libs.configurate.yaml.NodeStyle;
@@ -40,27 +39,27 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
     /**
      * The plugin's data directory as a {@link File}.
      */
-    protected final @NotNull File dataDirectory;
+    protected final @NonNull File dataDirectory;
     /**
      * The {@link ComponentLogger} of the plugin.
      */
-    protected final @NotNull ComponentLogger logger;
+    protected final @NonNull ComponentLogger logger;
     /**
      * The file name of the configuration.
      */
-    protected @NotNull String fileName;
+    protected final @NonNull String fileName;
     /**
      * The {@link Path} the configuration is loaded from and saved to.
      */
-    protected @NotNull Path configurationPath;
+    protected final @NonNull Path configurationPath;
     /**
      * The path as a {@link String} to the embedded default configuration.
      */
-    protected @NotNull String resourcePath;
+    protected final @NonNull String resourcePath;
     /**
      * The class of the configuration being loaded.
      */
-    protected final @NotNull Class<C> configClass;
+    protected final @NonNull Class<C> configClass;
 
     /**
      * The configuration object.
@@ -75,10 +74,10 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * @param configClass The {@link Class} of the {@link C} configuration object.
      */
     public EnchantmentConfigManager(
-            @NotNull File dataDirectory,
-            @NotNull ComponentLogger logger,
-            @NotNull String fileName,
-            @NotNull Class<C> configClass) {
+            @NonNull File dataDirectory,
+            @NonNull ComponentLogger logger,
+            @NonNull String fileName,
+            @NonNull Class<C> configClass) {
         this.dataDirectory = dataDirectory;
         this.logger = logger;
         this.fileName = fileName;
@@ -92,7 +91,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * @param configurationPath A {@link Path}.
      */
     @Override
-    public void setConfigurationPath(@NotNull Path configurationPath) {}
+    public void setConfigurationPath(@NonNull Path configurationPath) {}
 
     /**
      * Get the configuration. May be null.
@@ -121,7 +120,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
                 logger.warn(AdventureUtility.plain("Failed to load configuration. Class name: " + this.getClass().getName()));
                 return;
             }
-            @NotNull C preMigrationConfiguration = configuration;
+            C preMigrationConfiguration = configuration;
 
             // Migrate configuration
             configuration = migrateConfiguration(configuration);
@@ -151,9 +150,9 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * Save the configuration.
      */
     @Override
-    public void saveConfiguration(@NotNull C configuration) {
+    public void saveConfiguration(@NonNull C configuration) {
         try {
-            @NotNull YamlConfigurationLoader yamlConfigurationLoader = createLoader(configurationPath);
+            YamlConfigurationLoader yamlConfigurationLoader = createLoader(configurationPath);
 
             ConfigurationNode node = yamlConfigurationLoader.createNode();
 
@@ -214,7 +213,7 @@ public abstract class EnchantmentConfigManager<C> implements ISimpleConfigManage
      * @param configuration The configuration to migrate.
      * @return V the migrated configuration.
      */
-    public abstract @Nullable C migrateConfiguration(@NotNull C configuration);
+    public abstract @Nullable C migrateConfiguration(@NonNull C configuration);
 
     /**
      * Validate the configuration in the class.

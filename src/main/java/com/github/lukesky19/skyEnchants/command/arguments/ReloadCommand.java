@@ -26,21 +26,21 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This class creates the reload command to reload the plugin.
  */
 public class ReloadCommand {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull LocaleManager localeManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull LocaleManager localeManager;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
      * @param localeManager A {@link LocaleManager} instance.
      */
-    public ReloadCommand(@NotNull SkyEnchants skyEnchants, @NotNull LocaleManager localeManager) {
+    public ReloadCommand(@NonNull SkyEnchants skyEnchants, @NonNull LocaleManager localeManager) {
         this.skyEnchants = skyEnchants;
         this.localeManager = localeManager;
     }
@@ -49,7 +49,7 @@ public class ReloadCommand {
      * Creates the reload command to reload the plugin.
      * @return A {@link LiteralCommandNode} of type {@link CommandSourceStack}.
      */
-    public @NotNull LiteralCommandNode<CommandSourceStack> createCommand() {
+    public @NonNull LiteralCommandNode<CommandSourceStack> createCommand() {
         return Commands.literal("reload")
             .requires(ctx -> ctx.getSender().hasPermission("skyenchants.commands.skyenchants.reload"))
             .executes(ctx -> {

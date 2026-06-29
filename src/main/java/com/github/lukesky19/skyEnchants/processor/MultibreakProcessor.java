@@ -34,8 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -49,8 +48,8 @@ public class MultibreakProcessor extends BlockProcessor {
     private final boolean breakSimilarOnly;
 
     // Data
-    private final @NotNull BlockType startingBlockType;
-    private final @NotNull Direction direction;
+    private final @NonNull BlockType startingBlockType;
+    private final @NonNull Direction direction;
     private final int widthMin;
     private final int widthMax;
     private final int heightMin;
@@ -76,20 +75,20 @@ public class MultibreakProcessor extends BlockProcessor {
      * @param toolSlotNumber The slot number of the tool.
      */
     public MultibreakProcessor(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull EnchantmentManager enchantmentManager,
-            @NotNull HookManager hookManager,
-            @NotNull Direction direction,
-            @NotNull Block startingBlock,
-            @NotNull BlockType startingBlockType,
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull EnchantmentManager enchantmentManager,
+            @NonNull HookManager hookManager,
+            @NonNull Direction direction,
+            @NonNull Block startingBlock,
+            @NonNull BlockType startingBlockType,
             int depth,
             int width,
             int height,
             boolean breakSimilarOnly,
             boolean preventBelow,
-            @NotNull Player player,
-            @NotNull ItemStack tool,
+            @NonNull Player player,
+            @NonNull ItemStack tool,
             int toolSlotNumber) {
         super(skyEnchants, durabilityConfigManager, enchantmentManager, hookManager, startingBlock, player, tool, toolSlotNumber);
 
@@ -131,7 +130,7 @@ public class MultibreakProcessor extends BlockProcessor {
      * @param location The starting {@link Location}.
      */
     @Override
-    protected void queueLocations(@NotNull Location location) {
+    protected void queueLocations(@NonNull Location location) {
         for(int currentDepth = 0; currentDepth < depth; currentDepth++) {
             Location depthStartingLocation = location.clone().add(direction.vector.clone().multiply(currentDepth));
 
@@ -153,11 +152,11 @@ public class MultibreakProcessor extends BlockProcessor {
             // Get the location from the queue
             Location location = locationQueue.poll();
             // Get the Block at the location
-            @NotNull Block collectedBlock = location.getBlock();
+            Block collectedBlock = location.getBlock();
             // Ignore stacked blocks or spawners
             if(roseStackerHook.isHooked() && roseStackerHook.isStackedBlock(collectedBlock)) return;
             // Get the BlockType for the Block
-            @Nullable BlockType collectedBlockType = collectedBlock.getType().asBlockType();
+            BlockType collectedBlockType = collectedBlock.getType().asBlockType();
             // If the BlockType is null, then move to the next block
             if(collectedBlockType == null) continue;
 
@@ -186,8 +185,8 @@ public class MultibreakProcessor extends BlockProcessor {
             return;
         }
 
-        @Nullable ItemMeta itemMeta = tool.getItemMeta();
-        @Nullable Damageable durabilityMeta = null;
+        ItemMeta itemMeta = tool.getItemMeta();
+        Damageable durabilityMeta = null;
         if(itemMeta != null) {
             if(itemMeta instanceof Damageable damageable) {
                 durabilityMeta = damageable;
@@ -244,7 +243,7 @@ public class MultibreakProcessor extends BlockProcessor {
      * @param currentHeight The current height being processed.
      * @return A {@link Location}
      */
-    private @NotNull Location calculateBlockLocation(@NotNull Location depthStartingLocation, int currentWidth, int currentHeight) {
+    private @NonNull Location calculateBlockLocation(@NonNull Location depthStartingLocation, int currentWidth, int currentHeight) {
         if(direction.isX) {
             return depthStartingLocation.clone().add(0, currentHeight, currentWidth);
         } else if(direction.isY) {

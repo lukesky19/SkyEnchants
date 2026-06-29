@@ -17,7 +17,7 @@
 */
 package com.github.lukesky19.skyEnchants.config.data.settings;
 
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 /**

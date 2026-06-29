@@ -35,8 +35,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +47,7 @@ import java.util.UUID;
  * This class creates the GUI to preview what custom enchantments do and their descriptions.
  */
 public class PreviewGUI extends ChestGUI<UUID> {
-    private final @NotNull SkyEnchants skyEnchants;
+    private final @NonNull SkyEnchants skyEnchants;
     private final @Nullable PreviewGUIConfig previewGUIConfig;
 
     /**
@@ -58,10 +58,10 @@ public class PreviewGUI extends ChestGUI<UUID> {
      * @param guiConfigManager A {@link GUIConfigManager} instance.
      */
     public PreviewGUI(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull UUIDGUIManager guiManager,
-            @NotNull Player player,
-            @NotNull GUIConfigManager guiConfigManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull UUIDGUIManager guiManager,
+            @NonNull Player player,
+            @NonNull GUIConfigManager guiConfigManager) {
         super(skyEnchants, guiManager, player.getUniqueId(), player);
 
         this.skyEnchants = skyEnchants;
@@ -131,7 +131,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
      * @param inventoryCloseEvent An {@link InventoryCloseEvent}
      */
     @Override
-    public void handleClose(@NotNull InventoryCloseEvent inventoryCloseEvent) {
+    public void handleClose(@NonNull InventoryCloseEvent inventoryCloseEvent) {
         if(inventoryCloseEvent.getReason().equals(InventoryCloseEvent.Reason.UNLOADED) || inventoryCloseEvent.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW)) return;
 
         guiManager.removeOpenGUI(inventoryCloseEvent.getPlayer().getUniqueId());
@@ -142,28 +142,28 @@ public class PreviewGUI extends ChestGUI<UUID> {
      * @param inventoryDragEvent An {@link InventoryDragEvent}
      */
     @Override
-    public void handleBottomDrag(@NotNull InventoryDragEvent inventoryDragEvent) {}
+    public void handleBottomDrag(@NonNull InventoryDragEvent inventoryDragEvent) {}
 
     /**
      * Handles when items are dragged across the entire inventory. This method does nothing.
      * @param inventoryDragEvent An {@link InventoryDragEvent}
      */
     @Override
-    public void handleGlobalDrag(@NotNull InventoryDragEvent inventoryDragEvent) {}
+    public void handleGlobalDrag(@NonNull InventoryDragEvent inventoryDragEvent) {}
 
     /**
      * Handles when the player's inventory is clicked. This method does nothing.
      * @param inventoryClickEvent An {@link InventoryClickEvent}
      */
     @Override
-    public void handleBottomClick(@NotNull InventoryClickEvent inventoryClickEvent) {}
+    public void handleBottomClick(@NonNull InventoryClickEvent inventoryClickEvent) {}
 
     /**
      * Handles when a click occurs in either inventory. This method does nothing.
      * @param inventoryClickEvent An {@link InventoryClickEvent}
      */
     @Override
-    public void handleGlobalClick(@NotNull InventoryClickEvent inventoryClickEvent) {}
+    public void handleGlobalClick(@NonNull InventoryClickEvent inventoryClickEvent) {}
 
     /**
      * Create the filler buttons for the GUI.
@@ -176,7 +176,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
         itemStackBuilder.fromItemStackConfig(fillerConfig, player, List.of());
 
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
@@ -202,7 +202,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
         itemStackBuilder.fromItemStackConfig(exitConfig.item(), player, List.of());
 
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
             builder.setItemStack(itemStack);
@@ -233,7 +233,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
      * @param buttonConfig The {@link ButtonConfig}.
      * @param placeholders A {@link List} of {@link TagResolver.Single} of placeholders for the button's ItemStack.
      */
-    private void createDisplayButton(@NotNull ButtonConfig buttonConfig, @NotNull List<TagResolver.Single> placeholders) {
+    private void createDisplayButton(@NonNull ButtonConfig buttonConfig, @NonNull List<TagResolver.Single> placeholders) {
         if(buttonConfig.slot() == null) {
             logger.warn(AdventureUtility.plain("Unable to add a display button to the preview GUI due to an invalid slot."));
             return;
@@ -242,7 +242,7 @@ public class PreviewGUI extends ChestGUI<UUID> {
         ItemStackConfig itemStackConfig = buttonConfig.item();
         ItemStackBuilder itemStackBuilder = new ItemStackBuilder(skyEnchants.getComponentLogger());
         itemStackBuilder.fromItemStackConfig(itemStackConfig, player, placeholders);
-        Optional<@NotNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
+        Optional<@NonNull ItemStack> optionalItemStack = itemStackBuilder.buildItemStack();
         optionalItemStack.ifPresent(itemStack -> {
             GUIButton.Builder builder = new GUIButton.Builder();
 

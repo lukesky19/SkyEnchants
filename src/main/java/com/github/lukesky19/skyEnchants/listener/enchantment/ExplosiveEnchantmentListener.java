@@ -36,8 +36,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -47,10 +46,10 @@ import static com.github.lukesky19.skyEnchants.util.EnchantmentUtils.doesArmorCo
  * Listens to when an entity deals damage to another entity, and if the player has an explosive enchantment, attempts to apply the explosion effect.
  */
 public class ExplosiveEnchantmentListener implements Listener {
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull ExplosiveConfigManager explosiveConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull Set<UUID> entitiesToIgnore = new HashSet<>();
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull ExplosiveConfigManager explosiveConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
+    private final @NonNull Set<UUID> entitiesToIgnore = new HashSet<>();
 
     /**
      * Constructor
@@ -59,9 +58,9 @@ public class ExplosiveEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public ExplosiveEnchantmentListener(
-            @NotNull ComponentLogger logger,
-            @NotNull ExplosiveConfigManager explosiveConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull ComponentLogger logger,
+            @NonNull ExplosiveConfigManager explosiveConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.logger = logger;
         this.explosiveConfigManager = explosiveConfigManager;
         this.enchantmentManager = enchantmentManager;
@@ -101,7 +100,7 @@ public class ExplosiveEnchantmentListener implements Listener {
         }
 
         // Get the explosive configuration, and if null, log an error and return
-        @Nullable Explosive explosive = explosiveConfigManager.getConfiguration();
+        Explosive explosive = explosiveConfigManager.getConfiguration();
         if(explosive == null) {
             logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment due to invalid settings."));
             return;
@@ -110,25 +109,25 @@ public class ExplosiveEnchantmentListener implements Listener {
         // If explosive isn't enabled, return
         if(!explosive.isEnabled()) return;
         // Get the explosive Enchantment
-        @Nullable Enchantment explosiveEnchantment = enchantmentManager.getExplosiveEnchantment();
+        Enchantment explosiveEnchantment = enchantmentManager.getExplosiveEnchantment();
         // If the explosive enchantment is null, return
         if(explosiveEnchantment == null) return;
 
         if(!(causingEntity instanceof LivingEntity causingLivingEntity)) return;
         // The causing entity's equipment
-        @Nullable EntityEquipment causingEntityEquipment = causingLivingEntity.getEquipment();
+        EntityEquipment causingEntityEquipment = causingLivingEntity.getEquipment();
         if(causingEntityEquipment == null) return;
         // The entity that the damage is being applied to
         Entity targetEntity = entityDamageByEntityEvent.getEntity();
         if(!(targetEntity instanceof LivingEntity targetLivingEntity)) return;
 
         // Get the EquipmentSlots that the explosive enchantment can activate in.
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(explosive.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(explosive.getRegistrationConfig().equipmentSlots());
         // Get the explosive enchantment's max level
         int maxLevel = explosive.getRegistrationConfig().maxLevel();
 
         // Get the power mapping
-        @NotNull Map<Integer, Integer> explosivePowerPerLevel = explosive.explosionPowerPerLevel();
+        Map<Integer, Integer> explosivePowerPerLevel = explosive.explosionPowerPerLevel();
         // Log an error if the power mapping is empty
         if(explosivePowerPerLevel.isEmpty()) {
             logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping)."));
@@ -138,13 +137,13 @@ public class ExplosiveEnchantmentListener implements Listener {
         // Thorns handling
         if(damageSource.getDamageType().equals(DamageType.THORNS)) {
             // Ignore thorns damage from activating if armor doesn't contain the enchantment.
-            if(!doesArmorContainEnchantment(causingEntityEquipment, explosiveEnchantment)) return;
+            if(doesArmorContainEnchantment(causingEntityEquipment, explosiveEnchantment)) return;
         }
 
         // Loop through the equipment slots the explosive enchantment can activate in
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = causingEntityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = causingEntityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the explosive enchantment, move to the next EquipmentSlot
@@ -156,7 +155,7 @@ public class ExplosiveEnchantmentListener implements Listener {
             if(enchantmentLevel > maxLevel) continue;
 
             // Get the power for the explosion
-            @Nullable Integer power = explosivePowerPerLevel.get(enchantmentLevel);
+            Integer power = explosivePowerPerLevel.get(enchantmentLevel);
             // If there is no power mapping for the enchantment level, log an error and move to the next EquipmentSlot
             if(power == null) {
                 logger.warn(AdventureUtility.plain("Unable to apply the explosive enchantment effect due to invalid plugin settings (No power mapping for enchantment level: " + enchantmentLevel + ")."));

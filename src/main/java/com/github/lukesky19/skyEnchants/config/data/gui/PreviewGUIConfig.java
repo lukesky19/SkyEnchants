@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.data.gui;
 import com.github.lukesky19.skyEnchants.gui.PreviewGUI;
 import com.github.lukesky19.skylib.paper.api.gui.GUIType;
 import com.github.lukesky19.skylib.paper.api.itemstack.ItemStackConfig;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.List;
@@ -40,6 +40,6 @@ public record PreviewGUIConfig(
         int version,
         @Nullable String guiName,
         @Nullable GUIType guiType,
-        @NotNull ItemStackConfig filler,
-        @NotNull ButtonConfig exit,
-        @NotNull List<ButtonConfig> dummyButtons) {}
+        @NonNull ItemStackConfig filler,
+        @NonNull ButtonConfig exit,
+        @NonNull List<ButtonConfig> dummyButtons) {}

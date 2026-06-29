@@ -1,6 +1,6 @@
 package com.github.lukesky19.skyEnchants.config.data.misc;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.Map;
@@ -18,5 +18,5 @@ public record EnchantmentOptions(
         boolean disableAnvilUse,
         boolean disableEnchanterGuiUse,
         boolean allowEnchantmentOverwrite,
-        @NotNull Map<Integer, ApplicationCost> costByLevel,
-        @NotNull Map<Integer, ApplicationCost> penaltyByLevel) {}
+        @NonNull Map<Integer, ApplicationCost> costByLevel,
+        @NonNull Map<Integer, ApplicationCost> penaltyByLevel) {}

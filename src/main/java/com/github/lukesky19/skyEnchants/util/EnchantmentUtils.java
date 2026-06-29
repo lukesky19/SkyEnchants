@@ -34,7 +34,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -148,7 +147,7 @@ public class EnchantmentUtils {
      * @param player The {@link Player}.
      * @param enchantmentData The {@link EnchantmentData}.
      */
-    public static void returnUnappliedEnchantments(@NotNull Settings settings, @NonNull Player player, @NonNull EnchantmentData enchantmentData) {
+    public static void returnUnappliedEnchantments(@NonNull Settings settings, @NonNull Player player, @NonNull EnchantmentData enchantmentData) {
         // If not configured to return unapplied enchantments, return
         if(!settings.giveEnchantedBookForUnappliedEnchantments()) return;
         // If the enchantments to return is empty, return
@@ -242,7 +241,7 @@ public class EnchantmentUtils {
         boolean leggings = hasEnchantment(equipment.getItem(EquipmentSlot.LEGS), enchantment);
         boolean boots = hasEnchantment(equipment.getItem(EquipmentSlot.FEET), enchantment);
 
-        return helmet || chestplate || leggings || boots;
+        return !helmet && !chestplate && !leggings && !boots;
     }
 
     /**

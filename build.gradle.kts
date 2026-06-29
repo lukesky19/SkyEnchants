@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.lukesky19"
-version = "0.5.0.1"
+version = "0.5.0.2"
 
 repositories {
     mavenLocal()
@@ -23,9 +23,6 @@ repositories {
     }
     maven("https://repo.rosewooddev.io/repository/public/") {
         name = "RoseWood"
-    }
-    maven("https://repo.codemc.org/repository/maven-public/") {
-        name = "codemc"
     }
 }
 

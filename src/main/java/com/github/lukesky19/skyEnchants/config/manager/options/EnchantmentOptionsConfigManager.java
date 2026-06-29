@@ -27,8 +27,8 @@ import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -43,7 +43,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
      * Constructor
      * @param plugin A {@link SkyPlugin}.
      */
-    public EnchantmentOptionsConfigManager(@NotNull SkyPlugin plugin) {
+    public EnchantmentOptionsConfigManager(@NonNull SkyPlugin plugin) {
         super(plugin, Path.of(plugin.getDirectoryFile() + File.separator + "enchantment_options.yml"), EnchantmentOptionsConfig.class);
     }
 
@@ -65,7 +65,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
      * @return The original {@link EnchantmentOptionsConfig} configuration.
      */
     @Override
-    public @Nullable EnchantmentOptionsConfig migrateConfiguration(@NotNull EnchantmentOptionsConfig enchantmentOptionsConfig) {
+    public @Nullable EnchantmentOptionsConfig migrateConfiguration(@NonNull EnchantmentOptionsConfig enchantmentOptionsConfig) {
         return enchantmentOptionsConfig;
     }
 
@@ -85,7 +85,7 @@ public class EnchantmentOptionsConfigManager extends SimpleConfigManager<Enchant
     private void saveMissingEnchantmentOptions() {
         if(configuration == null) return;
 
-        Registry<@NotNull Enchantment> enchantmentRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT);
+        Registry<@NonNull Enchantment> enchantmentRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT);
         Map<String, EnchantmentOptions> enchantmentOptionsMap = configuration.enchantmentOptions();
 
         enchantmentRegistry.forEach(enchantment -> {

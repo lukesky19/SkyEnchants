@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.settings;
 import com.github.lukesky19.skyEnchants.config.data.settings.Settings;
 import com.github.lukesky19.skylib.common.api.configuration.abstracts.SimpleConfigManager;
 import com.github.lukesky19.skylib.paper.api.plugin.SkyPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -35,7 +35,7 @@ public class SettingsManager extends SimpleConfigManager<Settings> {
      * Constructor
      * @param plugin A {@link SkyPlugin}.
      */
-    public SettingsManager(@NotNull SkyPlugin plugin) {
+    public SettingsManager(@NonNull SkyPlugin plugin) {
         super(plugin, Path.of(plugin.getDataFolder() + File.separator + "settings.yml"), Settings.class);
     }
 
@@ -55,7 +55,7 @@ public class SettingsManager extends SimpleConfigManager<Settings> {
      * @return The original {@link Settings} configuration.
      */
     @Override
-    public @Nullable Settings migrateConfiguration(@NotNull Settings settings) {
+    public @Nullable Settings migrateConfiguration(@NonNull Settings settings) {
         return settings;
     }
 

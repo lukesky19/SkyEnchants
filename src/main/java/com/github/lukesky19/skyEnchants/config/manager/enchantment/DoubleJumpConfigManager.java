@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.DoubleJump;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class DoubleJumpConfigManager extends EnchantmentConfigManager<DoubleJump
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public DoubleJumpConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public DoubleJumpConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "double_jump.yml", DoubleJump.class);
     }
 
@@ -44,7 +44,7 @@ public class DoubleJumpConfigManager extends EnchantmentConfigManager<DoubleJump
      * @return The original {@link DoubleJump} configuration.
      */
     @Override
-    public @Nullable DoubleJump migrateConfiguration(@NotNull DoubleJump doubleJump) {
+    public @Nullable DoubleJump migrateConfiguration(@NonNull DoubleJump doubleJump) {
         return doubleJump;
     }
 

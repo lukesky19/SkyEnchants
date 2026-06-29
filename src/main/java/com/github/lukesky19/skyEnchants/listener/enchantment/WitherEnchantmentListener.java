@@ -37,8 +37,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -49,9 +48,9 @@ import static com.github.lukesky19.skyEnchants.util.EnchantmentUtils.doesArmorCo
  * Listens to when an entity deals damage to another entity, and if the player has a wither enchantment, attempts to apply the wither effect.
  */
 public class WitherEnchantmentListener implements Listener {
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull WitherConfigManager witherConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull WitherConfigManager witherConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
 
     /**
      * Constructor
@@ -60,9 +59,9 @@ public class WitherEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public WitherEnchantmentListener(
-            @NotNull ComponentLogger logger,
-            @NotNull WitherConfigManager witherConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull ComponentLogger logger,
+            @NonNull WitherConfigManager witherConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.logger = logger;
         this.witherConfigManager = witherConfigManager;
         this.enchantmentManager = enchantmentManager;
@@ -74,7 +73,7 @@ public class WitherEnchantmentListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntityDamaged(EntityDamageByEntityEvent entityDamageByEntityEvent) {
-        @Nullable Wither wither = witherConfigManager.getConfiguration();
+        Wither wither = witherConfigManager.getConfiguration();
         if(wither == null) {
             logger.error(AdventureUtility.plain("Unable to apply the wither enchantment's effects due to invalid settings."));
             return;
@@ -83,7 +82,7 @@ public class WitherEnchantmentListener implements Listener {
         // If wither isn't enabled, return
         if(!wither.isEnabled()) return;
         // Get the wither Enchantment
-        @Nullable Enchantment witherEnchantment = enchantmentManager.getWitherEnchantment();
+        Enchantment witherEnchantment = enchantmentManager.getWitherEnchantment();
         // If the wither enchantment is null, return
         if(witherEnchantment == null) return;
 
@@ -94,20 +93,20 @@ public class WitherEnchantmentListener implements Listener {
         if(causingEntity == null) return;
         if(!(causingEntity instanceof LivingEntity causingLivingEntity)) return;
         // The causing entity's equipment
-        @Nullable EntityEquipment causingEntityEquipment = causingLivingEntity.getEquipment();
+        EntityEquipment causingEntityEquipment = causingLivingEntity.getEquipment();
         if(causingEntityEquipment == null) return;
         // The entity that the damage is being applied to
         Entity targetEntity = entityDamageByEntityEvent.getEntity();
         if(!(targetEntity instanceof LivingEntity targetLivingEntity)) return;
 
         // Get the EquipmentSlots that the explosive enchantment can activate in.
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(wither.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(wither.getRegistrationConfig().equipmentSlots());
         // Get the explosive enchantment's max level
         int maxLevel = wither.getRegistrationConfig().maxLevel();
 
         // Get the effect duration and amplifier mapping
-        @NotNull Map<Integer, Integer> effectDurationPerLevel = wither.effectDurationPerLevel();
-        @NotNull Map<Integer, Integer> effectAmplifierPerLevel = wither.effectAmplifierPerLevel();
+        Map<Integer, Integer> effectDurationPerLevel = wither.effectDurationPerLevel();
+        Map<Integer, Integer> effectAmplifierPerLevel = wither.effectAmplifierPerLevel();
         // Log an error if the effect duration mapping is empty
         if(effectDurationPerLevel.isEmpty()) {
             logger.error(AdventureUtility.plain("Unable to apply the wither enchantment effect due to invalid plugin settings (No effect duration mapping)."));
@@ -123,13 +122,13 @@ public class WitherEnchantmentListener implements Listener {
         // Thorns handling
         if(damageSource.getDamageType().equals(DamageType.THORNS)) {
             // Ignore thorns damage from activating if armor doesn't contain the enchantment.
-            if(!doesArmorContainEnchantment(causingEntityEquipment, witherEnchantment)) return;
+            if(doesArmorContainEnchantment(causingEntityEquipment, witherEnchantment)) return;
         }
 
         // Loop through the equipment slots the wither enchantment can activate in
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = causingEntityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = causingEntityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the wither enchantment, move to the next EquipmentSlot
@@ -141,9 +140,9 @@ public class WitherEnchantmentListener implements Listener {
             if(enchantmentLevel > maxLevel) continue;
 
             // Get the duration of the effect
-            @Nullable Integer duration = effectDurationPerLevel.get(enchantmentLevel);
+            Integer duration = effectDurationPerLevel.get(enchantmentLevel);
             // Get the amplifier of the effect
-            @Nullable Integer amplifier = effectAmplifierPerLevel.get(enchantmentLevel);
+            Integer amplifier = effectAmplifierPerLevel.get(enchantmentLevel);
 
             // Log an error if there is no duration mapping for the enchantment level and move to the next EquipmentSlot
             if(duration == null) {

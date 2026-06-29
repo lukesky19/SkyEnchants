@@ -20,7 +20,7 @@ package com.github.lukesky19.skyEnchants.config.data.enchantment.interfaces;
 import com.github.lukesky19.skyEnchants.config.data.misc.Registration;
 import io.papermc.paper.registry.TypedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This interface acts as a way to get specific configuration across multiple configuration classes.
@@ -36,17 +36,17 @@ public interface IEnchantmentConfig {
      * The enchantment name.
      * @return The enchantment name as a {@link String}.
      */
-    @NotNull String getName();
+    @NonNull String getName();
 
     /**
      * Get the {@link TypedKey} of type {@link Enchantment}.
      * @return A {@link TypedKey} of type {@link Enchantment}.
      */
-    @NotNull TypedKey<@NotNull Enchantment> getTypedKey();
+    @NonNull TypedKey<@NonNull Enchantment> getTypedKey();
 
     /**
      * Get the {@link Registration} config.
      * @return The {@link Registration}
      */
-    @NotNull Registration getRegistrationConfig();
+    @NonNull Registration getRegistrationConfig();
 }

@@ -26,19 +26,19 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This class creates the help command argument for the skyenchants command.
  */
 public class HelpCommand {
-    private final @NotNull LocaleManager localeManager;
+    private final @NonNull LocaleManager localeManager;
 
     /**
      * Constructor
      * @param localeManager A {@link LocaleManager} instance.
      */
-    public HelpCommand(@NotNull LocaleManager localeManager) {
+    public HelpCommand(@NonNull LocaleManager localeManager) {
         this.localeManager = localeManager;
     }
 
@@ -46,7 +46,7 @@ public class HelpCommand {
      * Creates the {@link LiteralCommandNode} of type {@link CommandSourceStack} for the help command argument for the /skyenchants command.
      * @return A {@link LiteralCommandNode} of type {@link CommandSourceStack} for the help command argument for the /skyenchants command.
      */
-    public @NotNull LiteralCommandNode<CommandSourceStack> createCommand() {
+    public @NonNull LiteralCommandNode<CommandSourceStack> createCommand() {
         return Commands.literal("help")
                 .requires(ctx -> ctx.getSender().hasPermission("skyenchants.commands.skyenchants.help"))
                 .executes(ctx -> {

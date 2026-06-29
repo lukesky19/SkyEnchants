@@ -35,8 +35,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -45,13 +44,13 @@ import java.util.Map;
  * This class manages the application of attributes to ItemStacks with the speed, health, and or reach enchantments.
  */
 public class AttributeManager {
-    private final @NotNull ComponentLogger logger;
+    private final @NonNull ComponentLogger logger;
 
-    private final @NotNull HealthConfigManager healthConfigManager;
-    private final @NotNull ReachConfigManager reachConfigManager;
-    private final @NotNull SpeedConfigManager speedConfigManager;
+    private final @NonNull HealthConfigManager healthConfigManager;
+    private final @NonNull ReachConfigManager reachConfigManager;
+    private final @NonNull SpeedConfigManager speedConfigManager;
 
-    private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
 
     /**
      * Constructor
@@ -62,11 +61,11 @@ public class AttributeManager {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public AttributeManager(
-            @NotNull ComponentLogger logger,
-            @NotNull HealthConfigManager healthConfigManager,
-            @NotNull ReachConfigManager reachConfigManager,
-            @NotNull SpeedConfigManager speedConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull ComponentLogger logger,
+            @NonNull HealthConfigManager healthConfigManager,
+            @NonNull ReachConfigManager reachConfigManager,
+            @NonNull SpeedConfigManager speedConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.logger = logger;
         this.healthConfigManager = healthConfigManager;
         this.reachConfigManager = reachConfigManager;
@@ -78,30 +77,30 @@ public class AttributeManager {
      * Loop through the {@link EntityEquipment} provided and update any attributes for the speed, health, and reach enchantments that are enabled.
      * @param entityEquipment The {@link EntityEquipment} to loop through.
      */
-    public void applyAttributes(@NotNull EntityEquipment entityEquipment) {
-        @Nullable Health health = healthConfigManager.getConfiguration();
-        @Nullable Reach reach = reachConfigManager.getConfiguration();
-        @Nullable Speed speed = speedConfigManager.getConfiguration();
+    public void applyAttributes(@NonNull EntityEquipment entityEquipment) {
+        Health health = healthConfigManager.getConfiguration();
+        Reach reach = reachConfigManager.getConfiguration();
+        Speed speed = speedConfigManager.getConfiguration();
 
-        @Nullable Enchantment speedEnchantment = enchantmentManager.getSpeedEnchantment();
-        @Nullable Enchantment reachEnchantment = enchantmentManager.getReachEnchantment();
-        @Nullable Enchantment healthEnchantment = enchantmentManager.getHealthEnchantment();
+        Enchantment speedEnchantment = enchantmentManager.getSpeedEnchantment();
+        Enchantment reachEnchantment = enchantmentManager.getReachEnchantment();
+        Enchantment healthEnchantment = enchantmentManager.getHealthEnchantment();
 
         // If the health enchantment is enabled, apply the health attribute
         if(health != null && health.isEnabled() && healthEnchantment != null) {
             // Get the EquipmentSlots that the health enchantment can apply to.
-            @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(health.getRegistrationConfig().equipmentSlots());
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(health.getRegistrationConfig().equipmentSlots());
             // Get the max level for the health enchantment
             int maxLevel = health.getRegistrationConfig().maxLevel();
             // Get the health mapping per level
-            @NotNull Map<Integer, Integer> healthPerLevel = health.healthPerLevel();
+            Map<Integer, Integer> healthPerLevel = health.healthPerLevel();
 
             // Check if the health mapping is not empty
             if(!healthPerLevel.isEmpty()) {
                 // Loop through the possible EquipmentSlots that the health enchantment can activate in.
                 for(EquipmentSlot equipmentSlot : equipmentSlots) {
                     // Get the ItemStack in the EquipmentSlot
-                    @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+                    ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
                     // If the ItemStack is empty (air), move to the next EquipmentSlot
                     if(itemStack.isEmpty()) continue;
                     // If the ItemStack doesn't contain the health enchantment, move to the next EquipmentSlot
@@ -113,7 +112,7 @@ public class AttributeManager {
                     if(enchantmentLevel > maxLevel) continue;
 
                     // Get the health amount to use for the attribute
-                    @Nullable Integer healthAmount = healthPerLevel.get(enchantmentLevel);
+                    Integer healthAmount = healthPerLevel.get(enchantmentLevel);
                     // Log an error if there is no health amount configured for the enchantment level and move to the next EquipmentSlot
                     if(healthAmount == null) {
                         logger.error(AdventureUtility.plain("Unable to apply health enchantment's attribute due to invalid plugin settings (No health mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -131,18 +130,18 @@ public class AttributeManager {
         // If the reach enchantment is enabled, apply the reach attribute
         if(reach != null && reach.isEnabled() && reachEnchantment != null) {
             // Get the EquipmentSlots that the reach enchantment can apply to.
-            @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(reach.getRegistrationConfig().equipmentSlots());
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(reach.getRegistrationConfig().equipmentSlots());
             // Get the max level for the reach enchantment
             int maxLevel = reach.getRegistrationConfig().maxLevel();
             // Get the reach distance mapping per level
-            @NotNull Map<Integer, Double> reachDistancePerLevel = reach.reachDistancePerLevel();
+            Map<Integer, Double> reachDistancePerLevel = reach.reachDistancePerLevel();
 
             // Check if the reach distance mapping is not empty
             if(!reachDistancePerLevel.isEmpty()) {
                 // Loop through the possible EquipmentSlots that the reach enchantment can activate in.
                 for(EquipmentSlot equipmentSlot : equipmentSlots) {
                     // Get the ItemStack in the EquipmentSlot
-                    @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+                    ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
                     // If the ItemStack is empty (air), move to the next EquipmentSlot
                     if(itemStack.isEmpty()) continue;
                     // If the ItemStack doesn't contain the reach enchantment, move to the next EquipmentSlot
@@ -154,7 +153,7 @@ public class AttributeManager {
                     if(enchantmentLevel > maxLevel) continue;
 
                     // Get the reach distance amount to use for the attribute
-                    @Nullable Double reachDistanceAmount = reachDistancePerLevel.get(enchantmentLevel);
+                    Double reachDistanceAmount = reachDistancePerLevel.get(enchantmentLevel);
                     // Log an error if there is no reach distance amount configured for the enchantment level and move to the next EquipmentSlot
                     if(reachDistanceAmount == null) {
                         logger.error(AdventureUtility.plain("Unable to apply reach enchantment's attribute due to invalid plugin settings (No reach distance mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -172,18 +171,18 @@ public class AttributeManager {
         // If the speed enchantment is enabled, apply the speed attribute
         if(speed != null && speed.isEnabled() && speedEnchantment != null) {
             // Get the EquipmentSlots that the speed enchantment can apply to.
-            @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(speed.getRegistrationConfig().equipmentSlots());
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(speed.getRegistrationConfig().equipmentSlots());
             // Get the max level for the speed enchantment
             int maxLevel = speed.getRegistrationConfig().maxLevel();
             // Get the speed mapping per level
-            @NotNull Map<Integer, Double> speedPerLevel = speed.speedPerLevel();
+            Map<Integer, Double> speedPerLevel = speed.speedPerLevel();
 
             // Check if the speed mapping is not empty
             if(!speedPerLevel.isEmpty()) {
                 // Loop through the possible EquipmentSlots that the speed enchantment can activate in.
                 for(EquipmentSlot equipmentSlot : equipmentSlots) {
                     // Get the ItemStack in the EquipmentSlot
-                    @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+                    ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
                     // If the ItemStack is empty (air), move to the next EquipmentSlot
                     if(itemStack.isEmpty()) continue;
                     // If the ItemStack doesn't contain the speed enchantment, move to the next EquipmentSlot
@@ -195,7 +194,7 @@ public class AttributeManager {
                     if(enchantmentLevel > maxLevel) continue;
 
                     // Get the speed amount to use for the attribute
-                    @Nullable Double speedAmount = speedPerLevel.get(enchantmentLevel);
+                    Double speedAmount = speedPerLevel.get(enchantmentLevel);
                     // Log an error if there is no speed amount configured for the enchantment level and move to the next EquipmentSlot
                     if(speedAmount == null) {
                         logger.error(AdventureUtility.plain("Unable to apply speed enchantment's attribute due to invalid plugin settings (No speed mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -215,23 +214,23 @@ public class AttributeManager {
      * For the ItemStack provided, update any attributes for the speed, health, and reach enchantments that are enabled.
      * @param itemStack The {@link ItemStack} to update attributes for.
      */
-    public void applyAttributes(@NotNull ItemStack itemStack) {
-        @Nullable Health health = healthConfigManager.getConfiguration();
-        @Nullable Reach reach = reachConfigManager.getConfiguration();
-        @Nullable Speed speed = speedConfigManager.getConfiguration();
+    public void applyAttributes(@NonNull ItemStack itemStack) {
+        Health health = healthConfigManager.getConfiguration();
+        Reach reach = reachConfigManager.getConfiguration();
+        Speed speed = speedConfigManager.getConfiguration();
 
-        @Nullable Enchantment speedEnchantment = enchantmentManager.getSpeedEnchantment();
-        @Nullable Enchantment reachEnchantment = enchantmentManager.getReachEnchantment();
-        @Nullable Enchantment healthEnchantment = enchantmentManager.getHealthEnchantment();
+        Enchantment speedEnchantment = enchantmentManager.getSpeedEnchantment();
+        Enchantment reachEnchantment = enchantmentManager.getReachEnchantment();
+        Enchantment healthEnchantment = enchantmentManager.getHealthEnchantment();
 
         // If the health enchantment is enabled, apply the health attribute
         if(health != null && health.isEnabled() && healthEnchantment != null) {
             // Get the EquipmentSlots that the health enchantment can apply to.
-            @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(health.getRegistrationConfig().equipmentSlots());
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(health.getRegistrationConfig().equipmentSlots());
             // Get the max level for the health enchantment
             int maxLevel = health.getRegistrationConfig().maxLevel();
             // Get the health mapping per level
-            @NotNull Map<Integer, Integer> healthPerLevel = health.healthPerLevel();
+            Map<Integer, Integer> healthPerLevel = health.healthPerLevel();
 
             // Check if the health mapping is not empty
             if(!healthPerLevel.isEmpty()) {
@@ -248,7 +247,7 @@ public class AttributeManager {
                     if(enchantmentLevel > maxLevel) continue;
 
                     // Get the health amount to use for the attribute
-                    @Nullable Integer healthAmount = healthPerLevel.get(enchantmentLevel);
+                    Integer healthAmount = healthPerLevel.get(enchantmentLevel);
                     // Log an error if there is no health amount configured for the enchantment level and move to the next EquipmentSlot
                     if(healthAmount == null) {
                         logger.error(AdventureUtility.plain("Unable to apply health enchantment's attribute due to invalid plugin settings (No health mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -266,11 +265,11 @@ public class AttributeManager {
         // If the reach enchantment is enabled, apply the reach attribute
         if(reach != null && reach.isEnabled() && reachEnchantment != null) {
             // Get the EquipmentSlots that the reach enchantment can apply to.
-            @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(reach.getRegistrationConfig().equipmentSlots());
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(reach.getRegistrationConfig().equipmentSlots());
             // Get the max level for the reach enchantment
             int maxLevel = reach.getRegistrationConfig().maxLevel();
             // Get the reach distance mapping per level
-            @NotNull Map<Integer, Double> reachDistancePerLevel = reach.reachDistancePerLevel();
+            Map<Integer, Double> reachDistancePerLevel = reach.reachDistancePerLevel();
 
             // Check if the reach distance mapping is not empty
             if(!reachDistancePerLevel.isEmpty()) {
@@ -287,7 +286,7 @@ public class AttributeManager {
                     if(enchantmentLevel > maxLevel) continue;
 
                     // Get the reach distance amount to use for the attribute
-                    @Nullable Double reachDistanceAmount = reachDistancePerLevel.get(enchantmentLevel);
+                    Double reachDistanceAmount = reachDistancePerLevel.get(enchantmentLevel);
                     // Log an error if there is no reach distance amount configured for the enchantment level and move to the next EquipmentSlot
                     if(reachDistanceAmount == null) {
                         logger.error(AdventureUtility.plain("Unable to apply reach enchantment's attribute due to invalid plugin settings (No reach distance mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -305,11 +304,11 @@ public class AttributeManager {
         // If the speed enchantment is enabled, apply the speed attribute
         if(speed != null && speed.isEnabled() && speedEnchantment != null) {
             // Get the EquipmentSlots that the speed enchantment can apply to.
-            @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(speed.getRegistrationConfig().equipmentSlots());
+            List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(speed.getRegistrationConfig().equipmentSlots());
             // Get the max level for the speed enchantment
             int maxLevel = speed.getRegistrationConfig().maxLevel();
             // Get the speed mapping per level
-            @NotNull Map<Integer, Double> speedPerLevel = speed.speedPerLevel();
+            Map<Integer, Double> speedPerLevel = speed.speedPerLevel();
 
             // Check if the speed mapping is not empty
             if(!speedPerLevel.isEmpty()) {
@@ -326,7 +325,7 @@ public class AttributeManager {
                     if(enchantmentLevel > maxLevel) continue;
 
                     // Get the speed amount to use for the attribute
-                    @Nullable Double speedAmount = speedPerLevel.get(enchantmentLevel);
+                    Double speedAmount = speedPerLevel.get(enchantmentLevel);
                     // Log an error if there is no speed amount configured for the enchantment level and move to the next EquipmentSlot
                     if(speedAmount == null) {
                         logger.error(AdventureUtility.plain("Unable to apply speed enchantment's attribute due to invalid plugin settings (No speed mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -348,7 +347,7 @@ public class AttributeManager {
      * @param equipmentSlot The {@link EquipmentSlot} the item is in.
      * @param amount The amount of speed to add for the attribute.
      */
-    private void applySpeedAttribute(@NotNull ItemStack itemStack, @NotNull EquipmentSlot equipmentSlot, double amount) {
+    private void applySpeedAttribute(@NonNull ItemStack itemStack, @NonNull EquipmentSlot equipmentSlot, double amount) {
         ItemType itemType = itemStack.getType().asItemType();
         if(itemType == null) return;
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -374,7 +373,7 @@ public class AttributeManager {
      * @param equipmentSlot The {@link EquipmentSlot} the item is in.
      * @param amount The amount of reach to add for the attribute.
      */
-    private void applyReachAttribute(@NotNull ItemStack itemStack, @NotNull EquipmentSlot equipmentSlot, double amount) {
+    private void applyReachAttribute(@NonNull ItemStack itemStack, @NonNull EquipmentSlot equipmentSlot, double amount) {
         ItemType itemType = itemStack.getType().asItemType();
         if(itemType == null) return;
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -403,7 +402,7 @@ public class AttributeManager {
      * @param equipmentSlot The {@link EquipmentSlot} the item is in.
      * @param amount The amount of health to add for the attribute.
      */
-    private void applyHealthAttribute(@NotNull ItemStack itemStack, @NotNull EquipmentSlot equipmentSlot, double amount) {
+    private void applyHealthAttribute(@NonNull ItemStack itemStack, @NonNull EquipmentSlot equipmentSlot, double amount) {
         ItemType itemType = itemStack.getType().asItemType();
         if(itemType == null) return;
         ItemMeta itemMeta = itemStack.getItemMeta();

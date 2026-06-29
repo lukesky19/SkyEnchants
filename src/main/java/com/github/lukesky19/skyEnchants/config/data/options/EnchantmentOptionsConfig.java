@@ -18,7 +18,7 @@
 package com.github.lukesky19.skyEnchants.config.data.options;
 
 import com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentOptions;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.Map;
@@ -31,4 +31,4 @@ import java.util.Map;
 @ConfigSerializable
 public record EnchantmentOptionsConfig(
         int version,
-        @NotNull Map<String, EnchantmentOptions> enchantmentOptions) {}
+        @NonNull Map<String, EnchantmentOptions> enchantmentOptions) {}

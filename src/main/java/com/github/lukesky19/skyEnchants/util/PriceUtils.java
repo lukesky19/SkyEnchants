@@ -34,7 +34,7 @@ import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 import java.util.Iterator;
@@ -64,7 +64,7 @@ public class PriceUtils {
             @NonNull ComponentLogger logger,
             @NonNull EnchantmentOptionsConfigManager enchantmentOptionsConfigManager,
             @Nullable EnchantmentData enchantmentData) {
-        @Nullable EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
+        EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
         if(enchantmentOptionsConfig == null) {
             logger.error(AdventureUtility.plain("Unable to calculate application costs due to invalid enchantment options configuration."));
             return null;
@@ -83,7 +83,7 @@ public class PriceUtils {
             Enchantment enchantment = entry.getKey();
             int level = entry.getValue();
 
-            @Nullable ApplicationCost costs = getCost(enchantmentOptionsConfig, enchantment, level);
+            ApplicationCost costs = getCost(enchantmentOptionsConfig, enchantment, level);
             if(costs == null) {
                 logger.error(AdventureUtility.plain("Unable to calculate application costs due to missing enchantment configuration for " + enchantment.getKey() + " and level " + level));
                 return null;
@@ -108,7 +108,7 @@ public class PriceUtils {
             @NonNull ComponentLogger logger,
             @NonNull EnchantmentOptionsConfigManager enchantmentOptionsConfigManager,
             @Nullable EnchantmentData enchantmentData) {
-        @Nullable EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
+        EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
         if(enchantmentOptionsConfig == null) {
             logger.error(AdventureUtility.plain("Unable to calculate application costs due to invalid enchantment options configuration."));
             return null;
@@ -128,10 +128,10 @@ public class PriceUtils {
             Enchantment enchantment = entry.getKey();
             int level = entry.getValue();
 
-            @Nullable EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
+            EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
             if(enchantmentOptions != null) {
                 if(enchantmentOptions.allowEnchantmentOverwrite()) {
-                    @Nullable ApplicationCost enchantmentPenalties = getPenalty(enchantmentOptionsConfig, enchantment, level);
+                    ApplicationCost enchantmentPenalties = getPenalty(enchantmentOptionsConfig, enchantment, level);
                     if(enchantmentPenalties != null) {
                         requiredMoney.addAndGet(enchantmentPenalties.money());
                         requiredExpLevels.addAndGet(enchantmentPenalties.exp());
@@ -187,7 +187,7 @@ public class PriceUtils {
      * @return The {@link ApplicationCost} or null.
      */
     public static @Nullable ApplicationCost getCost(@NonNull EnchantmentOptionsConfig enchantmentOptionsConfig, @NonNull Enchantment enchantment, int level) {
-        @Nullable EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
+        EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
         if(enchantmentOptions == null) return null;
 
         return enchantmentOptions.costByLevel().get(level);
@@ -201,7 +201,7 @@ public class PriceUtils {
      * @return The {@link ApplicationCost} or null.
      */
     public static @Nullable ApplicationCost getPenalty(@NonNull EnchantmentOptionsConfig enchantmentOptionsConfig, @NonNull Enchantment enchantment, int level) {
-        @Nullable EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
+        EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
         if(enchantmentOptions == null) return null;
 
         return enchantmentOptions.penaltyByLevel().get(level);

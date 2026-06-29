@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Reach;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class ReachConfigManager extends EnchantmentConfigManager<Reach> {
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public ReachConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public ReachConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "reach.yml", Reach.class);
     }
 
@@ -44,7 +44,7 @@ public class ReachConfigManager extends EnchantmentConfigManager<Reach> {
      * @return The original {@link Reach} configuration.
      */
     @Override
-    public @Nullable Reach migrateConfiguration(@NotNull Reach reach) {
+    public @Nullable Reach migrateConfiguration(@NonNull Reach reach) {
         return reach;
     }
 

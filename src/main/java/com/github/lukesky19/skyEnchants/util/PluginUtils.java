@@ -31,7 +31,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,7 +56,7 @@ public class PluginUtils {
      * @param groupNames A {@link List} of {@link String}s for the group names.
      * @return An array of {@link EquipmentSlotGroup}s.
      */
-    public static @NotNull EquipmentSlotGroup @NotNull[] getEquipmentSlotGroups(@NotNull List<String> groupNames) {
+    public static @NonNull EquipmentSlotGroup @NonNull[] getEquipmentSlotGroups(@NonNull List<String> groupNames) {
         return groupNames.stream()
                 .map(EquipmentSlotGroup::getByName)
                 .filter(Objects::nonNull)
@@ -70,7 +70,7 @@ public class PluginUtils {
      * @param slotNames The {@link List} of {@link String}s for slot names.
      * @return A {@link List} of {@link EquipmentSlot}s.
      */
-    public static @NotNull List<EquipmentSlot> getEquipmentSlots(@NotNull List<String> slotNames) {
+    public static @NonNull List<EquipmentSlot> getEquipmentSlots(@NonNull List<String> slotNames) {
         return slotNames.stream()
                 .map(slotName -> {
                     try {
@@ -92,7 +92,7 @@ public class PluginUtils {
      * @param itemNames A {@link List} of {@link NamespacedKey}s as a {@link String} for {@link TypedKey}s of type {@link ItemType}
      * @return A {@link List} of {@link TypedKey}s of type {@link ItemType}.
      */
-    public static @NotNull List<@NotNull TypedKey<@NotNull ItemType>> getSupportedItemTypeTypedKeys(@NotNull List<String> itemNames) {
+    public static @NonNull List<@NonNull TypedKey<@NonNull ItemType>> getSupportedItemTypeTypedKeys(@NonNull List<String> itemNames) {
         return itemNames.stream()
                 .map(itemKeyName -> {
                     try {
@@ -113,11 +113,11 @@ public class PluginUtils {
      * @param itemTypeKeyName The ItemType key name.
      * @return true if supported, false if not.
      */
-    private static boolean supportsItemType(@NotNull String itemTypeKeyName) {
-        Registry<@NotNull ItemType> itemTypeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.ITEM);
+    private static boolean supportsItemType(@NonNull String itemTypeKeyName) {
+        Registry<@NonNull ItemType> itemTypeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.ITEM);
 
         // Create the NamespacedKey using the name normalized to lowercase.
-        @NotNull Optional<NamespacedKey> optionalNamespacedKey = createNamespacedKey(itemTypeKeyName.toLowerCase());
+        Optional<NamespacedKey> optionalNamespacedKey = createNamespacedKey(itemTypeKeyName.toLowerCase());
         if(optionalNamespacedKey.isPresent()) {
             NamespacedKey key = optionalNamespacedKey.get();
 
@@ -134,7 +134,7 @@ public class PluginUtils {
      * @param name The name of the key or the name with a namespace and key following the namespace:key format.
      * @return An {@link Optional} containing a {@link NamespacedKey} if one was created successfully. May be empty if the NamespacedKey fails to be created.
      */
-    private static @NotNull Optional<NamespacedKey> createNamespacedKey(@NotNull String name) {
+    private static @NonNull Optional<NamespacedKey> createNamespacedKey(@NonNull String name) {
         if(name.contains(":")) {
             return Optional.ofNullable(NamespacedKey.fromString(name));
         } else {
@@ -147,8 +147,8 @@ public class PluginUtils {
      * @param enchantmentNames A {@link List} of {@link NamespacedKey}s as a {@link String} for enchantments.
      * @return A {@link RegistryKeySet} of type {@link Enchantment}.
      */
-    public static @NotNull RegistryKeySet<@NotNull Enchantment> getExclusiveEnchantments(@NotNull List<String> enchantmentNames) {
-        List<@NotNull TypedKey<@NotNull Enchantment>> keyList = enchantmentNames.stream()
+    public static @NonNull RegistryKeySet<@NonNull Enchantment> getExclusiveEnchantments(@NonNull List<String> enchantmentNames) {
+        List<@NonNull TypedKey<@NonNull Enchantment>> keyList = enchantmentNames.stream()
                 .map(enchantmentName -> {
                     try {
                         //noinspection PatternValidation
@@ -168,7 +168,7 @@ public class PluginUtils {
      * @param itemStacks The {@link Collection} of {@link ItemStack}s to compact.
      * @return A {@link Collection} of {@link ItemStack}s.
      */
-    public static @NotNull Collection<ItemStack> compact(@NotNull Collection<ItemStack> itemStacks) {
+    public static @NonNull Collection<ItemStack> compact(@NonNull Collection<ItemStack> itemStacks) {
         Collection<ItemStack> combinedStacks = new ArrayList<>();
 
         for(ItemStack stack : itemStacks) {

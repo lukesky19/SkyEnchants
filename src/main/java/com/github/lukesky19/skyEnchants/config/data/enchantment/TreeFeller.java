@@ -23,7 +23,7 @@ import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.EnchantmentKeys;
 import net.kyori.adventure.key.Key;
 import org.bukkit.enchantments.Enchantment;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 /**
@@ -41,7 +41,7 @@ import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializ
 public record TreeFeller(
         int version,
         boolean enabled,
-        @NotNull Registration registration,
+        @NonNull Registration registration,
         int minLeafCount,
         boolean includeLeaves,
         boolean includeMangroveRoots,
@@ -53,17 +53,17 @@ public record TreeFeller(
     }
 
     @Override
-    public @NotNull String getName() {
+    public @NonNull String getName() {
         return "Tree Feller";
     }
 
     @Override
-    public @NotNull TypedKey<@NotNull Enchantment> getTypedKey() {
+    public @NonNull TypedKey<@NonNull Enchantment> getTypedKey() {
         return EnchantmentKeys.create(Key.key("skyenchants", "tree_feller"));
     }
 
     @Override
-    public @NotNull Registration getRegistrationConfig() {
+    public @NonNull Registration getRegistrationConfig() {
         return registration;
     }
 }

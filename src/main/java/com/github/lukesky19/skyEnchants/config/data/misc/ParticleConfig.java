@@ -19,7 +19,7 @@ package com.github.lukesky19.skyEnchants.config.data.misc;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 /**

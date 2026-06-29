@@ -19,7 +19,6 @@ package com.github.lukesky19.skyEnchants.util;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockType;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.util.Set;
@@ -74,7 +73,7 @@ public class BlockTypeUtils {
      * @param block The {@link Block} to check.
      * @return true or false.
      */
-    public static boolean isLogOrWoodBlock(@NotNull Block block) {
+    public static boolean isLogOrWoodBlock(@NonNull Block block) {
         BlockType blockType = block.getType().asBlockType();
         if(blockType == null) return false;
 
@@ -86,7 +85,7 @@ public class BlockTypeUtils {
      * @param block The {@link Block} to check.
      * @return true or false.
      */
-    public static boolean isLeafOrWartBlock(@NotNull Block block) {
+    public static boolean isLeafOrWartBlock(@NonNull Block block) {
         BlockType blockType = block.getType().asBlockType();
         if(blockType == null) return false;
 

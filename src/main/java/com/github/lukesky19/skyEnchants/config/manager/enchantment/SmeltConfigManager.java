@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Smelt;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class SmeltConfigManager extends EnchantmentConfigManager<Smelt> {
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public SmeltConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public SmeltConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger,"smelt.yml", Smelt.class);
     }
 
@@ -44,7 +44,7 @@ public class SmeltConfigManager extends EnchantmentConfigManager<Smelt> {
      * @return The original {@link Smelt} configuration.
      */
     @Override
-    public @Nullable Smelt migrateConfiguration(@NotNull Smelt smelt) {
+    public @Nullable Smelt migrateConfiguration(@NonNull Smelt smelt) {
         return smelt;
     }
 

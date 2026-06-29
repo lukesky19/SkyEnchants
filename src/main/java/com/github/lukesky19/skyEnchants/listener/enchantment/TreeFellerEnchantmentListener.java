@@ -40,8 +40,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -49,12 +48,12 @@ import java.util.*;
  * Listens for when a block is broken by a tool that contains the tree feller enchantment and applies the necessary actions.
  */
 public class TreeFellerEnchantmentListener implements Listener {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull DurabilityConfigManager durabilityConfigManager;
-    private final @NotNull TreeFellerConfigManager treeFellerConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull HookManager hookManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull DurabilityConfigManager durabilityConfigManager;
+    private final @NonNull TreeFellerConfigManager treeFellerConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
+    private final @NonNull HookManager hookManager;
 
     /**
      * Constructor
@@ -65,11 +64,11 @@ public class TreeFellerEnchantmentListener implements Listener {
      * @param hookManager A {@link HookManager} instance.
      */
     public TreeFellerEnchantmentListener(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull TreeFellerConfigManager treeFellerConfigManager,
-            @NotNull EnchantmentManager enchantmentManager,
-            @NotNull HookManager hookManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull TreeFellerConfigManager treeFellerConfigManager,
+            @NonNull EnchantmentManager enchantmentManager,
+            @NonNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.logger = skyEnchants.getComponentLogger();
         this.durabilityConfigManager = durabilityConfigManager;
@@ -87,7 +86,7 @@ public class TreeFellerEnchantmentListener implements Listener {
         Block block = blockBreakEvent.getBlock();
 
         // If the tree feller's settings are null, log and error and return
-        @Nullable TreeFeller treeFeller = treeFellerConfigManager.getConfiguration();
+        TreeFeller treeFeller = treeFellerConfigManager.getConfiguration();
         if(treeFeller == null) {
             logger.error(AdventureUtility.plain("Unable to activate a tree feller enchantment due to an invalid settings."));
             return;
@@ -96,7 +95,7 @@ public class TreeFellerEnchantmentListener implements Listener {
         // If the tree feller enchantment is disabled, return
         if(!treeFeller.isEnabled()) return;
         // If the tree feller enchantment is null, return
-        @Nullable Enchantment treeFellerEnchantment = enchantmentManager.getTreeFellerEnchantment();
+        Enchantment treeFellerEnchantment = enchantmentManager.getTreeFellerEnchantment();
         if(treeFellerEnchantment == null) return;
 
         // Get the block's BlockType
@@ -109,13 +108,13 @@ public class TreeFellerEnchantmentListener implements Listener {
         EntityEquipment entityEquipment = player.getEquipment();
 
         // Get the configured slots the enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(treeFeller.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(treeFeller.getRegistrationConfig().equipmentSlots());
         // Get the max level of the tree feller enchantment
         int maxLevel = treeFeller.getRegistrationConfig().maxLevel();
 
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the tree feller enchantment, move to the next EquipmentSlot

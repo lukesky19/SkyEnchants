@@ -35,8 +35,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
@@ -44,10 +44,10 @@ import java.util.*;
  * Listens for when a block is broken by a tool that contains the replant enchantment and applies the necessary actions.
  */
 public class ReplantEnchantmentListener implements Listener {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull ReplantConfigManager replantConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull ReplantConfigManager replantConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
 
     /**
      * Constructor
@@ -56,9 +56,9 @@ public class ReplantEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public ReplantEnchantmentListener(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull ReplantConfigManager replantConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull ReplantConfigManager replantConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.skyEnchants = skyEnchants;
         this.logger = skyEnchants.getComponentLogger();
         this.replantConfigManager = replantConfigManager;
@@ -71,7 +71,7 @@ public class ReplantEnchantmentListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBlockBreakReplantEnchantment(BlockBreakEvent blockBreakEvent) {
-        @Nullable Replant replant = replantConfigManager.getConfiguration();
+        Replant replant = replantConfigManager.getConfiguration();
         if(replant == null) {
             logger.error(AdventureUtility.plain("Unable to activate a replant enchantment due to invalid plugin settings."));
             return;
@@ -80,10 +80,10 @@ public class ReplantEnchantmentListener implements Listener {
         // If the multibreak enchantment is disabled, return
         if(!replant.isEnabled()) return;
         // If the multibreak enchantment is null, return
-        @Nullable Enchantment replantEnchantment = enchantmentManager.getReplantEnchantment();
+        Enchantment replantEnchantment = enchantmentManager.getReplantEnchantment();
         if(replantEnchantment == null) return;
 
-        @NotNull Map<Integer, Double> chancePerLevel = replant.chancePerLevel();
+        Map<Integer, Double> chancePerLevel = replant.chancePerLevel();
 
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
@@ -106,7 +106,7 @@ public class ReplantEnchantmentListener implements Listener {
         EntityEquipment entityEquipment = player.getEquipment();
 
         // Get the configured slots the enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(replant.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(replant.getRegistrationConfig().equipmentSlots());
         // Get the max level of the replant enchantment
         int maxLevel = replant.getRegistrationConfig().maxLevel();
 
@@ -116,7 +116,7 @@ public class ReplantEnchantmentListener implements Listener {
         // Loop through the possible EquipmentSlots that the replant enchantment can activate in.
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the replant enchantment, move to the next EquipmentSlot
@@ -128,7 +128,7 @@ public class ReplantEnchantmentListener implements Listener {
             if(enchantmentLevel > maxLevel) continue;
 
             // Get the chance that replant is applied
-            @Nullable Double replantChance = chancePerLevel.get(enchantmentLevel);
+            Double replantChance = chancePerLevel.get(enchantmentLevel);
             // Log an error if there is no chance configured for the enchantment level
             if(replantChance == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the replant enchantment due to invalid plugin settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
@@ -186,7 +186,7 @@ public class ReplantEnchantmentListener implements Listener {
      * @param blockType A {@link BlockType}.
      * @return An {@link ItemType} or null.
      */
-    private @Nullable ItemType getSeedItemTypeFromBlockType(@NotNull BlockType blockType) {
+    private @Nullable ItemType getSeedItemTypeFromBlockType(@NonNull BlockType blockType) {
         if(blockType.equals(BlockType.WHEAT)) {
             return ItemType.WHEAT_SEEDS;
         } else if(blockType.equals(BlockType.CARROTS)) {

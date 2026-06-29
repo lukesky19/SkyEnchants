@@ -34,8 +34,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.Damageable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
@@ -46,25 +46,25 @@ public abstract class BlockProcessor {
     /**
      * A {@link SkyEnchants} instance.
      */
-    protected final @NotNull SkyEnchants skyEnchants;
+    protected final @NonNull SkyEnchants skyEnchants;
     /**
      * A {@link DurabilityConfigManager} instance.
      */
-    protected final @NotNull DurabilityConfigManager durabilityConfigManager;
+    protected final @NonNull DurabilityConfigManager durabilityConfigManager;
     /**
      * An {@link EnchantmentManager} instance.
      */
-    protected final @NotNull EnchantmentManager enchantmentManager;
+    protected final @NonNull EnchantmentManager enchantmentManager;
     /**
      * A {@link HookManager} instance.
      */
-    protected final @NotNull HookManager hookManager;
+    protected final @NonNull HookManager hookManager;
 
     // Player Data
     /**
      * The {@link Player} to attribute the broken blocks to.
      */
-    protected final @NotNull Player player;
+    protected final @NonNull Player player;
     /**
      * The {@link ItemStack} to use.
      */
@@ -78,27 +78,27 @@ public abstract class BlockProcessor {
     /**
      * The starting {@link Block}.
      */
-    protected final @NotNull Block startingBlock;
+    protected final @NonNull Block startingBlock;
     /**
      * The starting location. This is the location of the starting block.
      */
-    protected final @NotNull Location startingLocation;
+    protected final @NonNull Location startingLocation;
     /**
      * The {@link World} the processing is occurring in.
      */
-    protected final @NotNull World world;
+    protected final @NonNull World world;
     /**
      * The {@link Deque} of {@link Location}s to be processed.
      */
-    protected final @NotNull Deque<Location> locationQueue = new ArrayDeque<>();
+    protected final @NonNull Deque<Location> locationQueue = new ArrayDeque<>();
     /**
      * The {@link Deque} of {@link Block}s to be processed.
      */
-    protected final @NotNull Deque<Block> blockQueue = new ArrayDeque<>();
+    protected final @NonNull Deque<Block> blockQueue = new ArrayDeque<>();
     /**
      * The locations already processed. See {@link #pack(Location)} and {@link #pack(int, int, int)} to convert coordinates to a single long.
      */
-    protected final @NotNull LongOpenHashSet processedLocations = new LongOpenHashSet();
+    protected final @NonNull LongOpenHashSet processedLocations = new LongOpenHashSet();
 
     /**
      * Constructor
@@ -112,13 +112,13 @@ public abstract class BlockProcessor {
      * @param toolSlotNumber The slot number of the tool.
      */
     public BlockProcessor(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull EnchantmentManager enchantmentManager,
-            @NotNull HookManager hookManager,
-            @NotNull Block startingBlock,
-            @NotNull Player player,
-            @NotNull ItemStack tool,
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull EnchantmentManager enchantmentManager,
+            @NonNull HookManager hookManager,
+            @NonNull Block startingBlock,
+            @NonNull Player player,
+            @NonNull ItemStack tool,
             int toolSlotNumber) {
         this.skyEnchants = skyEnchants;
         this.durabilityConfigManager = durabilityConfigManager;
@@ -140,7 +140,7 @@ public abstract class BlockProcessor {
      * Queue the location or locations based on the location. Locations should be added to {@link #locationQueue}.
      * @param location The {@link Location} to process.
      */
-    protected abstract void queueLocations(@NotNull Location location);
+    protected abstract void queueLocations(@NonNull Location location);
 
     /**
      * Process the locations in the {@link #locationQueue}.
@@ -166,7 +166,7 @@ public abstract class BlockProcessor {
      * @param location The {@link Location}
      * @return A long.
      */
-    protected long pack(@NotNull Location location) {
+    protected long pack(@NonNull Location location) {
         return pack(location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 
@@ -186,7 +186,7 @@ public abstract class BlockProcessor {
      * @param tool The {@link ItemStack}.
      * @return true if durability should be removed, false if not.
      */
-    protected boolean checkUnbreaking(@NotNull ItemStack tool) {
+    protected boolean checkUnbreaking(@NonNull ItemStack tool) {
         if(tool.isEmpty()) return false;
 
         int unbreakingLevel = tool.getEnchantmentLevel(Enchantment.UNBREAKING);
@@ -204,7 +204,7 @@ public abstract class BlockProcessor {
      * @param damageable The {@link Damageable}.
      * @return true if the durability enchantment is activated, false if not.
      */
-    protected boolean isProtected(@NotNull ItemStack tool, @NotNull Damageable damageable) {
+    protected boolean isProtected(@NonNull ItemStack tool, @NonNull Damageable damageable) {
         if(!damageable.hasDamage()) return false;
         int maxDurability = damageable.hasMaxDamage()
                 ? damageable.getMaxDamage()
@@ -212,12 +212,12 @@ public abstract class BlockProcessor {
         if((maxDurability - damageable.getDamage()) > 1) return false;
 
         // Get the durability enchantment configuration and if null, return
-        @Nullable Durability durability = durabilityConfigManager.getConfiguration();
+        Durability durability = durabilityConfigManager.getConfiguration();
         if(durability == null) return false;
         // If the durability enchantment is disabled, return
         if(!durability.isEnabled()) return false;
         // If the durability enchantment is null, return
-        @Nullable Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
+        Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
         if(durabilityEnchantment == null) return false;
 
         // Get the EquipmentSlots
@@ -244,7 +244,7 @@ public abstract class BlockProcessor {
      * Sets the tool to null if broken.
      * @param damageable The {@link Damageable} meta.
      */
-    protected void updateDurability(@NotNull Damageable damageable) {
+    protected void updateDurability(@NonNull Damageable damageable) {
         if(tool == null) return;
         if(!checkUnbreaking(tool)) return;
         if(isProtected(tool, damageable)) return;

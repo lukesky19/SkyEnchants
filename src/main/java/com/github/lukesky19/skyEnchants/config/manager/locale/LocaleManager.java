@@ -23,8 +23,8 @@ import com.github.lukesky19.skyEnchants.config.manager.settings.SettingsManager;
 import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import com.github.lukesky19.skylib.common.api.configuration.abstracts.SimpleConfigManager;
 import com.github.lukesky19.skylib.paper.api.plugin.SkyPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -34,8 +34,8 @@ import java.util.List;
  * This class manages the plugin's locale.
  */
 public class LocaleManager extends SimpleConfigManager<Locale> {
-    private final @NotNull SimpleConfigManager<Settings> settingsManager;
-    private final @NotNull Locale DEFAULT_LOCALE = new Locale(
+    private final @NonNull SimpleConfigManager<Settings> settingsManager;
+    private final @NonNull Locale DEFAULT_LOCALE = new Locale(
             1,
                     "<dark_purple><bold>SkyEnchants</bold></dark_purple><gray> ▪ </gray>",
             List.of(
@@ -60,7 +60,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
      * @param plugin A {@link SkyPlugin}.
      * @param settingsManager A {@link SettingsManager} instance.
      */
-    public LocaleManager(@NotNull SkyPlugin plugin, @NotNull SimpleConfigManager<Settings> settingsManager) {
+    public LocaleManager(@NonNull SkyPlugin plugin, @NonNull SimpleConfigManager<Settings> settingsManager) {
         super(plugin, Locale.class);
         this.settingsManager = settingsManager;
     }
@@ -70,7 +70,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
      * @return The plugin's locale if not null or the default locale otherwise.
      */
     @Override
-    public @NotNull Locale getConfiguration() {
+    public @NonNull Locale getConfiguration() {
         if(configuration == null) return DEFAULT_LOCALE;
         return configuration;
     }
@@ -108,7 +108,7 @@ public class LocaleManager extends SimpleConfigManager<Locale> {
      * @return The original {@link Locale} configuration.
      */
     @Override
-    public @Nullable Locale migrateConfiguration(@NotNull Locale locale) {
+    public @Nullable Locale migrateConfiguration(@NonNull Locale locale) {
         return locale;
     }
 

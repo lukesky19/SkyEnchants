@@ -46,7 +46,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -104,22 +104,22 @@ public final class SkyEnchants extends SkyPlugin {
      * @param witherConfigManager A {@link WitherConfigManager} instance.
      */
     public SkyEnchants(
-            @NotNull DoubleDropConfigManager doubleDropConfigManager,
-            @NotNull DoubleJumpConfigManager doubleJumpConfigManager,
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull ExplosiveConfigManager explosiveConfigManager,
-            @NotNull HasteConfigManager hasteConfigManager,
-            @NotNull HealthConfigManager healthConfigManager,
-            @NotNull MagnetConfigManager magnetConfigManager,
-            @NotNull MultibreakConfigManager multibreakConfigManager,
-            @NotNull PoisonConfigManager poisonConfigManager,
-            @NotNull ReachConfigManager reachConfigManager,
-            @NotNull ReplantConfigManager replantConfigManager,
-            @NotNull ShieldBashConfigManager shieldBashConfigManager,
-            @NotNull SmeltConfigManager smeltConfigManager,
-            @NotNull SpeedConfigManager speedConfigManager,
-            @NotNull TreeFellerConfigManager treeFellerConfigManager,
-            @NotNull WitherConfigManager witherConfigManager) {
+            @NonNull DoubleDropConfigManager doubleDropConfigManager,
+            @NonNull DoubleJumpConfigManager doubleJumpConfigManager,
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull ExplosiveConfigManager explosiveConfigManager,
+            @NonNull HasteConfigManager hasteConfigManager,
+            @NonNull HealthConfigManager healthConfigManager,
+            @NonNull MagnetConfigManager magnetConfigManager,
+            @NonNull MultibreakConfigManager multibreakConfigManager,
+            @NonNull PoisonConfigManager poisonConfigManager,
+            @NonNull ReachConfigManager reachConfigManager,
+            @NonNull ReplantConfigManager replantConfigManager,
+            @NonNull ShieldBashConfigManager shieldBashConfigManager,
+            @NonNull SmeltConfigManager smeltConfigManager,
+            @NonNull SpeedConfigManager speedConfigManager,
+            @NonNull TreeFellerConfigManager treeFellerConfigManager,
+            @NonNull WitherConfigManager witherConfigManager) {
         this.doubleDropConfigManager = doubleDropConfigManager;
         this.doubleJumpConfigManager = doubleJumpConfigManager;
         this.durabilityConfigManager = durabilityConfigManager;

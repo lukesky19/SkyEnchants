@@ -50,7 +50,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 import java.math.BigDecimal;
@@ -289,7 +289,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         int clickedSlot = inventoryClickEvent.getSlot();
         skyEnchants.getServer().getScheduler().runTask(skyEnchants, () -> {
             if(!player.isOnline() && !player.isConnected()) return;
-            @Nullable ItemStack clickedItemStack = player.getInventory().getItem(clickedSlot);
+            ItemStack clickedItemStack = player.getInventory().getItem(clickedSlot);
             if(clickedItemStack == null || clickedItemStack.isEmpty()) return;
 
             if(input1ItemStack == null) {
@@ -347,7 +347,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
     private void createCostsButton() {
         if(inventoryView == null) return;
         if(enchanterGUIConfig == null) return;
-        @Nullable EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
+        EnchantmentOptionsConfig enchantmentOptionsConfig = enchantmentOptionsConfigManager.getConfiguration();
         if(enchantmentOptionsConfig == null) {
             logger.warn(AdventureUtility.plain("Unable to add a the costs button to the enchanter GUI due to an invalid enchantment options config."));
             return;
@@ -556,7 +556,7 @@ public class EnchanterGUI extends ChestGUI<UUID> {
         GUIButton.Builder builder = new GUIButton.Builder();
         builder.setItemStack(outputItemStack);
         builder.setAction(inventoryClickEvent -> {
-            @Nullable Settings settings = settingsManager.getConfiguration();
+            Settings settings = settingsManager.getConfiguration();
             if(settings == null) return;
             if(enchantmentData == null) return;
 

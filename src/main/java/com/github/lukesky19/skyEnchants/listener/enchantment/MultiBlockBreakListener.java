@@ -39,8 +39,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -51,12 +51,12 @@ import static com.github.lukesky19.skyEnchants.util.PluginUtils.compact;
  * Listens for a {@link MultiBlockBreakEvent} and attempts to process enchantment effects.
  */
 public class MultiBlockBreakListener implements Listener {
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull DoubleDropConfigManager doubleDropConfigManager;
-    private final @NotNull SmeltConfigManager smeltConfigManager;
-    private final @NotNull MagnetConfigManager magnetConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull BlockManager blockManager;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull DoubleDropConfigManager doubleDropConfigManager;
+    private final @NonNull SmeltConfigManager smeltConfigManager;
+    private final @NonNull MagnetConfigManager magnetConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
+    private final @NonNull BlockManager blockManager;
 
     /**
      * Constructor
@@ -68,12 +68,12 @@ public class MultiBlockBreakListener implements Listener {
      * @param blockManager A {@link BlockManager} instance.
      */
     public MultiBlockBreakListener(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull DoubleDropConfigManager doubleDropConfigManager,
-            @NotNull SmeltConfigManager smeltConfigManager,
-            @NotNull MagnetConfigManager magnetConfigManager,
-            @NotNull EnchantmentManager enchantmentManager,
-            @NotNull BlockManager blockManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull DoubleDropConfigManager doubleDropConfigManager,
+            @NonNull SmeltConfigManager smeltConfigManager,
+            @NonNull MagnetConfigManager magnetConfigManager,
+            @NonNull EnchantmentManager enchantmentManager,
+            @NonNull BlockManager blockManager) {
         this.logger = skyEnchants.getComponentLogger();
         this.doubleDropConfigManager = doubleDropConfigManager;
         this.smeltConfigManager = smeltConfigManager;
@@ -108,10 +108,10 @@ public class MultiBlockBreakListener implements Listener {
      * @param itemStackList The {@link Collection} of {@link ItemStack}s.
      */
     private void processDoubleDrop(
-            @NotNull EntityEquipment playerEquipment,
-            @NotNull Map<BlockState, Collection<ItemStack>> blockStateItemStackMap,
-            @NotNull Collection<ItemStack> itemStackList) {
-        @Nullable DoubleDrop doubleDrop = doubleDropConfigManager.getConfiguration();
+            @NonNull EntityEquipment playerEquipment,
+            @NonNull Map<BlockState, Collection<ItemStack>> blockStateItemStackMap,
+            @NonNull Collection<ItemStack> itemStackList) {
+        DoubleDrop doubleDrop = doubleDropConfigManager.getConfiguration();
         if(doubleDrop == null) {
             logger.error(AdventureUtility.plain("Unable to activate a double drop enchantment due to an invalid settings."));
             return;
@@ -119,10 +119,10 @@ public class MultiBlockBreakListener implements Listener {
 
         // If the double drop enchantment isn't enabled or is null, return
         if(!doubleDrop.isEnabled()) return;
-        @Nullable Enchantment doubleDropEnchantment = enchantmentManager.getDoubleDropEnchantment();
+        Enchantment doubleDropEnchantment = enchantmentManager.getDoubleDropEnchantment();
         if(doubleDropEnchantment == null) return;
 
-        @NotNull Map<Integer, Double> chancePerLevel = doubleDrop.chancePerLevel();
+        Map<Integer, Double> chancePerLevel = doubleDrop.chancePerLevel();
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
             logger.error(AdventureUtility.plain("Unable to apply the double drop enchantment due to invalid plugin settings (No chance mapping)."));
@@ -130,7 +130,7 @@ public class MultiBlockBreakListener implements Listener {
         }
 
         // Get the EquipmentSlots that the haste enchantment can apply to.
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(doubleDrop.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(doubleDrop.getRegistrationConfig().equipmentSlots());
         // Get the max level for the haste enchantment.
         int maxLevel = doubleDrop.getRegistrationConfig().maxLevel();
 
@@ -163,10 +163,10 @@ public class MultiBlockBreakListener implements Listener {
      * @param itemStackList The {@link Collection} of {@link ItemStack}s.
      */
     private void processSmelt(
-            @NotNull EntityEquipment playerEquipment,
-            @NotNull Map<BlockState, Collection<ItemStack>> blockStateItemStackMap,
-            @NotNull Collection<ItemStack> itemStackList) {
-        @Nullable Smelt smelt = smeltConfigManager.getConfiguration();
+            @NonNull EntityEquipment playerEquipment,
+            @NonNull Map<BlockState, Collection<ItemStack>> blockStateItemStackMap,
+            @NonNull Collection<ItemStack> itemStackList) {
+        Smelt smelt = smeltConfigManager.getConfiguration();
         if(smelt == null) {
             logger.error(AdventureUtility.plain("Unable to activate the smelt enchantment due to invalid settings."));
             return;
@@ -175,10 +175,10 @@ public class MultiBlockBreakListener implements Listener {
         // If the smelt enchantment is disabled, return
         if(!smelt.enabled()) return;
         // If the smelt enchantment is null, return
-        @Nullable Enchantment smeltEnchantment = enchantmentManager.getSmeltEnchantment();
+        Enchantment smeltEnchantment = enchantmentManager.getSmeltEnchantment();
         if(smeltEnchantment == null) return;
 
-        @NotNull Map<Integer, Double> chancePerLevel = smelt.chancePerLevel();
+        Map<Integer, Double> chancePerLevel = smelt.chancePerLevel();
         // If there is no chance mapping, log an error and return
         if(chancePerLevel.isEmpty()) {
             logger.error(AdventureUtility.plain("Unable to apply the smelt enchantment due to invalid settings (No chance mapping)."));
@@ -186,7 +186,7 @@ public class MultiBlockBreakListener implements Listener {
         }
 
         // Get the configured slots the enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(smelt.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(smelt.getRegistrationConfig().equipmentSlots());
         // Get the max level of the smelt enchantment
         int maxLevel = smelt.getRegistrationConfig().maxLevel();
 
@@ -198,7 +198,7 @@ public class MultiBlockBreakListener implements Listener {
         blockStateItemStackMap.forEach((blockState, itemStackCollection) -> {
             if(!blockManager.isBlockPlayerPlaced(blockState.getBlock())) {
                 itemStackCollection.forEach(itemStack -> {
-                    @Nullable ItemStack smeltedItem = getSmeltedItemStack(itemStack);
+                    ItemStack smeltedItem = getSmeltedItemStack(itemStack);
                     result.add(Objects.requireNonNullElse(smeltedItem, itemStack));
                 });
             } else {
@@ -221,16 +221,16 @@ public class MultiBlockBreakListener implements Listener {
      * @param itemLocation The {@link Location} the {@link List} of {@link ItemStack}s will be dropped at, or null.
      */
     private void processMagnet(
-            @NotNull Player player,
-            @NotNull EntityEquipment playerEquipment,
-            @NotNull Collection<ItemStack> itemStackList,
-            @NotNull Location itemLocation) {
-        @NotNull Location playerLocation = player.getLocation();
-        @NotNull PlayerInventory playerInventory = player.getInventory();
-        @NotNull ItemStack toolStack = player.getInventory().getItemInMainHand();
+            @NonNull Player player,
+            @NonNull EntityEquipment playerEquipment,
+            @NonNull Collection<ItemStack> itemStackList,
+            @NonNull Location itemLocation) {
+        Location playerLocation = player.getLocation();
+        PlayerInventory playerInventory = player.getInventory();
+        ItemStack toolStack = player.getInventory().getItemInMainHand();
         if(toolStack.isEmpty()) return;
 
-        @Nullable Magnet magnet = magnetConfigManager.getConfiguration();
+        Magnet magnet = magnetConfigManager.getConfiguration();
         if(magnet == null) {
             logger.error(AdventureUtility.plain("Unable to activate the magnet enchantment due to invalid settings."));
             return;
@@ -239,7 +239,7 @@ public class MultiBlockBreakListener implements Listener {
         // If the magnet enchantment is disabled, return
         if(!magnet.isEnabled()) return;
         // If the magnet enchantment is null, return
-        @Nullable Enchantment magnetEnchantment = enchantmentManager.getMagnetEnchantment();
+        Enchantment magnetEnchantment = enchantmentManager.getMagnetEnchantment();
         if(magnetEnchantment == null) return;
 
         // Only check distance-level mappings if guaranteed pickup is false
@@ -252,15 +252,15 @@ public class MultiBlockBreakListener implements Listener {
         }
 
         // Get the configured slots the enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(magnet.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(magnet.getRegistrationConfig().equipmentSlots());
         // Get the max level of the magnet enchantment
         int maxLevel = magnet.getRegistrationConfig().maxLevel();
 
-        @Nullable Double distance = null;
+        Double distance = null;
         // Loop through the possible EquipmentSlots that the enchantment can activate in.
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = playerEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = playerEquipment.getItem(equipmentSlot);
 
             // If the ItemStack is not valid, move to the next EquipmentSlot
             if(isItemStackInvalid(itemStack, magnetEnchantment, maxLevel)) continue;
@@ -308,15 +308,15 @@ public class MultiBlockBreakListener implements Listener {
      * @return true if the player lacks equipment with a valid enchantment, or false.
      */
     private boolean lacksEquipment(
-            @NotNull EntityEquipment playerEquipment,
-            @NotNull List<EquipmentSlot> equipmentSlots,
-            @NotNull Map<Integer, Double> chancePerLevel,
-            @NotNull Enchantment enchantment,
+            @NonNull EntityEquipment playerEquipment,
+            @NonNull List<EquipmentSlot> equipmentSlots,
+            @NonNull Map<Integer, Double> chancePerLevel,
+            @NonNull Enchantment enchantment,
             int maxLevel) {
         // Loop through the possible EquipmentSlots that the enchantment can activate in.
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = playerEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = playerEquipment.getItem(equipmentSlot);
 
             // If the ItemStack is not valid, move to the next EquipmentSlot
             if(isItemStackInvalid(itemStack, enchantment, maxLevel)) continue;
@@ -324,7 +324,7 @@ public class MultiBlockBreakListener implements Listener {
             // Get the enchantment level
             int enchantmentLevel = itemStack.getEnchantmentLevel(enchantment);
             // Get the chance that the enchantment is applied
-            @Nullable Double chance = chancePerLevel.get(enchantmentLevel);
+            Double chance = chancePerLevel.get(enchantmentLevel);
             // Log an error if there is no chance configured for the enchantment level
             if (chance == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the " + enchantment.getKey() + " enchantment due to invalid plugin settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
@@ -346,7 +346,7 @@ public class MultiBlockBreakListener implements Listener {
      * @param enchantment The {@link Enchantment}.
      * @return true if invalid, false if not.
      */
-    private boolean isItemStackInvalid(@NotNull ItemStack itemStack, @NotNull Enchantment enchantment, int maxLevel) {
+    private boolean isItemStackInvalid(@NonNull ItemStack itemStack, @NonNull Enchantment enchantment, int maxLevel) {
         // If the ItemStack is empty (air), the item is not valid.
         if(itemStack.isEmpty()) return true;
         // If the ItemStack doesn't contain the enchantment, the item is not valid.
@@ -379,7 +379,7 @@ public class MultiBlockBreakListener implements Listener {
      * @param item The {@link ItemStack} to get the smelted result for.
      * @return The {@link ItemStack} or null.
      */
-    private @Nullable ItemStack getSmeltedItemStack(@NotNull ItemStack item) {
+    private @Nullable ItemStack getSmeltedItemStack(@NonNull ItemStack item) {
         if(item.isEmpty()) return null;
 
         Iterator<Recipe> recipes = Bukkit.recipeIterator();
@@ -408,7 +408,7 @@ public class MultiBlockBreakListener implements Listener {
      * @param itemStack The ItemStack to add.
      * @return A {@link List} of {@link ItemStack}s that were leftover because the full ItemStack didn't fit in the Inventory.
      */
-    private @NotNull List<ItemStack> addToInventory(@NotNull Inventory inventory, @NotNull ItemStack itemStack) {
+    private @NonNull List<ItemStack> addToInventory(@NonNull Inventory inventory, @NonNull ItemStack itemStack) {
         Map<Integer, ItemStack> leftover = inventory.addItem(itemStack);
         if(leftover.isEmpty()) return new ArrayList<>();
 

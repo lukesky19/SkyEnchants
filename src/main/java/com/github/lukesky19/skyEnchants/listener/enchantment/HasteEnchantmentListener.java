@@ -39,8 +39,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -49,10 +48,10 @@ import java.util.*;
  * applies the necessary effects or actions. Also removes the unbreakable setting if necessary.
  */
 public class HasteEnchantmentListener implements Listener {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull HasteConfigManager hasteConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull HasteConfigManager hasteConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
 
     /**
      * Constructor
@@ -61,9 +60,9 @@ public class HasteEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public HasteEnchantmentListener(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull HasteConfigManager hasteConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull HasteConfigManager hasteConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.skyEnchants = skyEnchants;
         this.logger = skyEnchants.getComponentLogger();
         this.hasteConfigManager = hasteConfigManager;
@@ -78,7 +77,7 @@ public class HasteEnchantmentListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBlockBreakHasteEnchantment(BlockBreakEvent blockBreakEvent) {
-        @Nullable Haste haste = hasteConfigManager.getConfiguration();
+        Haste haste = hasteConfigManager.getConfiguration();
         if(haste == null) {
             logger.error(AdventureUtility.plain("Unable to activate a haste enchantment due to invalid settings."));
             return;
@@ -86,13 +85,13 @@ public class HasteEnchantmentListener implements Listener {
 
         // If the haste enchantment isn't enabled or is null, return
         if(!haste.isEnabled()) return;
-        @Nullable Enchantment hasteEnchantment = enchantmentManager.getHasteEnchantment();
+        Enchantment hasteEnchantment = enchantmentManager.getHasteEnchantment();
         if(hasteEnchantment == null) return;
 
-        @NotNull Map<Integer, Long> unbreakableDurationPerLevel = haste.unbreakableDurationPerLevel();
-        @NotNull Map<Integer, Integer> effectDurationPerLevel = haste.effectDurationPerLevel();
-        @NotNull Map<Integer, Integer> effectAmplifierPerLevel = haste.effectAmplifierPerLevel();
-        @NotNull Map<Integer, Double> chancePerLevel = haste.chancePerLevel();
+        Map<Integer, Long> unbreakableDurationPerLevel = haste.unbreakableDurationPerLevel();
+        Map<Integer, Integer> effectDurationPerLevel = haste.effectDurationPerLevel();
+        Map<Integer, Integer> effectAmplifierPerLevel = haste.effectAmplifierPerLevel();
+        Map<Integer, Double> chancePerLevel = haste.chancePerLevel();
 
         // If unbreakable with haste is enabled and there is no unbreakable duration mapping, log an error and return
         if(haste.temporaryUnbreakable()) {
@@ -125,7 +124,7 @@ public class HasteEnchantmentListener implements Listener {
         // Get the Player's EntityEquipment
         EntityEquipment entityEquipment = player.getEquipment();
         // Get the EquipmentSlots that the haste enchantment can apply to.
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(haste.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(haste.getRegistrationConfig().equipmentSlots());
         // Get the max level for the haste enchantment.
         int maxLevel = haste.getRegistrationConfig().maxLevel();
 
@@ -135,7 +134,7 @@ public class HasteEnchantmentListener implements Listener {
         // Loop through the possible EquipmentSlots that the haste enchantment can activate in.
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the Haste enchantment, move to the next EquipmentSlot
@@ -147,7 +146,7 @@ public class HasteEnchantmentListener implements Listener {
             if(enchantmentLevel > maxLevel) continue;
 
             // Get the chance that haste is applied
-            @Nullable Double hasteChance = chancePerLevel.get(enchantmentLevel);
+            Double hasteChance = chancePerLevel.get(enchantmentLevel);
             // Log an error if there is no chance configured for the enchantment level
             if(hasteChance == null) {
                 logger.error(AdventureUtility.plain("Unable to apply haste enchantment effects due to invalid settings (No chance to activate for enchantment level: " + enchantmentLevel + ")."));
@@ -163,7 +162,7 @@ public class HasteEnchantmentListener implements Listener {
             }
 
             // Get the duration for the haste effect
-            @Nullable Integer duration = effectDurationPerLevel.get(enchantmentLevel);
+            Integer duration = effectDurationPerLevel.get(enchantmentLevel);
             // Log an error if there is no duration configured for the enchantment level
             if(duration == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the haste enchantment effect due to invalid settings (No effect duration mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -171,7 +170,7 @@ public class HasteEnchantmentListener implements Listener {
             }
 
             // Get the amplifier for the haste effect
-            @Nullable Integer amplifier = effectAmplifierPerLevel.get(enchantmentLevel);
+            Integer amplifier = effectAmplifierPerLevel.get(enchantmentLevel);
             // Log an error if there is no amplifier configured for the enchantment level
             if(amplifier == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the haste enchantment effect due to invalid settings (No effect amplifier mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -195,7 +194,7 @@ public class HasteEnchantmentListener implements Listener {
                 if(timestampKey == null) continue;
 
                 // Get the unbreakable duration
-                @Nullable Long unbreakableDuration = unbreakableDurationPerLevel.get(enchantmentLevel);
+                Long unbreakableDuration = unbreakableDurationPerLevel.get(enchantmentLevel);
                 // Log an error if there is no duration for the enchantment level
                 if(unbreakableDuration == null) {
                     logger.error(AdventureUtility.plain("Unable to apply the haste enchantment effect due to invalid settings (No unbreakable duration mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -220,7 +219,7 @@ public class HasteEnchantmentListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onBlockBreakUnbreakableCheck(BlockBreakEvent blockBreakEvent) {
-        @Nullable Haste haste = hasteConfigManager.getConfiguration();
+        Haste haste = hasteConfigManager.getConfiguration();
         if(haste == null) {
             logger.error(AdventureUtility.plain("Unable to remove a unbreakable tool from the haste enchantment due to invalid settings."));
             return;
@@ -252,7 +251,7 @@ public class HasteEnchantmentListener implements Listener {
             if(!pdc.has(timestampKey)) continue;
 
             // Get the timestamp stored on the PDC
-            @Nullable Long timeStamp = pdc.get(timestampKey, PersistentDataType.LONG);
+            Long timeStamp = pdc.get(timestampKey, PersistentDataType.LONG);
             // If the timestamp is null, move to the next EquipmentSlot
             if(timeStamp == null) continue;
 

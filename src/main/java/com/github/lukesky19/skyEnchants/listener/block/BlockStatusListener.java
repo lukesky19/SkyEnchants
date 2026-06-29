@@ -31,15 +31,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 /**
  * This class listens for when a block is placed and marks it as player-placed.
  */
 public class BlockStatusListener implements Listener {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull BlockManager blockManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull BlockManager blockManager;
     private final @NonNull HookManager hookManager;
 
     /**
@@ -49,8 +48,8 @@ public class BlockStatusListener implements Listener {
      * @param hookManager A {@link HookManager} instance.
      */
     public BlockStatusListener(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull BlockManager blockManager,
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull BlockManager blockManager,
             @NonNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.blockManager = blockManager;

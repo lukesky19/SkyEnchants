@@ -41,8 +41,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.projectiles.ProjectileSource;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -53,8 +52,8 @@ import java.util.List;
  * for the tree feller and multibreak enchantment.
  */
 public class DurabilityEnchantmentListener implements Listener {
-    private final @NotNull DurabilityConfigManager durabilityConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NonNull DurabilityConfigManager durabilityConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
 
     /**
      * Constructor
@@ -62,8 +61,8 @@ public class DurabilityEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public DurabilityEnchantmentListener(
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.durabilityConfigManager = durabilityConfigManager;
         this.enchantmentManager = enchantmentManager;
     }
@@ -100,7 +99,7 @@ public class DurabilityEnchantmentListener implements Listener {
     public void onBlockInteract(EntityInteractEvent entityInteractEvent) {
         Entity entity = entityInteractEvent.getEntity();
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        @Nullable EntityEquipment entityEquipment = livingEntity.getEquipment();
+        EntityEquipment entityEquipment = livingEntity.getEquipment();
         if(entityEquipment == null) return;
         ItemStack mainHandItem = entityEquipment.getItem(EquipmentSlot.HAND);
         ItemStack offHandItem = entityEquipment.getItem(EquipmentSlot.OFF_HAND);
@@ -127,7 +126,7 @@ public class DurabilityEnchantmentListener implements Listener {
     public void onEntityChangeBlock(EntityChangeBlockEvent entityChangeBlockEvent) {
         Entity entity = entityChangeBlockEvent.getEntity();
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        @Nullable EntityEquipment entityEquipment = livingEntity.getEquipment();
+        EntityEquipment entityEquipment = livingEntity.getEquipment();
         if(entityEquipment == null) return;
         ItemStack mainHandItem = entityEquipment.getItem(EquipmentSlot.HAND);
         ItemStack offHandItem = entityEquipment.getItem(EquipmentSlot.OFF_HAND);
@@ -189,7 +188,7 @@ public class DurabilityEnchantmentListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent entityDamageByEntityEvent) {
         Entity entity = entityDamageByEntityEvent.getDamageSource().getCausingEntity();
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        @Nullable EntityEquipment entityEquipment = livingEntity.getEquipment();
+        EntityEquipment entityEquipment = livingEntity.getEquipment();
         if(entityEquipment == null) return;
         ItemStack mainHandItem = entityEquipment.getItem(EquipmentSlot.HAND);
         ItemStack offHandItem = entityEquipment.getItem(EquipmentSlot.OFF_HAND);
@@ -216,7 +215,7 @@ public class DurabilityEnchantmentListener implements Listener {
     public void onEntityDamageByBlock(EntityDamageByBlockEvent entityDamageByBlockEvent) {
         Entity entity = entityDamageByBlockEvent.getDamageSource().getCausingEntity();
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        @Nullable EntityEquipment entityEquipment = livingEntity.getEquipment();
+        EntityEquipment entityEquipment = livingEntity.getEquipment();
         if(entityEquipment == null) return;
 
         ItemStack helmetItem = entityEquipment.getItem(EquipmentSlot.HEAD);
@@ -272,7 +271,7 @@ public class DurabilityEnchantmentListener implements Listener {
         ProjectileSource projectileSource = projectile.getShooter();
         if(!(projectileSource instanceof Entity entity)) return;
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        @Nullable EntityEquipment entityEquipment = livingEntity.getEquipment();
+        EntityEquipment entityEquipment = livingEntity.getEquipment();
         if(entityEquipment == null) return;
 
         ItemStack mainHandItem = entityEquipment.getItem(EquipmentSlot.HAND);
@@ -300,12 +299,12 @@ public class DurabilityEnchantmentListener implements Listener {
     public void onItemDamage(EntityDamageItemEvent entityDamageItemEvent) {
         Entity entity = entityDamageItemEvent.getEntity();
         if(!(entity instanceof LivingEntity livingEntity)) return;
-        @Nullable EntityEquipment entityEquipment = livingEntity.getEquipment();
+        EntityEquipment entityEquipment = livingEntity.getEquipment();
         if(entityEquipment == null) return;
-        @NotNull ItemStack itemStack = entityDamageItemEvent.getItem();
+        ItemStack itemStack = entityDamageItemEvent.getItem();
 
         // Get the EquipmentSlot
-        @Nullable EquipmentSlot itemStackEquipmentSlot = null;
+        EquipmentSlot itemStackEquipmentSlot = null;
         for(EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if(entityEquipment.getItem(equipmentSlot).equals(itemStack)) {
                 itemStackEquipmentSlot = equipmentSlot;
@@ -328,10 +327,10 @@ public class DurabilityEnchantmentListener implements Listener {
     public void onItemDamage(PlayerItemDamageEvent playerItemDamageEvent) {
         Player player = playerItemDamageEvent.getPlayer();
         EntityEquipment entityEquipment = player.getEquipment();
-        @NotNull ItemStack itemStack = playerItemDamageEvent.getItem();
+        ItemStack itemStack = playerItemDamageEvent.getItem();
 
         // Get the EquipmentSlot
-        @Nullable EquipmentSlot itemStackEquipmentSlot = null;
+        EquipmentSlot itemStackEquipmentSlot = null;
         for(EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if(entityEquipment.getItem(equipmentSlot).equals(itemStack)) {
                 itemStackEquipmentSlot = equipmentSlot;
@@ -351,7 +350,7 @@ public class DurabilityEnchantmentListener implements Listener {
      * @param equipmentSlot The {@link EquipmentSlot} the {@link ItemStack} is in.
      * @return true if cancelled, false if not.
      */
-    private boolean shouldCancel(@NotNull ItemStack itemStack, @NotNull EquipmentSlot equipmentSlot) {
+    private boolean shouldCancel(@NonNull ItemStack itemStack, @NonNull EquipmentSlot equipmentSlot) {
         if(itemStack.isEmpty()) return false;
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
@@ -363,12 +362,12 @@ public class DurabilityEnchantmentListener implements Listener {
         if((maxDurability - damageable.getDamage()) > 1) return false;
 
         // Get the durability enchantment configuration and if null, return
-        @Nullable Durability durability = durabilityConfigManager.getConfiguration();
+        Durability durability = durabilityConfigManager.getConfiguration();
         if(durability == null) return false;
         // If the durability enchantment is disabled, return
         if(!durability.isEnabled()) return false;
         // If the durability enchantment is null, return
-        @Nullable Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
+        Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
         if(durabilityEnchantment == null) return false;
 
         // Get the EquipmentSlots

@@ -23,21 +23,21 @@ import dev.rosewood.rosestacker.api.RoseStackerAPI;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This class manages interfacing with RoseStacker.
  */
 public class RoseStackerHook implements Hook {
-    private final @NotNull SkyPlugin plugin;
+    private final @NonNull SkyPlugin plugin;
     private @Nullable RoseStackerAPI roseStackerAPI;
 
     /**
      * Constructor
      * @param plugin A {@link JavaPlugin} instance.
      */
-    public RoseStackerHook(@NotNull SkyPlugin plugin) {
+    public RoseStackerHook(@NonNull SkyPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -46,7 +46,7 @@ public class RoseStackerHook implements Hook {
      */
     @Override
     public void initialize() {
-        @Nullable Plugin plugin = this.plugin.getServer().getPluginManager().getPlugin("RoseStacker");
+        Plugin plugin = this.plugin.getServer().getPluginManager().getPlugin("RoseStacker");
         if(plugin != null && plugin.isEnabled()) {
             roseStackerAPI = RoseStackerAPI.getInstance();
         }
@@ -67,7 +67,7 @@ public class RoseStackerHook implements Hook {
      * @param block The {@link Block}.
      * @return true if stacked, false if not.
      */
-    public boolean isStackedBlock(@NotNull Block block) {
+    public boolean isStackedBlock(@NonNull Block block) {
         if(roseStackerAPI == null) return false;
 
         return roseStackerAPI.isBlockStacked(block) || roseStackerAPI.isSpawnerStacked(block);

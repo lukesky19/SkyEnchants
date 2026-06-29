@@ -18,7 +18,6 @@
 package com.github.lukesky19.skyEnchants.data;
 
 import org.bukkit.enchantments.Enchantment;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
@@ -31,7 +30,7 @@ import java.util.Map;
  * @param conflictToAdd The {@link Map} that maps the conflicting {@link EnchantmentLevel} to the {@link EnchantmentLevel} that would be in the {@link #enchantmentsToAdd} map.
  */
 public record EnchantmentData(
-        @NotNull Map<Enchantment, Integer> enchantmentsToAdd,
-        @NotNull Map<Enchantment, Integer> enchantmentsToReturn,
+        @NonNull Map<Enchantment, Integer> enchantmentsToAdd,
+        @NonNull Map<Enchantment, Integer> enchantmentsToReturn,
         @NonNull Map<Enchantment, Integer> enchantmentConflicts,
         @NonNull Map<EnchantmentLevel, EnchantmentLevel> conflictToAdd) {}

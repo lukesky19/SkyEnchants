@@ -37,8 +37,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -47,10 +46,10 @@ import java.util.*;
  * Also listens for when a player walks on solid ground and or logs out to reset their jump count.
  */
 public class DoubleJumpEnchantmentListener implements Listener {
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull DoubleJumpConfigManager doubleJumpConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull Map<UUID, Integer> jumpCounts = new HashMap<>();
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull DoubleJumpConfigManager doubleJumpConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
+    private final @NonNull Map<UUID, Integer> jumpCounts = new HashMap<>();
 
     /**
      * Constructor
@@ -59,9 +58,9 @@ public class DoubleJumpEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public DoubleJumpEnchantmentListener(
-            @NotNull ComponentLogger logger,
-            @NotNull DoubleJumpConfigManager doubleJumpConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull ComponentLogger logger,
+            @NonNull DoubleJumpConfigManager doubleJumpConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.logger = logger;
         this.doubleJumpConfigManager = doubleJumpConfigManager;
         this.enchantmentManager = enchantmentManager;
@@ -84,7 +83,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
         // If the input is not a jump, return
         if(!input.isJump()) return;
 
-        @Nullable DoubleJump doubleJump = doubleJumpConfigManager.getConfiguration();
+        DoubleJump doubleJump = doubleJumpConfigManager.getConfiguration();
         if(doubleJump == null) {
             logger.error(AdventureUtility.plain("Unable to activate a double jump enchantment due to an invalid settings."));
             return;
@@ -93,12 +92,12 @@ public class DoubleJumpEnchantmentListener implements Listener {
         // If the double jump enchantment isn't enabled, return
         if(!doubleJump.enabled()) return;
         // Get the double jump enchantment
-        @Nullable Enchantment doubleJumpEnchantment = enchantmentManager.getDoubleJumpEnchantment();
+        Enchantment doubleJumpEnchantment = enchantmentManager.getDoubleJumpEnchantment();
         // If the double jump enchantment is null, return
         if(doubleJumpEnchantment == null) return;
 
         // Get the jump velocity mapping
-        @NotNull Map<Integer, Double> jumpVelocityPerLevel = doubleJump.velocityPerLevel();
+        Map<Integer, Double> jumpVelocityPerLevel = doubleJump.velocityPerLevel();
         // If the jump velocity is empty, log an error and return
         if(jumpVelocityPerLevel.isEmpty()) {
             logger.error(AdventureUtility.plain("Unable to apply double jump enchantment action due to invalid plugin settings (No velocity mapping)."));
@@ -117,14 +116,14 @@ public class DoubleJumpEnchantmentListener implements Listener {
         if(blockBelow.getType().isSolid()) return;
 
         // Get the EquipmentSlots that the double jump enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(doubleJump.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(doubleJump.getRegistrationConfig().equipmentSlots());
         // Get the max level for the double jump enchantment
         int maxLevel = doubleJump.getRegistrationConfig().maxLevel();
 
         // Loop through the possible EquipmentSlots that the double jump enchantment can activate in.
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the double jump enchantment, move to the next EquipmentSlot
@@ -149,7 +148,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
             }
 
             // Get the jump velocity for the enchantment level
-            @Nullable Double jumpVelocity = jumpVelocityPerLevel.get(enchantmentLevel);
+            Double jumpVelocity = jumpVelocityPerLevel.get(enchantmentLevel);
             // Log an error if no jump velocity is configured
             if(jumpVelocity == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the double jump enchantment effect due to invalid plugin settings (No jump velocity mapping for enchantment level: " + enchantmentLevel + ")."));
@@ -170,7 +169,7 @@ public class DoubleJumpEnchantmentListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent playerMoveEvent) {
-        @Nullable DoubleJump doubleJump = doubleJumpConfigManager.getConfiguration();
+        DoubleJump doubleJump = doubleJumpConfigManager.getConfiguration();
         if(doubleJump == null) {
             logger.error(AdventureUtility.plain("Unable to reset jump count due to invalid settings."));
             return;

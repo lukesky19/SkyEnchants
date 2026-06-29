@@ -38,8 +38,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -49,9 +48,9 @@ import java.util.Optional;
  * Listens for when an attack is blocked with a shield that has the shield bash enchantment and triggers a shield bash.
  */
 public class ShieldBashEnchantmentListener implements Listener {
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull ShieldBashConfigManager shieldBashConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull ShieldBashConfigManager shieldBashConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
 
     /**
      * Constructor
@@ -60,9 +59,9 @@ public class ShieldBashEnchantmentListener implements Listener {
      * @param enchantmentManager An {@link EnchantmentManager} instance.
      */
     public ShieldBashEnchantmentListener(
-            @NotNull ComponentLogger logger,
-            @NotNull ShieldBashConfigManager shieldBashConfigManager,
-            @NotNull EnchantmentManager enchantmentManager) {
+            @NonNull ComponentLogger logger,
+            @NonNull ShieldBashConfigManager shieldBashConfigManager,
+            @NonNull EnchantmentManager enchantmentManager) {
         this.logger = logger;
         this.shieldBashConfigManager = shieldBashConfigManager;
         this.enchantmentManager = enchantmentManager;
@@ -74,7 +73,7 @@ public class ShieldBashEnchantmentListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onAttackBlocked(EntityDamageByEntityEvent entityDamageByEntityEvent) {
-        @Nullable ShieldBash shieldBash = shieldBashConfigManager.getConfiguration();
+        ShieldBash shieldBash = shieldBashConfigManager.getConfiguration();
         if(shieldBash == null) {
             logger.error(AdventureUtility.plain("Unable to apply shield bash due to an invalid settings."));
             return;
@@ -82,13 +81,13 @@ public class ShieldBashEnchantmentListener implements Listener {
         // If shield bash isn't enabled, return
         if(!shieldBash.isEnabled()) return;
         // Get the shield bash Enchantment
-        @Nullable Enchantment shieldBashEnchantment = enchantmentManager.getShieldBashEnchantment();
+        Enchantment shieldBashEnchantment = enchantmentManager.getShieldBashEnchantment();
         // If the shield bash enchantment is null, return
         if(shieldBashEnchantment == null) return;
 
         // Get the damage and knockback mapping
-        @NotNull Map<Integer, Double> damagePerLevel = shieldBash.damagePerLevel();
-        @NotNull Map<Integer, Double> knockbackPerLevel = shieldBash.knockbackPerLevel();
+        Map<Integer, Double> damagePerLevel = shieldBash.damagePerLevel();
+        Map<Integer, Double> knockbackPerLevel = shieldBash.knockbackPerLevel();
 
         // If there is no damage mapping, log an error and return
         if(damagePerLevel.isEmpty()) {
@@ -118,14 +117,14 @@ public class ShieldBashEnchantmentListener implements Listener {
         // Get the target player's EntityEquipment
         EntityEquipment targetPlayerEquipment = targetPlayer.getEquipment();
         // Get the EquipmentSlots that the shield bash enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(shieldBash.registration().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(shieldBash.registration().equipmentSlots());
         // Get the max level for the shield bash enchantment.
         int maxLevel = shieldBash.registration().maxLevel();
 
         // Loop through the possible EquipmentSlots that the shield bash enchantment can activate in.
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = targetPlayerEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = targetPlayerEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the shield bash enchantment, move to the next EquipmentSlot
@@ -136,13 +135,13 @@ public class ShieldBashEnchantmentListener implements Listener {
             // If the enchantment level is over the max level, move to the next EquipmentSlot
             if(enchantmentLevel > maxLevel) continue;
 
-            @Nullable Double damageAmount = damagePerLevel.get(enchantmentLevel);
+            Double damageAmount = damagePerLevel.get(enchantmentLevel);
             if(damageAmount == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the shield bash enchantment effect due to invalid plugin settings (No damage mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
             }
 
-            @Nullable Double knockbackAmount = knockbackPerLevel.get(enchantmentLevel);
+            Double knockbackAmount = knockbackPerLevel.get(enchantmentLevel);
             if(knockbackAmount == null) {
                 logger.error(AdventureUtility.plain("Unable to apply the shield bash enchantment effect due to invalid plugin settings (No damage mapping for enchantment level: " + enchantmentLevel + ")."));
                 continue;
@@ -162,9 +161,9 @@ public class ShieldBashEnchantmentListener implements Listener {
      * @param knockbackAmount The knockback amount.
      */
     private void applyShieldBash(
-            @NotNull ShieldBash shieldBash,
-            @NotNull Player targetPlayer,
-            @NotNull LivingEntity causingEntity,
+            @NonNull ShieldBash shieldBash,
+            @NonNull Player targetPlayer,
+            @NonNull LivingEntity causingEntity,
             double damageAmount,
             double knockbackAmount) {
         Location targetPlayerLocation = targetPlayer.getLocation();

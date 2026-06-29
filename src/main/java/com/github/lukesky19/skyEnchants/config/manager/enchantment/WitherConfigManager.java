@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Wither;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class WitherConfigManager extends EnchantmentConfigManager<Wither> {
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public WitherConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public WitherConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "wither.yml", Wither.class);
     }
 
@@ -44,7 +44,7 @@ public class WitherConfigManager extends EnchantmentConfigManager<Wither> {
      * @return The original {@link Wither} configuration.
      */
     @Override
-    public @Nullable Wither migrateConfiguration(@NotNull Wither wither) {
+    public @Nullable Wither migrateConfiguration(@NonNull Wither wither) {
         return wither;
     }
 

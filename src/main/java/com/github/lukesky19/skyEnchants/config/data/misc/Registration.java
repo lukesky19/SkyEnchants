@@ -21,7 +21,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.jetbrains.annotations.Range;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
@@ -45,8 +45,8 @@ public record Registration(
         boolean showInEnchantmentTable,
         @Range(from = 0, to = Integer.MAX_VALUE) int anvilCost,
         @Range(from = 1, to = 1024) int weight,
-        @NotNull List<String> exclusive,
-        @NotNull com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentTableCost minimumCost,
-        @NotNull com.github.lukesky19.skyEnchants.config.data.misc.EnchantmentTableCost maximumCost,
-        @NotNull List<String> equipmentSlots,
-        @NotNull List<String> supportedItems) {}
+        @NonNull List<String> exclusive,
+        @NonNull EnchantmentTableCost minimumCost,
+        @NonNull EnchantmentTableCost maximumCost,
+        @NonNull List<String> equipmentSlots,
+        @NonNull List<String> supportedItems) {}

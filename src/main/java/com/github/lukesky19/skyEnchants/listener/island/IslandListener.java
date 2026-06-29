@@ -23,7 +23,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import world.bentobox.bentobox.api.events.island.IslandDeletedEvent;
 import world.bentobox.bentobox.database.objects.IslandDeletion;
 
@@ -33,13 +33,13 @@ import java.util.concurrent.CompletableFuture;
  * Listens for when an island is deleted and removes any player-placed block statuses.
  */
 public class IslandListener implements Listener {
-    private final @NotNull BlockManager blockManager;
+    private final @NonNull BlockManager blockManager;
 
     /**
      * Constructor
      * @param blockManager A {@link BlockManager} instance.
      */
-    public IslandListener(@NotNull BlockManager blockManager) {
+    public IslandListener(@NonNull BlockManager blockManager) {
         this.blockManager = blockManager;
     }
 
@@ -48,9 +48,9 @@ public class IslandListener implements Listener {
      * @param islandDeletedEvent A {@link IslandDeletedEvent}.
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onIslandDelete(@NotNull IslandDeletedEvent islandDeletedEvent) {
-        @NotNull IslandDeletion islandDeletion = islandDeletedEvent.getDeletedIslandInfo();
-        @NotNull World world = islandDeletion.getWorld();
+    public void onIslandDelete(@NonNull IslandDeletedEvent islandDeletedEvent) {
+        IslandDeletion islandDeletion = islandDeletedEvent.getDeletedIslandInfo();
+        World world = islandDeletion.getWorld();
         int islandMinX = islandDeletion.getMinX();
         int islandMaxX = islandDeletion.getMaxX();
         int islandMinZ = islandDeletion.getMinZ();

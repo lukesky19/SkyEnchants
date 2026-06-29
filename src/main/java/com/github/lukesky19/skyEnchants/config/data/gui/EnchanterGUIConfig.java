@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.data.gui;
 import com.github.lukesky19.skyEnchants.gui.EnchanterGUI;
 import com.github.lukesky19.skylib.paper.api.gui.GUIType;
 import com.github.lukesky19.skylib.paper.api.itemstack.ItemStackConfig;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 import java.util.List;
@@ -44,10 +44,10 @@ public record EnchanterGUIConfig(
         int version,
         @Nullable String guiName,
         @Nullable GUIType guiType,
-        @NotNull ItemStackConfig filler,
-        @NotNull ButtonConfig playerInfoButton,
-        @NotNull ButtonConfig costButton,
-        @NotNull ButtonConfig inputItem,
-        @NotNull ButtonConfig inputEnchantment,
-        @NotNull ButtonConfig output,
-        @NotNull List<ButtonConfig> dummyButtons) {}
+        @NonNull ItemStackConfig filler,
+        @NonNull ButtonConfig playerInfoButton,
+        @NonNull ButtonConfig costButton,
+        @NonNull ButtonConfig inputItem,
+        @NonNull ButtonConfig inputEnchantment,
+        @NonNull ButtonConfig output,
+        @NonNull List<ButtonConfig> dummyButtons) {}

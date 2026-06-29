@@ -25,19 +25,19 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This class is used to process player-placed blocks.
  */
 public class BlockManager {
-    private final @NotNull SkyEnchants skyEnchants;
+    private final @NonNull SkyEnchants skyEnchants;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
      */
-    public BlockManager(@NotNull SkyEnchants skyEnchants) {
+    public BlockManager(@NonNull SkyEnchants skyEnchants) {
         this.skyEnchants = skyEnchants;
     }
 
@@ -46,7 +46,7 @@ public class BlockManager {
      * @param block The {@link Block}.
      * @return true if player-placed, or false if not.
      */
-    public boolean isBlockPlayerPlaced(@NotNull Block block) {
+    public boolean isBlockPlayerPlaced(@NonNull Block block) {
         return isLocationPlayerPlaced(block.getChunk(), block.getLocation());
     }
 
@@ -56,7 +56,7 @@ public class BlockManager {
      * @param location The {@link Location}.
      * @return true if player-placed, or false if not.
      */
-    public boolean isLocationPlayerPlaced(@NotNull Chunk chunk, @NotNull Location location) {
+    public boolean isLocationPlayerPlaced(@NonNull Chunk chunk, @NonNull Location location) {
         return chunk.getPersistentDataContainer().has(getNamespacedKey(location));
     }
 
@@ -64,7 +64,7 @@ public class BlockManager {
      * Store the block's location as player-placed.
      * @param block The {@link Block}.
      */
-    public void setBlockPlayerPlaced(@NotNull Block block) {
+    public void setBlockPlayerPlaced(@NonNull Block block) {
         setLocationPlayerPlaced(block.getChunk(), block.getLocation());
     }
 
@@ -73,7 +73,7 @@ public class BlockManager {
      * @param chunk The {@link Chunk} the location is in.
      * @param location The {@link Location}.
      */
-    public void setLocationPlayerPlaced(@NotNull Chunk chunk, @NotNull Location location) {
+    public void setLocationPlayerPlaced(@NonNull Chunk chunk, @NonNull Location location) {
         chunk.getPersistentDataContainer().set(getNamespacedKey(location), PersistentDataType.INTEGER, 1);
     }
 
@@ -81,7 +81,7 @@ public class BlockManager {
      * Remove the block's location as player-placed.
      * @param block The {@link Block}.
      */
-    public void removeBlockPlayerPlaced(@NotNull Block block) {
+    public void removeBlockPlayerPlaced(@NonNull Block block) {
         removeLocationPlayerPlaced(block.getChunk(), block.getLocation());
     }
 
@@ -90,7 +90,7 @@ public class BlockManager {
      * @param chunk The {@link Chunk} the location is in.
      * @param location The {@link Location}.
      */
-    public void removeLocationPlayerPlaced(@NotNull Chunk chunk, @NotNull Location location) {
+    public void removeLocationPlayerPlaced(@NonNull Chunk chunk, @NonNull Location location) {
         removeLocationPlayerPlaced(chunk, location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 
@@ -103,8 +103,8 @@ public class BlockManager {
      * @param z The z coordinate.
      */
     public void removeLocationPlayerPlaced(
-            @NotNull Chunk chunk,
-            @NotNull World world,
+            @NonNull Chunk chunk,
+            @NonNull World world,
             int x,
             int y,
             int z) {
@@ -122,7 +122,7 @@ public class BlockManager {
      * @param location The {@link Location}.
      * @return The {@link NamespacedKey}.
      */
-    private @NotNull NamespacedKey getNamespacedKey(@NotNull Location location) {
+    private @NonNull NamespacedKey getNamespacedKey(@NonNull Location location) {
         return getNamespacedKey(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
 
@@ -134,8 +134,8 @@ public class BlockManager {
      * @param z The z coordinate.
      * @return The {@link NamespacedKey}.
      */
-    private @NotNull NamespacedKey getNamespacedKey(
-            @NotNull World world,
+    private @NonNull NamespacedKey getNamespacedKey(
+            @NonNull World world,
             int x, int y, int z) {
         return new NamespacedKey(skyEnchants, world.getName() + "." + x + "." + y + "." + z);
     }

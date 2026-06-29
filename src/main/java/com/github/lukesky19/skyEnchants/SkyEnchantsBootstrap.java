@@ -41,8 +41,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
@@ -134,10 +134,10 @@ public final class SkyEnchantsBootstrap implements PluginBootstrap {
 
         // Register enchantments in enchantment table if configured to do so
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.TAGS.postFlatten(RegistryKey.ENCHANTMENT), event -> {
-            Set<@NotNull TypedKey<@NotNull Enchantment>> enchantmentSet = getInEnchantmentTableSet();
+            Set<@NonNull TypedKey<@NonNull Enchantment>> enchantmentSet = getInEnchantmentTableSet();
 
             if(!enchantmentSet.isEmpty()) {
-                PostFlattenTagRegistrar<@NotNull Enchantment> registrar = event.registrar();
+                PostFlattenTagRegistrar<@NonNull Enchantment> registrar = event.registrar();
 
                 registrar.addToTag(
                         EnchantmentTagKeys.IN_ENCHANTING_TABLE,
@@ -149,7 +149,7 @@ public final class SkyEnchantsBootstrap implements PluginBootstrap {
         // Register enchantments in the enchantment registry
         context.getLifecycleManager().registerEventHandler(RegistryEvents.ENCHANTMENT.compose()
             .newHandler(event -> {
-                WritableRegistry<@NotNull Enchantment, EnchantmentRegistryEntry.@NotNull Builder> writableRegistry = event.registry();
+                WritableRegistry<@NonNull Enchantment, EnchantmentRegistryEntry.@NonNull Builder> writableRegistry = event.registry();
 
                 if(doubleDrop != null) {
                     registerEnchantment(doubleDrop, writableRegistry);
@@ -255,7 +255,7 @@ public final class SkyEnchantsBootstrap implements PluginBootstrap {
      * @return A {@link JavaPlugin}.
      */
     @Override
-    public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext context) {
+    public @NonNull JavaPlugin createPlugin(@NonNull PluginProviderContext context) {
         return new SkyEnchants(
                 doubleDropConfigManager,
                 doubleJumpConfigManager,
@@ -281,13 +281,13 @@ public final class SkyEnchantsBootstrap implements PluginBootstrap {
      * @param enchantmentRegistry The enchantment registry.
      */
     private void registerEnchantment(
-            @NotNull IEnchantmentConfig enchantmentConfig,
-            @NotNull WritableRegistry<@NotNull Enchantment, EnchantmentRegistryEntry.@NotNull Builder> enchantmentRegistry) {
+            @NonNull IEnchantmentConfig enchantmentConfig,
+            @NonNull WritableRegistry<@NonNull Enchantment, EnchantmentRegistryEntry.@NonNull Builder> enchantmentRegistry) {
         if(enchantmentConfig.isEnabled()) {
             Registration registrationConfig = enchantmentConfig.getRegistrationConfig();
-            RegistryKeySet<@NotNull ItemType> supportedItems = RegistrySet.keySet(RegistryKey.ITEM, getSupportedItemTypeTypedKeys(registrationConfig.supportedItems()));
+            RegistryKeySet<@NonNull ItemType> supportedItems = RegistrySet.keySet(RegistryKey.ITEM, getSupportedItemTypeTypedKeys(registrationConfig.supportedItems()));
             EquipmentSlotGroup[] equipmentSlotGroups = getEquipmentSlotGroups(registrationConfig.equipmentSlots());
-            RegistryKeySet<@NotNull Enchantment> exclusiveEnchantments = getExclusiveEnchantments(registrationConfig.exclusive());
+            RegistryKeySet<@NonNull Enchantment> exclusiveEnchantments = getExclusiveEnchantments(registrationConfig.exclusive());
 
             enchantmentRegistry.register(enchantmentConfig.getTypedKey(), builder -> {
                 builder.description(Component.text(enchantmentConfig.getName()));
@@ -315,8 +315,8 @@ public final class SkyEnchantsBootstrap implements PluginBootstrap {
      * Get the {@link Set} of {@link TypedKey}s of type {@link Enchantment} to register to the enchantment table.
      * @return A {@link Set} of {@link TypedKey}s of type {@link Enchantment}.
      */
-    private @NotNull Set<@NotNull TypedKey<@NotNull Enchantment>> getInEnchantmentTableSet() {
-        Set<TypedKey<@NotNull Enchantment>> set = new HashSet<>();
+    private @NonNull Set<@NonNull TypedKey<@NonNull Enchantment>> getInEnchantmentTableSet() {
+        Set<TypedKey<@NonNull Enchantment>> set = new HashSet<>();
 
         if(doubleDrop != null && doubleDrop.enabled() && doubleDrop.registration().showInEnchantmentTable()) set.add(doubleDrop.getTypedKey());
         if(doubleJump != null && doubleJump.enabled() && doubleJump.registration().showInEnchantmentTable()) set.add(doubleJump.getTypedKey());

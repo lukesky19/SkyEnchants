@@ -23,19 +23,19 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Listens to when an ItemStack is clicked and updates the attributes on the item if it has the reach, speed, and or health enchantment.
  */
 public class ItemClickListener implements Listener {
-    private final @NotNull AttributeManager attributeManager;
+    private final @NonNull AttributeManager attributeManager;
 
     /**
      * Constructor
      * @param attributeManager An {@link AttributeManager} instance.
      */
-    public ItemClickListener(@NotNull AttributeManager attributeManager) {
+    public ItemClickListener(@NonNull AttributeManager attributeManager) {
         this.attributeManager = attributeManager;
     }
 

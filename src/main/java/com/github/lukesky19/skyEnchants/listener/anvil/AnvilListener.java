@@ -38,8 +38,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -49,9 +48,9 @@ import java.util.Map;
  * If the enchantment is disabled in anvils, the event is cancelled and tells the player to use the custom enchanter GUI instead.
  */
 public class AnvilListener implements Listener {
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull EnchantmentOptionsConfigManager anvilConfigManager;
-    private final @NotNull LocaleManager localeManager;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull EnchantmentOptionsConfigManager anvilConfigManager;
+    private final @NonNull LocaleManager localeManager;
 
     /**
      * Constructor
@@ -60,9 +59,9 @@ public class AnvilListener implements Listener {
      * @param localeManager A {@link LocaleManager} instance.
      */
     public AnvilListener(
-            @NotNull ComponentLogger logger,
-            @NotNull EnchantmentOptionsConfigManager anvilConfigManager,
-            @NotNull LocaleManager localeManager) {
+            @NonNull ComponentLogger logger,
+            @NonNull EnchantmentOptionsConfigManager anvilConfigManager,
+            @NonNull LocaleManager localeManager) {
         this.logger = logger;
         this.anvilConfigManager = anvilConfigManager;
         this.localeManager = localeManager;
@@ -80,22 +79,22 @@ public class AnvilListener implements Listener {
         if(!(clickedInventory instanceof AnvilInventory  anvilInventory)) return;
         if(inventoryClickEvent.getSlot() != 2) return;
 
-        @Nullable EnchantmentOptionsConfig enchantmentOptionsConfig = anvilConfigManager.getConfiguration();
+        EnchantmentOptionsConfig enchantmentOptionsConfig = anvilConfigManager.getConfiguration();
         if(enchantmentOptionsConfig == null) {
             logger.error("<red>Unable to prevent custom enchantment use in anvils due to invalid anvil config.</red>");
             return;
         }
         Locale locale = localeManager.getConfiguration();
 
-        @Nullable ItemStack inputItem = anvilInventory.getItem(1);
+        ItemStack inputItem = anvilInventory.getItem(1);
         if(inputItem == null || inputItem.isEmpty()) return;
-        @Nullable ItemType inputItemType = inputItem.getType().asItemType();
+        ItemType inputItemType = inputItem.getType().asItemType();
         if(inputItemType == null) return;
         if(!(inputItem.getItemMeta() instanceof EnchantmentStorageMeta enchantmentStorageMeta)) return;
-        @NotNull Map<Enchantment, Integer> inputItemEnchantments = enchantmentStorageMeta.getStoredEnchants();
+        Map<Enchantment, Integer> inputItemEnchantments = enchantmentStorageMeta.getStoredEnchants();
 
         for(Enchantment enchantment : inputItemEnchantments.keySet()) {
-            @Nullable EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
+            EnchantmentOptions enchantmentOptions = enchantmentOptionsConfig.enchantmentOptions().get(enchantment.getKey().toString());
             if(enchantmentOptions == null) {
                 logger.warn(AdventureUtility.plain("No anvil configuration found for NamespacedKey: " + enchantment.getKey()));
                 continue;

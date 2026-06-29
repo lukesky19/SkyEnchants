@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Durability;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class DurabilityConfigManager extends EnchantmentConfigManager<Durability
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public DurabilityConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public DurabilityConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "durability.yml", Durability.class);
     }
 
@@ -44,7 +44,7 @@ public class DurabilityConfigManager extends EnchantmentConfigManager<Durability
      * @return The original {@link Durability} configuration.
      */
     @Override
-    public @Nullable Durability migrateConfiguration(@NotNull Durability durability) {
+    public @Nullable Durability migrateConfiguration(@NonNull Durability durability) {
         return durability;
     }
 

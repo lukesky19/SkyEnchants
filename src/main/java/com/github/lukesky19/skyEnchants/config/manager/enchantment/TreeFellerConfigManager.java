@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.TreeFeller;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class TreeFellerConfigManager extends EnchantmentConfigManager<TreeFeller
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public TreeFellerConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public TreeFellerConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "tree_feller.yml", TreeFeller.class);
     }
 
@@ -44,7 +44,7 @@ public class TreeFellerConfigManager extends EnchantmentConfigManager<TreeFeller
      * @return The original {@link TreeFeller} configuration.
      */
     @Override
-    public @Nullable TreeFeller migrateConfiguration(@NotNull TreeFeller treeFeller) {
+    public @Nullable TreeFeller migrateConfiguration(@NonNull TreeFeller treeFeller) {
         return treeFeller;
     }
 

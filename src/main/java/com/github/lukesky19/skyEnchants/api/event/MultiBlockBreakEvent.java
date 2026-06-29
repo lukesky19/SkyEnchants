@@ -24,7 +24,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,13 +34,13 @@ import java.util.Map;
  * This event should be fired after all blocks have been broken.
  */
 public class MultiBlockBreakEvent extends Event implements Cancellable {
-    private static final @NotNull HandlerList HANDLERS = new HandlerList();
+    private static final @NonNull HandlerList HANDLERS = new HandlerList();
     private boolean isCancelled = false;
-    private final @NotNull Player player;
-    private final @NotNull List<BlockState> blocks;
-    private final @NotNull Collection<ItemStack> items;
-    private final @NotNull Map<BlockState, Collection<ItemStack>> getBlockStateToItemStackMap;
-    private final @NotNull Location location;
+    private final @NonNull Player player;
+    private final @NonNull List<BlockState> blocks;
+    private final @NonNull Collection<ItemStack> items;
+    private final @NonNull Map<BlockState, Collection<ItemStack>> getBlockStateToItemStackMap;
+    private final @NonNull Location location;
 
     /**
      * Constructor
@@ -51,11 +51,11 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * @param location The {@link Location} the {@link ItemStack}s will be dropped at.
      */
     public MultiBlockBreakEvent(
-            @NotNull Player player,
-            @NotNull List<BlockState> blocks,
-            @NotNull Collection<ItemStack> items,
-            @NotNull Map<BlockState, Collection<ItemStack>> getBlockStateToItemStackMap,
-            @NotNull Location location) {
+            @NonNull Player player,
+            @NonNull List<BlockState> blocks,
+            @NonNull Collection<ItemStack> items,
+            @NonNull Map<BlockState, Collection<ItemStack>> getBlockStateToItemStackMap,
+            @NonNull Location location) {
         this.player = player;
         this.blocks = blocks;
         this.items = items;
@@ -67,7 +67,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * The player who initiated the block breaking.
      * @return A {@link Player}.
      */
-    public @NotNull Player getPlayer() {
+    public @NonNull Player getPlayer() {
         return player;
     }
 
@@ -75,7 +75,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * Get the {@link List} of {@link BlockState}s that were broken.
      * @return A {@link List} of {@link BlockState}s.
      */
-    public @NotNull List<BlockState> getBlocks() {
+    public @NonNull List<BlockState> getBlocks() {
         return blocks;
     }
 
@@ -84,7 +84,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * @apiNote If {@link PreMultiBlockBreakEvent#isDropItems()} was set to false, the list will be empty.
      * @return A {@link Collection} of {@link ItemStack}.
      */
-    public @NotNull Collection<ItemStack> getItems() {
+    public @NonNull Collection<ItemStack> getItems() {
         return items;
     }
 
@@ -93,7 +93,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * @apiNote {@link #getItems()} is the authoritative collection of items dropped. Make sure any changes modify that list.
      * @return A {@link Map} mapping {@link BlockState}s to a {@link Collection} of {@link ItemStack}s.
      */
-    public @NotNull Map<BlockState, Collection<ItemStack>> getBlockStateToItemStackMap() {
+    public @NonNull Map<BlockState, Collection<ItemStack>> getBlockStateToItemStackMap() {
         return getBlockStateToItemStackMap;
     }
 
@@ -101,7 +101,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * Get the {@link Location} the items will be dropped at.
      * @return A {@link Location}.
      */
-    public @NotNull Location getLocation() {
+    public @NonNull Location getLocation() {
         return location;
     }
 
@@ -109,7 +109,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * Get the {@link HandlerList} for this event.
      * @return A {@link HandlerList}.
      */
-    public static @NotNull HandlerList getHandlerList() {
+    public static @NonNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
@@ -118,7 +118,7 @@ public class MultiBlockBreakEvent extends Event implements Cancellable {
      * @return A {@link HandlerList}.
      */
     @Override
-    public @NotNull HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLERS;
     }
 

@@ -23,8 +23,7 @@ import com.github.lukesky19.skyEnchants.config.data.gui.PreviewGUIConfig;
 import com.github.lukesky19.skylib.common.api.adventure.AdventureUtility;
 import com.github.lukesky19.skylib.common.platform.PlatformUtils;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import com.github.lukesky19.skylib.libs.configurate.ConfigurateException;
 import com.github.lukesky19.skylib.libs.configurate.yaml.NodeStyle;
@@ -37,18 +36,18 @@ import java.nio.file.Path;
  * This class manages the plugin's gui configurations.
  */
 public class GUIConfigManager {
-    private final @NotNull SkyEnchants skyEnchants;
+    private final @NonNull SkyEnchants skyEnchants;
     private @Nullable PreviewGUIConfig previewGUIConfig;
     private @Nullable EnchanterGUIConfig enchanterGUIConfig;
 
-    private final @NotNull Path previewGUIConfigPath;
-    private final @NotNull Path enchanterGUIConfigPath;
+    private final @NonNull Path previewGUIConfigPath;
+    private final @NonNull Path enchanterGUIConfigPath;
 
     /**
      * Constructor
      * @param skyEnchants A {@link SkyEnchants} instance.
      */
-    public GUIConfigManager(@NotNull SkyEnchants skyEnchants) {
+    public GUIConfigManager(@NonNull SkyEnchants skyEnchants) {
         this.skyEnchants = skyEnchants;
 
         previewGUIConfigPath = Path.of(skyEnchants.getDataFolder() + File.separator + "gui" + File.separator + "preview.yml");

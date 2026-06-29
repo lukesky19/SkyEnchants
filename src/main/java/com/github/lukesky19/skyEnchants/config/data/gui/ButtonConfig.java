@@ -19,8 +19,8 @@ package com.github.lukesky19.skyEnchants.config.data.gui;
 
 import com.github.lukesky19.skylib.paper.api.itemstack.ItemStackConfig;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializable;
 
 /**
@@ -30,5 +30,5 @@ import com.github.lukesky19.skylib.libs.configurate.objectmapping.ConfigSerializ
  */
 @ConfigSerializable
 public record ButtonConfig(
-        @NotNull ItemStackConfig item,
+        @NonNull ItemStackConfig item,
         @Nullable Integer slot) {}

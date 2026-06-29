@@ -24,19 +24,19 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EntityEquipment;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Listens to when a player joins and updates the attributes on the player's equipment if they have a reach, speed, and or health enchantment.
  */
 public class JoinListener implements Listener {
-    private final @NotNull AttributeManager attributeManager;
+    private final @NonNull AttributeManager attributeManager;
 
     /**
      * Constructor
      * @param attributeManager An {@link AttributeManager} instance.
      */
-    public JoinListener(@NotNull AttributeManager attributeManager) {
+    public JoinListener(@NonNull AttributeManager attributeManager) {
         this.attributeManager = attributeManager;
     }
 

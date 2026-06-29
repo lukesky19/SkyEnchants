@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Magnet;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class MagnetConfigManager extends EnchantmentConfigManager<Magnet> {
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public MagnetConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public MagnetConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "magnet.yml", Magnet.class);
     }
 
@@ -44,7 +44,7 @@ public class MagnetConfigManager extends EnchantmentConfigManager<Magnet> {
      * @return The original {@link Magnet} configuration.
      */
     @Override
-    public @Nullable Magnet migrateConfiguration(@NotNull Magnet magnet) {
+    public @Nullable Magnet migrateConfiguration(@NonNull Magnet magnet) {
         return magnet;
     }
 

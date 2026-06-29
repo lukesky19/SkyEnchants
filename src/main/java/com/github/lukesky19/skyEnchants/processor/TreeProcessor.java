@@ -38,8 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -76,18 +75,18 @@ public class TreeProcessor extends BlockProcessor {
      * @param toolSlotNumber The slot number of the tool.
      */
     public TreeProcessor(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull EnchantmentManager enchantmentManager,
-            @NotNull HookManager hookManager,
-            @NotNull Block startingBlock,
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull EnchantmentManager enchantmentManager,
+            @NonNull HookManager hookManager,
+            @NonNull Block startingBlock,
             int minLeavesRequired,
             boolean includeLeaves,
             boolean includeMangroveRoots,
             boolean includeFoliage,
             boolean preventBreaking,
-            @NotNull Player player,
-            @NotNull ItemStack tool,
+            @NonNull Player player,
+            @NonNull ItemStack tool,
             int toolSlotNumber) {
         super(skyEnchants, durabilityConfigManager, enchantmentManager, hookManager, startingBlock, player, tool, toolSlotNumber);
 
@@ -111,7 +110,7 @@ public class TreeProcessor extends BlockProcessor {
      * @param center The starting {@link Location}.
      */
     @Override
-    protected void queueLocations(@NotNull Location center) {
+    protected void queueLocations(@NonNull Location center) {
         int baseX = center.getBlockX();
         int baseY = center.getBlockY();
         int baseZ = center.getBlockZ();
@@ -146,7 +145,7 @@ public class TreeProcessor extends BlockProcessor {
             Block block = location.getBlock();
             // Ignore stacked blocks or spawners
             if(roseStackerHook.isHooked() && roseStackerHook.isStackedBlock(block)) continue;
-            @Nullable BlockType blockType = block.getType().asBlockType();
+            BlockType blockType = block.getType().asBlockType();
             if(blockType == null) continue;
 
             if(BlockTypeUtils.isLogOrWoodBlock(block)
@@ -198,8 +197,8 @@ public class TreeProcessor extends BlockProcessor {
             return;
         }
 
-        @Nullable ItemMeta itemMeta = tool.getItemMeta();
-        @Nullable Damageable durabilityMeta = null;
+        ItemMeta itemMeta = tool.getItemMeta();
+        Damageable durabilityMeta = null;
         if(itemMeta != null) {
             if(itemMeta instanceof Damageable damageable) {
                 durabilityMeta = damageable;
@@ -260,7 +259,7 @@ public class TreeProcessor extends BlockProcessor {
     }
 
     @Override
-    protected boolean isProtected(@NotNull ItemStack tool, @NotNull Damageable damageable) {
+    protected boolean isProtected(@NonNull ItemStack tool, @NonNull Damageable damageable) {
         if(!damageable.hasDamage()) return false;
         int maxDurability = damageable.hasMaxDamage()
                 ? damageable.getMaxDamage()
@@ -274,12 +273,12 @@ public class TreeProcessor extends BlockProcessor {
             if((maxDurability - damageable.getDamage()) > 1) return false;
 
             // Get the durability enchantment configuration and if null, return
-            @Nullable Durability durability = durabilityConfigManager.getConfiguration();
+            Durability durability = durabilityConfigManager.getConfiguration();
             if(durability == null) return false;
             // If the durability enchantment is disabled, return
             if(!durability.isEnabled()) return false;
             // If the durability enchantment is null, return
-            @Nullable Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
+            Enchantment durabilityEnchantment = enchantmentManager.getDurabilityEnchantment();
             if(durabilityEnchantment == null) return false;
 
             // Get the EquipmentSlots

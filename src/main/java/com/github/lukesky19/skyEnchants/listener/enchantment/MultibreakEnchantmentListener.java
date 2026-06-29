@@ -39,8 +39,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -48,12 +47,12 @@ import java.util.*;
  * Listens for when a block is broken by a tool that contains the multibreak enchantment and queues the multibreak.
  */
 public class MultibreakEnchantmentListener implements Listener {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull ComponentLogger logger;
-    private final @NotNull DurabilityConfigManager durabilityConfigManager;
-    private final @NotNull MultibreakConfigManager multibreakConfigManager;
-    private final @NotNull EnchantmentManager enchantmentManager;
-    private final @NotNull HookManager hookManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull ComponentLogger logger;
+    private final @NonNull DurabilityConfigManager durabilityConfigManager;
+    private final @NonNull MultibreakConfigManager multibreakConfigManager;
+    private final @NonNull EnchantmentManager enchantmentManager;
+    private final @NonNull HookManager hookManager;
 
     /**
      * Constructor
@@ -64,11 +63,11 @@ public class MultibreakEnchantmentListener implements Listener {
      * @param hookManager A {@link HookManager} instance.
      */
     public MultibreakEnchantmentListener(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull DurabilityConfigManager durabilityConfigManager,
-            @NotNull MultibreakConfigManager multibreakConfigManager,
-            @NotNull EnchantmentManager enchantmentManager,
-            @NotNull HookManager hookManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull DurabilityConfigManager durabilityConfigManager,
+            @NonNull MultibreakConfigManager multibreakConfigManager,
+            @NonNull EnchantmentManager enchantmentManager,
+            @NonNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.logger = skyEnchants.getComponentLogger();
         this.durabilityConfigManager = durabilityConfigManager;
@@ -85,7 +84,7 @@ public class MultibreakEnchantmentListener implements Listener {
     public void onBlockMultibreak(BlockBreakEvent blockBreakEvent) {
         Block block = blockBreakEvent.getBlock();
 
-        @Nullable Multibreak multibreak = multibreakConfigManager.getConfiguration();
+        Multibreak multibreak = multibreakConfigManager.getConfiguration();
         if(multibreak == null) {
             logger.error(AdventureUtility.plain("Unable to activate a multibreak enchantment due to invalid settings."));
             return;
@@ -94,7 +93,7 @@ public class MultibreakEnchantmentListener implements Listener {
         // If the multibreak enchantment is disabled, return
         if(!multibreak.isEnabled()) return;
         // If the multibreak enchantment is null, return
-        @Nullable Enchantment multibreakEnchantment = enchantmentManager.getMultibreakEnchantment();
+        Enchantment multibreakEnchantment = enchantmentManager.getMultibreakEnchantment();
         if(multibreakEnchantment == null) return;
 
         // If no break areas are defined, log an error and return
@@ -114,13 +113,13 @@ public class MultibreakEnchantmentListener implements Listener {
         EntityEquipment entityEquipment = player.getEquipment();
 
         // Get the configured slots the enchantment can activate in
-        @NotNull List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(multibreak.getRegistrationConfig().equipmentSlots());
+        List<EquipmentSlot> equipmentSlots = PluginUtils.getEquipmentSlots(multibreak.getRegistrationConfig().equipmentSlots());
         // Get the max level of the multibreak enchantment
         int maxLevel = multibreak.getRegistrationConfig().maxLevel();
 
         for(EquipmentSlot equipmentSlot : equipmentSlots) {
             // Get the ItemStack in the EquipmentSlot
-            @NotNull ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
+            ItemStack itemStack = entityEquipment.getItem(equipmentSlot);
             // If the ItemStack is empty (air), move to the next EquipmentSlot
             if(itemStack.isEmpty()) continue;
             // If the ItemStack doesn't contain the multibreak enchantment, move to the next EquipmentSlot
@@ -132,7 +131,7 @@ public class MultibreakEnchantmentListener implements Listener {
             if(enchantmentLevel > maxLevel) continue;
 
             // Get the configured area dimensions as a String
-            @Nullable String areaDimensionsString = multibreak.breakAreas().get(enchantmentLevel);
+            String areaDimensionsString = multibreak.breakAreas().get(enchantmentLevel);
             // If there is no break area mapping for the enchantment level, log an error and move to the next EquipmentSlot
             if(areaDimensionsString == null) {
                 logger.error(AdventureUtility.plain("No dimensions for the area to break for enchantment level " + enchantmentLevel));

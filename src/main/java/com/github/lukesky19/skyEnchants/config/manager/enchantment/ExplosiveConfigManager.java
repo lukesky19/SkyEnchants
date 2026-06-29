@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Explosive;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class ExplosiveConfigManager extends EnchantmentConfigManager<Explosive> 
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public ExplosiveConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public ExplosiveConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "explosive.yml", Explosive.class);
     }
 
@@ -44,7 +44,7 @@ public class ExplosiveConfigManager extends EnchantmentConfigManager<Explosive> 
      * @return The original {@link Explosive} configuration.
      */
     @Override
-    public @Nullable Explosive migrateConfiguration(@NotNull Explosive explosive) {
+    public @Nullable Explosive migrateConfiguration(@NonNull Explosive explosive) {
         return explosive;
     }
 

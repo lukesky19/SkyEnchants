@@ -26,7 +26,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.*;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -34,13 +34,13 @@ import java.util.*;
  * Listens to when a chunk is loaded and for all entities in that chunk, updates the attributes on the entity's equipment if it has the reach, speed, and or health enchantment.
  */
 public class ChunkLoadListener implements Listener {
-    private final @NotNull AttributeManager attributeManager;
+    private final @NonNull AttributeManager attributeManager;
 
     /**
      * Constructor
      * @param attributeManager An {@link AttributeManager} instance.
      */
-    public ChunkLoadListener(@NotNull AttributeManager attributeManager) {
+    public ChunkLoadListener(@NonNull AttributeManager attributeManager) {
         this.attributeManager = attributeManager;
     }
 

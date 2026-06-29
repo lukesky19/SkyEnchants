@@ -30,19 +30,19 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This class creates the gui command to open the enchanter and preview GUIs.
  */
 public class GUICommand {
-    private final @NotNull SkyEnchants skyEnchants;
-    private final @NotNull UUIDGUIManager guiManager;
-    private final @NotNull SettingsManager settingsManager;
-    private final @NotNull LocaleManager localeManager;
-    private final @NotNull EnchantmentOptionsConfigManager anvilConfigManager;
-    private final @NotNull GUIConfigManager guiConfigManager;
-    private final @NotNull HookManager hookManager;
+    private final @NonNull SkyEnchants skyEnchants;
+    private final @NonNull UUIDGUIManager guiManager;
+    private final @NonNull SettingsManager settingsManager;
+    private final @NonNull LocaleManager localeManager;
+    private final @NonNull EnchantmentOptionsConfigManager anvilConfigManager;
+    private final @NonNull GUIConfigManager guiConfigManager;
+    private final @NonNull HookManager hookManager;
 
     /**
      * Constructor
@@ -55,13 +55,13 @@ public class GUICommand {
      * @param hookManager A {@link HookManager} instance.
      */
     public GUICommand(
-            @NotNull SkyEnchants skyEnchants,
-            @NotNull UUIDGUIManager guiManager,
-            @NotNull SettingsManager settingsManager,
-            @NotNull LocaleManager localeManager,
-            @NotNull EnchantmentOptionsConfigManager anvilConfigManager,
-            @NotNull GUIConfigManager guiConfigManager,
-            @NotNull HookManager hookManager) {
+            @NonNull SkyEnchants skyEnchants,
+            @NonNull UUIDGUIManager guiManager,
+            @NonNull SettingsManager settingsManager,
+            @NonNull LocaleManager localeManager,
+            @NonNull EnchantmentOptionsConfigManager anvilConfigManager,
+            @NonNull GUIConfigManager guiConfigManager,
+            @NonNull HookManager hookManager) {
         this.skyEnchants = skyEnchants;
         this.guiManager = guiManager;
         this.settingsManager = settingsManager;
@@ -75,7 +75,7 @@ public class GUICommand {
      * Creates the gui command to open the enchanter and preview GUIs.
      * @return A {@link LiteralCommandNode} of type {@link CommandSourceStack}.
      */
-    public @NotNull LiteralCommandNode<CommandSourceStack> createCommand() {
+    public @NonNull LiteralCommandNode<CommandSourceStack> createCommand() {
         return Commands.literal("gui")
                 .requires(ctx -> ctx.getSender().hasPermission("skyenchants.commands.skyenchants.gui") && ctx.getSender() instanceof Player)
                 .then(Commands.literal("enchanter")

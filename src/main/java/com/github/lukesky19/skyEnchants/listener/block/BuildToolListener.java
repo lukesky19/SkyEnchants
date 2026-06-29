@@ -22,19 +22,19 @@ import com.github.lukesky19.skyTools.buildTool.event.BuildToolPlaceBlockEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This class listens for when a block is placed by a build tool and marks it as player-placed.
  */
 public class BuildToolListener implements Listener {
-    private final @NotNull BlockManager blockManager;
+    private final @NonNull BlockManager blockManager;
 
     /**
      * Constructor
      * @param blockManager A {@link BlockManager} instance.
      */
-    public BuildToolListener(@NotNull BlockManager blockManager) {
+    public BuildToolListener(@NonNull BlockManager blockManager) {
         this.blockManager = blockManager;
     }
 

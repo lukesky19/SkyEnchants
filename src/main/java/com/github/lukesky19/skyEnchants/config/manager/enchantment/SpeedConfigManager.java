@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.config.manager.enchantment;
 import com.github.lukesky19.skyEnchants.config.data.enchantment.Speed;
 import com.github.lukesky19.skyEnchants.config.manager.abstracts.EnchantmentConfigManager;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class SpeedConfigManager extends EnchantmentConfigManager<Speed> {
      * @param dataFolder The plugin's data folder.
      * @param logger The plugin's {@link ComponentLogger}.
      */
-    public SpeedConfigManager(@NotNull File dataFolder, @NotNull ComponentLogger logger) {
+    public SpeedConfigManager(@NonNull File dataFolder, @NonNull ComponentLogger logger) {
         super(dataFolder, logger, "speed.yml", Speed.class);
     }
 
@@ -44,7 +44,7 @@ public class SpeedConfigManager extends EnchantmentConfigManager<Speed> {
      * @return The original {@link Speed} configuration.
      */
     @Override
-    public @Nullable Speed migrateConfiguration(@NotNull Speed speed) {
+    public @Nullable Speed migrateConfiguration(@NonNull Speed speed) {
         return speed;
     }
 

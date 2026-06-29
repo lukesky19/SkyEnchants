@@ -20,8 +20,8 @@ package com.github.lukesky19.skyEnchants.manager.enchantment;
 import com.github.lukesky19.skylib.paper.api.registry.RegistryUtil;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.enchantments.Enchantment;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This class stores the {@link Enchantment}s for the custom enchantments loaded.
@@ -52,7 +52,7 @@ public class EnchantmentManager {
      * @apiNote Changing the enabled option in the enchantment's settings after the server has started will not change the data stored here.
      * @param logger A {@link ComponentLogger} instance.
      */
-    public EnchantmentManager(@NotNull ComponentLogger logger) {
+    public EnchantmentManager(@NonNull ComponentLogger logger) {
         doubleDropEnchantment = RegistryUtil.getEnchantment(logger, "skyenchants:double_drop").orElse(null);
         doubleJumpEnchantment = RegistryUtil.getEnchantment(logger, "skyenchants:double_jump").orElse(null);
         durabilityEnchantment = RegistryUtil.getEnchantment(logger, "skyenchants:durability").orElse(null);

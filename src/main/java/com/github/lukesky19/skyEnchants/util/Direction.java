@@ -2,7 +2,7 @@ package com.github.lukesky19.skyEnchants.util;
 
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This enum is used to identify the direction a player is looking.
@@ -91,7 +91,7 @@ public enum Direction {
      * @param player The {@link Player} to get the direction they are facing for.
      * @return The {@link Direction} the player is facing.
      */
-    public static @NotNull Direction getDirectionFacing(@NotNull Player player) {
+    public static @NonNull Direction getDirectionFacing(@NonNull Player player) {
         // Get the vector the player is facing.
         Vector playerDirectionVector = player.getLocation().getDirection().normalize();
         double vectorX = playerDirectionVector.getX();
