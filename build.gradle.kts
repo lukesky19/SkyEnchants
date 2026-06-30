@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.lukesky19"
-version = "0.5.0.2"
+version = "0.5.1.0"
 
 repositories {
     mavenLocal()

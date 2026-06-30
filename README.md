@@ -45,7 +45,11 @@
 * /skyenchants help - View the plugin's help message.
 * /skyenchants reload - Reloads the plugin.
 * /skyenchants gui enchanter - Open the enchanter GUI.
-* /skyenchants gui preview - Open the preview GUI.
+  * Alias: /skyenchants enchanter 
+* /skyenchants gui preview - Open the preview GUI. Same GUI as info.
+  * Alias: /skyenchants preview
+* /skyenchants gui info - Open the info GUI. Same GUI as preview.
+  * Alias: /skyenchants info
 
 ## Permissions
 * `skyenchants.command.skyenchants` - Base Command Permission
@@ -54,6 +58,7 @@
 * `skyenchants.command.skyenchants.gui` - The permission to use the `/skyenchants gui` command.
 * `skyenchants.command.skyenchants.gui.enchanter` - The permission to use the `/skyenchants gui enchanter` command.
 * `skyenchants.command.skyenchants.gui.preview` - The permission to use the `/skyenchants gui preview` command.
+* `skyenchants.command.skyenchants.gui.info` - The permission to use the `/skyenchants gui info` command.
 
 ## FAQ
 Q: How do I get the enchanted books?

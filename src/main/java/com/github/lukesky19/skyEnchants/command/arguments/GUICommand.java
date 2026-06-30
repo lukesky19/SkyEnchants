@@ -19,8 +19,6 @@ package com.github.lukesky19.skyEnchants.command.arguments;
 
 import com.github.lukesky19.skyEnchants.SkyEnchants;
 import com.github.lukesky19.skyEnchants.config.manager.options.EnchantmentOptionsConfigManager;
-import com.github.lukesky19.skyEnchants.gui.EnchanterGUI;
-import com.github.lukesky19.skyEnchants.gui.PreviewGUI;
 import com.github.lukesky19.skyEnchants.config.manager.gui.GUIConfigManager;
 import com.github.lukesky19.skyEnchants.config.manager.locale.LocaleManager;
 import com.github.lukesky19.skyEnchants.config.manager.settings.SettingsManager;
@@ -78,37 +76,9 @@ public class GUICommand {
     public @NonNull LiteralCommandNode<CommandSourceStack> createCommand() {
         return Commands.literal("gui")
                 .requires(ctx -> ctx.getSender().hasPermission("skyenchants.commands.skyenchants.gui") && ctx.getSender() instanceof Player)
-                .then(Commands.literal("enchanter")
-                    .requires(ctx -> ctx.getSender().hasPermission("skyenchants.commands.skyenchants.gui.enchanter"))
-                    .executes(ctx -> {
-                        EnchanterGUI enchanterGUI = new EnchanterGUI(skyEnchants, guiManager, (Player) ctx.getSource().getSender(), settingsManager, localeManager, anvilConfigManager, guiConfigManager, hookManager);
-
-                        boolean creationResult = enchanterGUI.create();
-                        if(!creationResult) return 0;
-
-                        boolean updateResult = enchanterGUI.update();
-                        if(!updateResult) return 0;
-
-                        boolean openResult = enchanterGUI.open();
-                        if(!openResult) return 0;
-
-                        return 1;
-                    }))
-                .then(Commands.literal("preview")
-                        .executes(ctx -> {
-                            PreviewGUI previewGUI = new PreviewGUI(skyEnchants, guiManager, (Player) ctx.getSource().getSender(), guiConfigManager);
-
-                            boolean creationResult = previewGUI.create();
-                            if(!creationResult) return 0;
-
-                            boolean updateResult = previewGUI.update();
-                            if(!updateResult) return 0;
-
-                            boolean openResult = previewGUI.open();
-                            if(!openResult) return 0;
-
-                            return 1;
-                        }))
+                .then(new EnchanterCommand(skyEnchants, guiManager, settingsManager, localeManager, anvilConfigManager, guiConfigManager, hookManager).createCommand())
+                .then(new InfoCommand(skyEnchants, guiManager, guiConfigManager).createCommand("preview"))
+                .then(new InfoCommand(skyEnchants, guiManager, guiConfigManager).createCommand("info"))
                 .build();
     }
 }
